@@ -13,16 +13,16 @@ const lines = [
 export default function Home() {
   const navigate = useNavigate();
   const [currentLine, setCurrentLine] = useState(0);
-  const [visible, setVisible] = useState(true);
+  const [transitioning, setTransitioning] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setVisible(false);
+      setTransitioning(true);
       setTimeout(() => {
         setCurrentLine((prev) => (prev + 1) % lines.length);
-        setVisible(true);
-      }, 800);
-    }, 3800);
+        setTransitioning(false);
+      }, 2000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -103,17 +103,19 @@ export default function Home() {
           letter-spacing: 0.06em;
           line-height: 1.7;
           min-height: 2.6rem;
-          transition: opacity 0.8s ease;
           max-width: 480px;
           margin: 0 auto;
+          transition: opacity 2s ease, transform 2s ease;
         }
 
-        .home-rotating-line.hidden {
+        .home-rotating-line.transitioning {
           opacity: 0;
+          transform: translateY(6px);
         }
 
-        .home-rotating-line.visible {
+        .home-rotating-line.settled {
           opacity: 1;
+          transform: translateY(0);
         }
 
         /* Manifesto */
@@ -243,7 +245,9 @@ export default function Home() {
           <h1 className="home-title">unsent</h1>
           <div className="home-divider" />
 
-          <p className={`home-rotating-line ${visible ? "visible" : "hidden"}`}>
+          <p
+            className={`home-rotating-line ${transitioning ? "transitioning" : "settled"}`}
+          >
             {lines[currentLine]}
           </p>
 
