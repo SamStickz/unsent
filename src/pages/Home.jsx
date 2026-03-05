@@ -125,7 +125,7 @@ export default function Home() {
           font-weight: 200;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #2e2b26;
+          color: #6b5d48;
           line-height: 2;
         }
 
@@ -186,7 +186,7 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #2a2720;
+          color: #6b5d48;
           cursor: pointer;
           padding: 0;
           transition: color 0.3s ease;
@@ -205,7 +205,7 @@ export default function Home() {
         }
 
         .home-btn-secondary:hover {
-          color: #4a4439;
+          color: #7a6f5e;
         }
 
         .home-btn-secondary:hover::after {
@@ -223,13 +223,13 @@ export default function Home() {
           font-weight: 200;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #1e1c18;
+          color: #6b5d48;
           z-index: 1;
         }
 
         .home-footer span {
           margin: 0 0.6rem;
-          color: #2a2720;
+          color: #6b5d48;
         }
       `}</style>
 

@@ -83,7 +83,7 @@ export default function NewEntry() {
           font-style: italic;
           font-weight: 300;
           font-size: 1.15rem;
-          color: #4a4439;
+          color: #7a6f5e;
           text-align: center;
           margin-bottom: 2.4rem;
           letter-spacing: 0.06em;
@@ -101,7 +101,7 @@ export default function NewEntry() {
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #3a352d;
+          color: #7a6f5e;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
@@ -127,7 +127,7 @@ export default function NewEntry() {
           caret-color: #c4a97d;
         }
 
-        .recipient-input::placeholder { color: #2a2720; font-style: italic; }
+        .recipient-input::placeholder { color: #5a5048; font-style: italic; }
 
         .recipient-line {
           position: absolute;
@@ -158,8 +158,8 @@ export default function NewEntry() {
           caret-color: #c4a97d;
         }
 
-        .entry-textarea::placeholder { color: #2e2b26; font-style: italic; }
-        .entry-textarea:focus { border-color: #2e2b26; background: rgba(255,255,255,0.03); }
+        .entry-textarea::placeholder { color: #6b5d48; font-style: italic; }
+        .entry-textarea:focus { border-color: #6b5d48; background: rgba(255,255,255,0.03); }
 
         .mood-label {
           display: block;
@@ -167,7 +167,7 @@ export default function NewEntry() {
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #3a352d;
+          color: #7a6f5e;
           margin: 1.6rem 0 0.8rem;
         }
 
@@ -185,14 +185,14 @@ export default function NewEntry() {
           font-style: italic;
           font-weight: 300;
           font-size: 0.88rem;
-          color: #3a352d;
+          color: #7a6f5e;
           cursor: pointer;
           transition: all 0.3s ease;
           letter-spacing: 0.04em;
           border-radius: 1px;
         }
 
-        .mood-tag:hover { border-color: #3a352d; color: #6b5d48; }
+        .mood-tag:hover { border-color: #7a6f5e; color: #6b5d48; }
         .mood-tag.selected { border-color: #6b5d48; color: #c4a97d; background: rgba(196,169,125,0.05); }
 
         /* Capsule toggle */
@@ -216,7 +216,7 @@ export default function NewEntry() {
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #3a352d;
+          color: #7a6f5e;
         }
 
         .capsule-sublabel {
@@ -224,7 +224,7 @@ export default function NewEntry() {
           font-style: italic;
           font-weight: 300;
           font-size: 0.82rem;
-          color: #2a2720;
+          color: #6b5d48;
           letter-spacing: 0.04em;
         }
 
@@ -285,7 +285,7 @@ export default function NewEntry() {
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #3a352d;
+          color: #7a6f5e;
           margin-bottom: 0.6rem;
         }
 
@@ -310,7 +310,7 @@ export default function NewEntry() {
           font-style: italic;
           font-weight: 300;
           font-size: 0.8rem;
-          color: #2a2720;
+          color: #6b5d48;
           letter-spacing: 0.04em;
         }
 
@@ -326,7 +326,7 @@ export default function NewEntry() {
           font-size: 0.65rem;
           font-weight: 300;
           letter-spacing: 0.15em;
-          color: #2a2720;
+          color: #6b5d48;
         }
 
         .entry-actions {

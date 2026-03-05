@@ -115,7 +115,7 @@ export default function Login() {
         }
 
         .field-input::placeholder {
-          color: #3a352d;
+          color: #7a6f5e;
         }
 
         .field-input:focus {
@@ -197,7 +197,7 @@ export default function Login() {
           font-weight: 300;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #4a4439;
+          color: #7a6f5e;
           text-decoration: none;
           transition: color 0.3s ease;
         }
@@ -207,7 +207,7 @@ export default function Login() {
         }
 
         .footer-sep {
-          color: #2e2b26;
+          color: #6b5d48;
           margin: 0 0.8rem;
           font-size: 0.6rem;
         }

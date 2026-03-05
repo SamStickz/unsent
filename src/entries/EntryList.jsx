@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
-import EntryCard from "./EntryCard";
+import EntryCard from "../components/EntryCard";
 
 export default function EntryList() {
   const [entries, setEntries] = useState([]);
@@ -73,7 +73,7 @@ export default function EntryList() {
           font-style: italic;
           font-weight: 300;
           font-size: 0.88rem;
-          color: #3a352d;
+          color: #7a6f5e;
           letter-spacing: 0.08em;
         }
 
@@ -89,7 +89,7 @@ export default function EntryList() {
           font-style: italic;
           font-weight: 300;
           font-size: 1rem;
-          color: #2e2b26;
+          color: #6b5d48;
           text-align: center;
           letter-spacing: 0.1em;
           padding: 4rem 0;
@@ -106,7 +106,7 @@ export default function EntryList() {
           font-style: italic;
           font-weight: 300;
           font-size: 1rem;
-          color: #2a2720;
+          color: #5a5048;
           text-align: center;
           letter-spacing: 0.06em;
           line-height: 1.8;
@@ -118,7 +118,7 @@ export default function EntryList() {
           font-weight: 200;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #2a2720;
+          color: #5a5048;
           text-align: center;
           margin-bottom: 1rem;
         }

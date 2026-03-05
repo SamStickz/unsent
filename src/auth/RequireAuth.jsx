@@ -37,7 +37,7 @@ export default function RequireAuth({ children }) {
           font-style: italic;
           font-weight: 300;
           font-size: 1.1rem;
-          color: #4a4439;
+          color: #7a6f5e;
           letter-spacing: 0.2em;
           animation: breathe 2.4s ease-in-out infinite;
         }

@@ -81,7 +81,7 @@ export default function Signup() {
           font-style: italic;
           font-weight: 300;
           font-size: 1rem;
-          color: #4a4439;
+          color: #7a6f5e;
           text-align: center;
           margin-bottom: 2.4rem;
           letter-spacing: 0.08em;
@@ -123,7 +123,7 @@ export default function Signup() {
         }
 
         .field-input::placeholder {
-          color: #3a352d;
+          color: #7a6f5e;
         }
 
         .field-input:focus {
@@ -205,7 +205,7 @@ export default function Signup() {
           font-weight: 300;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #4a4439;
+          color: #7a6f5e;
           text-decoration: none;
           transition: color 0.3s ease;
         }
@@ -221,7 +221,7 @@ export default function Signup() {
           font-style: italic;
           font-weight: 300;
           font-size: 0.82rem;
-          color: #2e2b26;
+          color: #6b5d48;
           letter-spacing: 0.06em;
           line-height: 1.7;
         }

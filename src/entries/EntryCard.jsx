@@ -80,7 +80,7 @@ export default function EntryCard({ entry, onDelete }) {
           font-weight: 300;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #2e2b26;
+          color: #6b5d48;
         }
 
         .entry-card-seal-recipient {
@@ -88,7 +88,7 @@ export default function EntryCard({ entry, onDelete }) {
           font-style: italic;
           font-weight: 300;
           font-size: 0.95rem;
-          color: #3a352d;
+          color: #7a6f5e;
           letter-spacing: 0.04em;
         }
 
@@ -97,7 +97,7 @@ export default function EntryCard({ entry, onDelete }) {
           font-style: italic;
           font-weight: 300;
           font-size: 0.82rem;
-          color: #2a2720;
+          color: #6b5d48;
           letter-spacing: 0.04em;
           margin-top: 0.2rem;
         }
@@ -108,7 +108,7 @@ export default function EntryCard({ entry, onDelete }) {
           font-weight: 200;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #2a2720;
+          color: #6b5d48;
         }
 
         /* Open card */
@@ -118,7 +118,7 @@ export default function EntryCard({ entry, onDelete }) {
           font-weight: 300;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #3a352d;
+          color: #7a6f5e;
           margin-bottom: 0.8rem;
         }
 
@@ -149,7 +149,7 @@ export default function EntryCard({ entry, onDelete }) {
           font-style: italic;
           font-weight: 300;
           font-size: 0.82rem;
-          color: #3a352d;
+          color: #7a6f5e;
           border: 1px solid #1e1c18;
           padding: 0.25rem 0.7rem;
           letter-spacing: 0.04em;
@@ -169,7 +169,7 @@ export default function EntryCard({ entry, onDelete }) {
           font-weight: 200;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #2e2b26;
+          color: #6b5d48;
         }
 
         .entry-card-release {
@@ -181,7 +181,7 @@ export default function EntryCard({ entry, onDelete }) {
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #2a2720;
+          color: #6b5d48;
           padding: 0;
           transition: color 0.3s ease;
           position: relative;
@@ -213,7 +213,7 @@ export default function EntryCard({ entry, onDelete }) {
           font-style: italic;
           font-weight: 300;
           font-size: 0.82rem;
-          color: #4a4439;
+          color: #7a6f5e;
           letter-spacing: 0.06em;
         }
 
@@ -233,7 +233,7 @@ export default function EntryCard({ entry, onDelete }) {
           font-family: 'Jost', sans-serif;
           font-size: 0.65rem; font-weight: 300;
           letter-spacing: 0.2em; text-transform: uppercase;
-          color: #2e2b26; padding: 0;
+          color: #6b5d48; padding: 0;
           transition: color 0.3s ease;
         }
 

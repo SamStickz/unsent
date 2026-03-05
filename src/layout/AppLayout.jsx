@@ -48,7 +48,7 @@ export default function AppLayout() {
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #3a352d;
+          color: #7a6f5e;
           text-decoration: none;
           transition: color 0.3s ease;
           position: relative;
