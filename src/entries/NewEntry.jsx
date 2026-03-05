@@ -83,7 +83,7 @@ export default function NewEntry() {
           font-style: italic;
           font-weight: 300;
           font-size: 1.15rem;
-          color: #7a6f5e;
+          color: #c4b99a;
           text-align: center;
           margin-bottom: 2.4rem;
           letter-spacing: 0.06em;
@@ -127,7 +127,7 @@ export default function NewEntry() {
           caret-color: #c4a97d;
         }
 
-        .recipient-input::placeholder { color: #5a5048; font-style: italic; }
+        .recipient-input::placeholder { color: #7a6f5e; font-style: italic; }
 
         .recipient-line {
           position: absolute;
@@ -158,7 +158,7 @@ export default function NewEntry() {
           caret-color: #c4a97d;
         }
 
-        .entry-textarea::placeholder { color: #6b5d48; font-style: italic; }
+        .entry-textarea::placeholder { color: #7a6f5e; font-style: italic; }
         .entry-textarea:focus { border-color: #6b5d48; background: rgba(255,255,255,0.03); }
 
         .mood-label {

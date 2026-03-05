@@ -11,7 +11,6 @@ export default function Dashboard() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
           padding: 3rem 2rem;
         }
 
@@ -19,8 +18,8 @@ export default function Dashboard() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1rem;
-          color: #6b5d48;
+          font-size: 1.1rem;
+          color: #a89880;
           letter-spacing: 0.1em;
           text-align: center;
           margin-bottom: 2.4rem;

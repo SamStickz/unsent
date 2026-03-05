@@ -102,7 +102,7 @@ export default function Home() {
           font-style: italic;
           font-weight: 300;
           font-size: clamp(1rem, 3.5vw, 1.3rem);
-          color: #6b5d48;
+          color: #a89880;
           letter-spacing: 0.06em;
           line-height: 1.7;
           min-height: 2.6rem;
@@ -125,7 +125,7 @@ export default function Home() {
           font-weight: 200;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #6b5d48;
+          color: #7a6f5e;
           line-height: 2;
         }
 
