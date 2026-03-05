@@ -2,18 +2,19 @@ import { useState } from "react";
 import { supabase } from "../lib/supabase";
 import { useNavigate } from "react-router-dom";
 
-export default function Signup() {
-  const [email, setEmail] = useState("");
+export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [done, setDone] = useState(false);
   const [error, setError] = useState(null);
-  const [focused, setFocused] = useState(null);
+  const [focused, setFocused] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignup = async () => {
-    const { error } = await supabase.auth.signUp({ email, password });
+  const handleUpdate = async () => {
+    const { error } = await supabase.auth.updateUser({ password });
     if (error) return setError(error.message);
-    navigate("/app");
+    setDone(true);
+    setTimeout(() => navigate("/app"), 2500);
   };
 
   return (
@@ -23,7 +24,7 @@ export default function Signup() {
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .signup-root {
+        .reset-root {
           min-height: 100vh;
           background-color: #0e0d0b;
           background-image:
@@ -36,7 +37,7 @@ export default function Signup() {
           padding: 2rem;
         }
 
-        .signup-card {
+        .reset-card {
           width: 100%;
           max-width: 400px;
           animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -58,15 +59,6 @@ export default function Signup() {
           text-transform: lowercase;
         }
 
-        .brand-tagline {
-          margin-top: 0.5rem;
-          font-size: 0.72rem;
-          font-weight: 200;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #7a6f5e;
-        }
-
         .divider {
           width: 32px;
           height: 1px;
@@ -74,7 +66,7 @@ export default function Signup() {
           margin: 1.2rem auto 0;
         }
 
-        .section-title {
+        .reset-title {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
@@ -85,10 +77,7 @@ export default function Signup() {
           letter-spacing: 0.08em;
         }
 
-        .field-group {
-          margin-bottom: 1.4rem;
-          position: relative;
-        }
+        .field-group { margin-bottom: 1.4rem; position: relative; }
 
         .field-label {
           display: block;
@@ -150,16 +139,13 @@ export default function Signup() {
           transition: color 0.3s ease;
           display: flex;
           align-items: center;
-          line-height: 1;
         }
 
         .eye-btn:hover { color: #7a6f5e; }
 
         .eye-btn svg {
-          width: 16px;
-          height: 16px;
-          stroke: currentColor;
-          fill: none;
+          width: 16px; height: 16px;
+          stroke: currentColor; fill: none;
           stroke-width: 1.5;
           stroke-linecap: round;
           stroke-linejoin: round;
@@ -167,15 +153,26 @@ export default function Signup() {
 
         .error-msg {
           font-size: 0.72rem;
-          font-weight: 300;
-          letter-spacing: 0.1em;
           color: #b87474;
           margin-bottom: 1.6rem;
           text-align: center;
-          animation: fadeUp 0.4s ease both;
+          letter-spacing: 0.1em;
         }
 
-        .signup-btn {
+        .done-msg {
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 1rem;
+          color: #a89880;
+          text-align: center;
+          letter-spacing: 0.06em;
+          line-height: 1.8;
+          padding: 1rem 0 2rem;
+          animation: fadeUp 0.6s ease both;
+        }
+
+        .reset-btn {
           width: 100%;
           margin-top: 2rem;
           padding: 0.95rem;
@@ -193,7 +190,7 @@ export default function Signup() {
           overflow: hidden;
         }
 
-        .signup-btn::before {
+        .reset-btn::before {
           content: '';
           position: absolute;
           inset: 0;
@@ -203,119 +200,69 @@ export default function Signup() {
           transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .signup-btn:hover { border-color: #c4a97d; color: #e8dfc8; }
-        .signup-btn:hover::before { transform: scaleX(1); }
-        .signup-btn:active { opacity: 0.7; }
-
-        .footer-links {
-          margin-top: 2.4rem;
-          text-align: center;
-        }
-
-        .footer-links a {
-          font-size: 0.68rem;
-          font-weight: 300;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          color: #6b5d48;
-          text-decoration: none;
-          cursor: pointer;
-          transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover { color: #c4a97d; }
-
-        .promise {
-          margin-top: 3rem;
-          text-align: center;
-          font-family: 'Cormorant Garamond', serif;
-          font-style: italic;
-          font-weight: 300;
-          font-size: 0.82rem;
-          color: #4a4439;
-          letter-spacing: 0.06em;
-          line-height: 1.7;
-        }
+        .reset-btn:hover { border-color: #c4a97d; color: #e8dfc8; }
+        .reset-btn:hover::before { transform: scaleX(1); }
+        .reset-btn:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
       `}</style>
 
-      <div className="signup-root">
-        <div className="signup-card">
+      <div className="reset-root">
+        <div className="reset-card">
           <div className="brand">
             <div className="brand-name">unsent</div>
             <div className="divider" />
-            <div className="brand-tagline">for the words that stay</div>
           </div>
 
-          <p className="section-title">begin here</p>
-
-          {error && <p className="error-msg">{error}</p>}
-
-          <div
-            className={`field-group ${focused === "email" ? "is-focused" : ""}`}
-          >
-            <label className="field-label">Email</label>
-            <div className="field-input-wrap">
-              <input
-                type="email"
-                placeholder="you@somewhere.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onFocus={() => setFocused("email")}
-                onBlur={() => setFocused(null)}
-                className="field-input"
-              />
-            </div>
-            <div className="field-line" />
-          </div>
-
-          <div
-            className={`field-group ${focused === "password" ? "is-focused" : ""}`}
-          >
-            <label className="field-label">Password</label>
-            <div className="field-input-wrap">
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onFocus={() => setFocused("password")}
-                onBlur={() => setFocused(null)}
-                className="field-input"
-              />
+          {!done ? (
+            <>
+              <p className="reset-title">choose a new password</p>
+              {error && <p className="error-msg">{error}</p>}
+              <div className={`field-group ${focused ? "is-focused" : ""}`}>
+                <label className="field-label">New Password</label>
+                <div className="field-input-wrap">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onFocus={() => setFocused(true)}
+                    onBlur={() => setFocused(false)}
+                    className="field-input"
+                  />
+                  <button
+                    className="eye-btn"
+                    onClick={() => setShowPassword(!showPassword)}
+                    tabIndex={-1}
+                  >
+                    {showPassword ? (
+                      <svg viewBox="0 0 24 24">
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                        <line x1="1" y1="1" x2="23" y2="23" />
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+                <div className="field-line" />
+              </div>
               <button
-                className="eye-btn"
-                onClick={() => setShowPassword(!showPassword)}
-                tabIndex={-1}
+                className="reset-btn"
+                onClick={handleUpdate}
+                disabled={!password.trim()}
               >
-                {showPassword ? (
-                  <svg viewBox="0 0 24 24">
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                    <line x1="1" y1="1" x2="23" y2="23" />
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 24 24">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                )}
+                Update password
               </button>
-            </div>
-            <div className="field-line" />
-          </div>
-
-          <button className="signup-btn" onClick={handleSignup}>
-            Begin
-          </button>
-
-          <div className="footer-links">
-            <a onClick={() => navigate("/login")}>Already have an account</a>
-          </div>
-
-          <p className="promise">
-            no feeds. no sharing.
-            <br />
-            just somewhere to put the words.
-          </p>
+            </>
+          ) : (
+            <p className="done-msg">
+              password updated.
+              <br />
+              taking you back in…
+            </p>
+          )}
         </div>
       </div>
     </>

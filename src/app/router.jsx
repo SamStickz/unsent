@@ -7,6 +7,8 @@ import RequireAuth from "../auth/RequireAuth";
 import Home from "../pages/Home";
 import Login from "../auth/Login";
 import Signup from "../auth/Signup";
+import ForgotPassword from "../auth/ForgotPassword";
+import ResetPassword from "../auth/ResetPassword";
 import Dashboard from "../pages/Dashboard";
 import EntryList from "../entries/EntryList";
 
@@ -20,6 +22,8 @@ const router = createBrowserRouter([
     children: [
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
+      { path: "/forgot", element: <ForgotPassword /> },
+      { path: "/reset-password", element: <ResetPassword /> },
     ],
   },
   {

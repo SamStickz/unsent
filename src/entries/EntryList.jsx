@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import EntryCard from "./EntryCard";
+import { useNavigate } from "react-router-dom";
 
 export default function EntryList() {
   const [entries, setEntries] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUser = async () => {
@@ -101,24 +103,79 @@ export default function EntryList() {
           50%       { opacity: 0.8; }
         }
 
+        /* Empty state */
         .list-empty {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 4rem 0;
+          animation: fadeUp 0.8s ease both;
+          animation-delay: 0.2s;
+        }
+
+        .list-empty-line {
+          width: 1px;
+          height: 48px;
+          background: linear-gradient(180deg, transparent, #2e2b26, transparent);
+          margin-bottom: 2rem;
+        }
+
+        .list-empty-title {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1rem;
-          color: #5a5048;
-          text-align: center;
+          font-size: 1.2rem;
+          color: #a89880;
           letter-spacing: 0.06em;
-          line-height: 1.8;
-          padding: 4rem 0;
+          text-align: center;
+          margin-bottom: 0.8rem;
         }
+
+        .list-empty-sub {
+          font-size: 0.68rem;
+          font-weight: 200;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: #6b5d48;
+          text-align: center;
+          line-height: 1.8;
+          margin-bottom: 2.4rem;
+        }
+
+        .list-empty-btn {
+          background: transparent;
+          border: 1px solid #2e2b26;
+          color: #c4a97d;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.68rem;
+          font-weight: 300;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+          padding: 0.7rem 1.8rem;
+          cursor: pointer;
+          transition: all 0.4s ease;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .list-empty-btn::before {
+          content: '';
+          position: absolute; inset: 0;
+          background: rgba(196,169,125,0.07);
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .list-empty-btn:hover { border-color: #c4a97d; color: #e8dfc8; }
+        .list-empty-btn:hover::before { transform: scaleX(1); }
 
         .list-count {
           font-size: 0.65rem;
           font-weight: 200;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #5a5048;
+          color: #6b5d48;
           text-align: center;
           margin-bottom: 1rem;
         }
@@ -136,11 +193,18 @@ export default function EntryList() {
         {loading ? (
           <p className="list-loading">gathering your words…</p>
         ) : entries.length === 0 ? (
-          <p className="list-empty">
-            nothing here yet.
-            <br />
-            write what your heart has been holding.
-          </p>
+          <div className="list-empty">
+            <div className="list-empty-line" />
+            <p className="list-empty-title">nothing here yet</p>
+            <p className="list-empty-sub">
+              the words are waiting.
+              <br />
+              whenever you're ready.
+            </p>
+            <button className="list-empty-btn" onClick={() => navigate("/app")}>
+              write something
+            </button>
+          </div>
         ) : (
           <>
             <p className="list-count">

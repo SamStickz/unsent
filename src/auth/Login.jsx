@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [focused, setFocused] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -49,10 +50,7 @@ export default function Login() {
           to   { opacity: 1; transform: translateY(0); }
         }
 
-        .brand {
-          text-align: center;
-          margin-bottom: 3rem;
-        }
+        .brand { text-align: center; margin-bottom: 3rem; }
 
         .brand-name {
           font-family: 'Cormorant Garamond', serif;
@@ -90,13 +88,17 @@ export default function Login() {
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #6b5d48;
+          color: #7a6f5e;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
 
-        .field-group.is-focused .field-label {
-          color: #c4a97d;
+        .field-group.is-focused .field-label { color: #c4a97d; }
+
+        .field-input-wrap {
+          position: relative;
+          display: flex;
+          align-items: center;
         }
 
         .field-input {
@@ -105,6 +107,7 @@ export default function Login() {
           border: none;
           border-bottom: 1px solid #2e2b26;
           padding: 0.6rem 0;
+          padding-right: 2rem;
           font-family: 'Jost', sans-serif;
           font-size: 0.95rem;
           font-weight: 300;
@@ -112,28 +115,46 @@ export default function Login() {
           outline: none;
           transition: border-color 0.4s ease;
           letter-spacing: 0.04em;
+          caret-color: #c4a97d;
         }
 
-        .field-input::placeholder {
-          color: #7a6f5e;
-        }
-
-        .field-input:focus {
-          border-bottom-color: #c4a97d;
-        }
+        .field-input::placeholder { color: #4a4439; }
+        .field-input:focus { border-bottom-color: #c4a97d; }
 
         .field-line {
           position: absolute;
-          bottom: 0;
-          left: 0;
-          height: 1px;
-          width: 0%;
+          bottom: 0; left: 0;
+          height: 1px; width: 0%;
           background: #c4a97d;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .field-group.is-focused .field-line {
-          width: 100%;
+        .field-group.is-focused .field-line { width: 100%; }
+
+        .eye-btn {
+          position: absolute;
+          right: 0;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          color: #4a4439;
+          transition: color 0.3s ease;
+          display: flex;
+          align-items: center;
+          line-height: 1;
+        }
+
+        .eye-btn:hover { color: #7a6f5e; }
+
+        .eye-btn svg {
+          width: 16px;
+          height: 16px;
+          stroke: currentColor;
+          fill: none;
+          stroke-width: 1.5;
+          stroke-linecap: round;
+          stroke-linejoin: round;
         }
 
         .error-msg {
@@ -168,28 +189,23 @@ export default function Login() {
           content: '';
           position: absolute;
           inset: 0;
-          background: rgba(196, 169, 125, 0.07);
+          background: rgba(196,169,125,0.07);
           transform: scaleX(0);
           transform-origin: left;
           transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .login-btn:hover {
-          border-color: #c4a97d;
-          color: #e8dfc8;
-        }
-
-        .login-btn:hover::before {
-          transform: scaleX(1);
-        }
-
-        .login-btn:active {
-          opacity: 0.7;
-        }
+        .login-btn:hover { border-color: #c4a97d; color: #e8dfc8; }
+        .login-btn:hover::before { transform: scaleX(1); }
+        .login-btn:active { opacity: 0.7; }
 
         .footer-links {
           margin-top: 2.4rem;
           text-align: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0;
         }
 
         .footer-links a {
@@ -197,20 +213,14 @@ export default function Login() {
           font-weight: 300;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #7a6f5e;
+          color: #6b5d48;
           text-decoration: none;
           transition: color 0.3s ease;
+          cursor: pointer;
         }
 
-        .footer-links a:hover {
-          color: #c4a97d;
-        }
-
-        .footer-sep {
-          color: #6b5d48;
-          margin: 0 0.8rem;
-          font-size: 0.6rem;
-        }
+        .footer-links a:hover { color: #c4a97d; }
+        .footer-sep { color: #2e2b26; margin: 0 0.8rem; font-size: 0.6rem; }
       `}</style>
 
       <div className="login-root">
@@ -227,15 +237,17 @@ export default function Login() {
             className={`field-group ${focused === "email" ? "is-focused" : ""}`}
           >
             <label className="field-label">Email</label>
-            <input
-              type="email"
-              placeholder="you@somewhere.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onFocus={() => setFocused("email")}
-              onBlur={() => setFocused(null)}
-              className="field-input"
-            />
+            <div className="field-input-wrap">
+              <input
+                type="email"
+                placeholder="you@somewhere.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onFocus={() => setFocused("email")}
+                onBlur={() => setFocused(null)}
+                className="field-input"
+              />
+            </div>
             <div className="field-line" />
           </div>
 
@@ -243,15 +255,34 @@ export default function Login() {
             className={`field-group ${focused === "password" ? "is-focused" : ""}`}
           >
             <label className="field-label">Password</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onFocus={() => setFocused("password")}
-              onBlur={() => setFocused(null)}
-              className="field-input"
-            />
+            <div className="field-input-wrap">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onFocus={() => setFocused("password")}
+                onBlur={() => setFocused(null)}
+                className="field-input"
+              />
+              <button
+                className="eye-btn"
+                onClick={() => setShowPassword(!showPassword)}
+                tabIndex={-1}
+              >
+                {showPassword ? (
+                  <svg viewBox="0 0 24 24">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                )}
+              </button>
+            </div>
             <div className="field-line" />
           </div>
 
@@ -260,9 +291,9 @@ export default function Login() {
           </button>
 
           <div className="footer-links">
-            <a href="/forgot">Forgot password</a>
+            <a onClick={() => navigate("/forgot")}>Forgot password</a>
             <span className="footer-sep">·</span>
-            <a href="/signup">Create account</a>
+            <a onClick={() => navigate("/signup")}>Create account</a>
           </div>
         </div>
       </div>
