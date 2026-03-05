@@ -1,0 +1,347 @@
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabase";
+
+const MOODS = [
+  "still hurting",
+  "finding peace",
+  "letting go",
+  "missing you",
+  "finally free",
+  "not yet ready",
+  "grateful now",
+  "just numb",
+];
+
+export default function NewEntry() {
+  const [content, setContent] = useState("");
+  const [recipient, setRecipient] = useState("");
+  const [mood, setMood] = useState(null);
+  const [saved, setSaved] = useState(false);
+  const [user, setUser] = useState(null);
+  const [focusedField, setFocusedField] = useState(null);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session) setUser(session.user);
+    };
+    getUser();
+  }, []);
+
+  const handleSave = async () => {
+    if (!content.trim() || !user) return;
+    const { error } = await supabase.from("entries").insert({
+      content,
+      recipient: recipient.trim() || null,
+      mood: mood || null,
+      user_id: user.id,
+    });
+    if (!error) {
+      setContent("");
+      setRecipient("");
+      setMood(null);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    }
+  };
+
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+
+        .entry-root {
+          max-width: 640px;
+          margin: 0 auto;
+          padding: 3rem 2rem 6rem;
+          font-family: 'Jost', sans-serif;
+          animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .entry-prompt {
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 1.15rem;
+          color: #4a4439;
+          text-align: center;
+          margin-bottom: 2.4rem;
+          letter-spacing: 0.06em;
+          line-height: 1.7;
+        }
+
+        .recipient-group {
+          margin-bottom: 1.6rem;
+          position: relative;
+        }
+
+        .recipient-label {
+          display: block;
+          font-size: 0.68rem;
+          font-weight: 300;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #3a352d;
+          margin-bottom: 0.6rem;
+          transition: color 0.3s ease;
+        }
+
+        .recipient-group.is-focused .recipient-label {
+          color: #c4a97d;
+        }
+
+        .recipient-input {
+          width: 100%;
+          background: transparent;
+          border: none;
+          border-bottom: 1px solid #1e1c18;
+          padding: 0.5rem 0;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 1.1rem;
+          color: #e8dfc8;
+          outline: none;
+          transition: border-color 0.4s ease;
+          letter-spacing: 0.04em;
+          caret-color: #c4a97d;
+        }
+
+        .recipient-input::placeholder {
+          color: #2a2720;
+          font-style: italic;
+        }
+
+        .recipient-line {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 1px;
+          width: 0%;
+          background: #c4a97d;
+          transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .recipient-group.is-focused .recipient-line {
+          width: 100%;
+        }
+
+        .entry-textarea {
+          width: 100%;
+          min-height: 220px;
+          background: rgba(255,255,255,0.02);
+          border: 1px solid #1e1c18;
+          border-radius: 2px;
+          padding: 1.6rem;
+          font-family: 'Cormorant Garamond', serif;
+          font-weight: 300;
+          font-size: 1.15rem;
+          color: #e8dfc8;
+          line-height: 1.8;
+          letter-spacing: 0.02em;
+          resize: none;
+          outline: none;
+          transition: border-color 0.4s ease, background 0.4s ease;
+          caret-color: #c4a97d;
+        }
+
+        .entry-textarea::placeholder {
+          color: #2e2b26;
+          font-style: italic;
+        }
+
+        .entry-textarea:focus {
+          border-color: #2e2b26;
+          background: rgba(255,255,255,0.03);
+        }
+
+        .mood-label {
+          display: block;
+          font-size: 0.68rem;
+          font-weight: 300;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #3a352d;
+          margin: 1.6rem 0 0.8rem;
+        }
+
+        .mood-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.6rem;
+        }
+
+        .mood-tag {
+          background: transparent;
+          border: 1px solid #1e1c18;
+          padding: 0.4rem 0.9rem;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 0.88rem;
+          color: #3a352d;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          letter-spacing: 0.04em;
+          border-radius: 1px;
+        }
+
+        .mood-tag:hover {
+          border-color: #3a352d;
+          color: #6b5d48;
+        }
+
+        .mood-tag.selected {
+          border-color: #6b5d48;
+          color: #c4a97d;
+          background: rgba(196, 169, 125, 0.05);
+        }
+
+        .entry-footer {
+          margin-top: 1.6rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .entry-char-count {
+          font-size: 0.65rem;
+          font-weight: 300;
+          letter-spacing: 0.15em;
+          color: #2a2720;
+        }
+
+        .entry-actions {
+          display: flex;
+          align-items: center;
+          gap: 1.2rem;
+        }
+
+        .entry-saved {
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 0.85rem;
+          color: #6b5d48;
+          letter-spacing: 0.08em;
+          animation: fadeIn 0.5s ease both;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+
+        .entry-save-btn {
+          background: transparent;
+          border: 1px solid #3a352d;
+          color: #c4a97d;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.68rem;
+          font-weight: 300;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+          padding: 0.7rem 1.8rem;
+          cursor: pointer;
+          transition: all 0.4s ease;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .entry-save-btn::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: rgba(196, 169, 125, 0.07);
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .entry-save-btn:hover {
+          border-color: #c4a97d;
+          color: #e8dfc8;
+        }
+
+        .entry-save-btn:hover::before {
+          transform: scaleX(1);
+        }
+
+        .entry-save-btn:disabled {
+          opacity: 0.2;
+          cursor: default;
+          pointer-events: none;
+        }
+      `}</style>
+
+      <div className="entry-root">
+        <p className="entry-prompt">
+          write the message you couldn't send.
+          <br />
+          this space is just for you.
+        </p>
+
+        <div
+          className={`recipient-group ${focusedField === "recipient" ? "is-focused" : ""}`}
+        >
+          <label className="recipient-label">for</label>
+          <input
+            type="text"
+            className="recipient-input"
+            placeholder="a name, a memory, a version of yourself…"
+            value={recipient}
+            onChange={(e) => setRecipient(e.target.value)}
+            onFocus={() => setFocusedField("recipient")}
+            onBlur={() => setFocusedField(null)}
+          />
+          <div className="recipient-line" />
+        </div>
+
+        <textarea
+          className="entry-textarea"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          onFocus={() => setFocusedField("content")}
+          onBlur={() => setFocusedField(null)}
+          placeholder="say it here…"
+        />
+
+        <span className="mood-label">how this feels</span>
+        <div className="mood-tags">
+          {MOODS.map((m) => (
+            <button
+              key={m}
+              className={`mood-tag ${mood === m ? "selected" : ""}`}
+              onClick={() => setMood(mood === m ? null : m)}
+            >
+              {m}
+            </button>
+          ))}
+        </div>
+
+        <div className="entry-footer">
+          <span className="entry-char-count">
+            {content.length > 0 ? `${content.length} characters` : ""}
+          </span>
+          <div className="entry-actions">
+            {saved && <span className="entry-saved">kept.</span>}
+            <button
+              className="entry-save-btn"
+              onClick={handleSave}
+              disabled={!content.trim()}
+            >
+              Keep
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
