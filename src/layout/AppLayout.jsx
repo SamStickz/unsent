@@ -19,12 +19,13 @@ export default function AppLayout() {
         }
 
         .app-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 1.6rem 2.4rem;
-          border-bottom: 1px solid #1a1814;
-        }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.6rem 2.4rem;
+  border-bottom: 1px solid #1a1814;
+  gap: 3rem;
+}
 
         .app-brand {
           font-family: 'Cormorant Garamond', serif;
@@ -37,10 +38,11 @@ export default function AppLayout() {
         }
 
         .app-nav {
-          display: flex;
-          align-items: center;
-          gap: 2rem;
-        }
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  flex-shrink: 0;
+}
 
         .app-nav-link {
           font-family: 'Jost', sans-serif;
