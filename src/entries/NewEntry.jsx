@@ -16,6 +16,8 @@ export default function NewEntry() {
   const [content, setContent] = useState("");
   const [recipient, setRecipient] = useState("");
   const [mood, setMood] = useState(null);
+  const [sealed, setSealed] = useState(false);
+  const [unlockAt, setUnlockAt] = useState("");
   const [saved, setSaved] = useState(false);
   const [user, setUser] = useState(null);
   const [focusedField, setFocusedField] = useState(null);
@@ -32,20 +34,31 @@ export default function NewEntry() {
 
   const handleSave = async () => {
     if (!content.trim() || !user) return;
+    if (sealed && !unlockAt) return;
+
     const { error } = await supabase.from("entries").insert({
       content,
       recipient: recipient.trim() || null,
       mood: mood || null,
+      unlock_at: sealed ? new Date(unlockAt).toISOString() : null,
       user_id: user.id,
     });
+
     if (!error) {
       setContent("");
       setRecipient("");
       setMood(null);
+      setSealed(false);
+      setUnlockAt("");
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     }
   };
+
+  // Min date for capsule — tomorrow
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const minDate = tomorrow.toISOString().split("T")[0];
 
   return (
     <>
@@ -114,24 +127,17 @@ export default function NewEntry() {
           caret-color: #c4a97d;
         }
 
-        .recipient-input::placeholder {
-          color: #2a2720;
-          font-style: italic;
-        }
+        .recipient-input::placeholder { color: #2a2720; font-style: italic; }
 
         .recipient-line {
           position: absolute;
-          bottom: 0;
-          left: 0;
-          height: 1px;
-          width: 0%;
+          bottom: 0; left: 0;
+          height: 1px; width: 0%;
           background: #c4a97d;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .recipient-group.is-focused .recipient-line {
-          width: 100%;
-        }
+        .recipient-group.is-focused .recipient-line { width: 100%; }
 
         .entry-textarea {
           width: 100%;
@@ -152,15 +158,8 @@ export default function NewEntry() {
           caret-color: #c4a97d;
         }
 
-        .entry-textarea::placeholder {
-          color: #2e2b26;
-          font-style: italic;
-        }
-
-        .entry-textarea:focus {
-          border-color: #2e2b26;
-          background: rgba(255,255,255,0.03);
-        }
+        .entry-textarea::placeholder { color: #2e2b26; font-style: italic; }
+        .entry-textarea:focus { border-color: #2e2b26; background: rgba(255,255,255,0.03); }
 
         .mood-label {
           display: block;
@@ -193,17 +192,129 @@ export default function NewEntry() {
           border-radius: 1px;
         }
 
-        .mood-tag:hover {
-          border-color: #3a352d;
-          color: #6b5d48;
+        .mood-tag:hover { border-color: #3a352d; color: #6b5d48; }
+        .mood-tag.selected { border-color: #6b5d48; color: #c4a97d; background: rgba(196,169,125,0.05); }
+
+        /* Capsule toggle */
+        .capsule-row {
+          margin-top: 2rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1rem 0;
+          border-top: 1px solid #1a1814;
         }
 
-        .mood-tag.selected {
+        .capsule-label-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
+        }
+
+        .capsule-label {
+          font-size: 0.68rem;
+          font-weight: 300;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #3a352d;
+        }
+
+        .capsule-sublabel {
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 0.82rem;
+          color: #2a2720;
+          letter-spacing: 0.04em;
+        }
+
+        .capsule-toggle {
+          position: relative;
+          width: 36px;
+          height: 20px;
+          cursor: pointer;
+        }
+
+        .capsule-toggle input {
+          opacity: 0;
+          width: 0; height: 0;
+        }
+
+        .capsule-toggle-track {
+          position: absolute;
+          inset: 0;
+          background: #1e1c18;
+          border: 1px solid #2e2b26;
+          border-radius: 20px;
+          transition: all 0.4s ease;
+        }
+
+        .capsule-toggle input:checked + .capsule-toggle-track {
+          background: rgba(196,169,125,0.15);
           border-color: #6b5d48;
-          color: #c4a97d;
-          background: rgba(196, 169, 125, 0.05);
         }
 
+        .capsule-toggle-thumb {
+          position: absolute;
+          top: 3px; left: 3px;
+          width: 12px; height: 12px;
+          background: #3a352d;
+          border-radius: 50%;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .capsule-toggle input:checked ~ .capsule-toggle-thumb {
+          transform: translateX(16px);
+          background: #c4a97d;
+        }
+
+        /* Date picker */
+        .capsule-date-group {
+          margin-top: 1rem;
+          animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(8px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .capsule-date-label {
+          display: block;
+          font-size: 0.68rem;
+          font-weight: 300;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #3a352d;
+          margin-bottom: 0.6rem;
+        }
+
+        .capsule-date-input {
+          background: transparent;
+          border: none;
+          border-bottom: 1px solid #2e2b26;
+          padding: 0.5rem 0;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.88rem;
+          font-weight: 300;
+          color: #c4a97d;
+          outline: none;
+          letter-spacing: 0.06em;
+          color-scheme: dark;
+          cursor: pointer;
+        }
+
+        .capsule-date-hint {
+          margin-top: 0.5rem;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 0.8rem;
+          color: #2a2720;
+          letter-spacing: 0.04em;
+        }
+
+        /* Footer */
         .entry-footer {
           margin-top: 1.6rem;
           display: flex;
@@ -234,10 +345,7 @@ export default function NewEntry() {
           animation: fadeIn 0.5s ease both;
         }
 
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .entry-save-btn {
           background: transparent;
@@ -259,26 +367,15 @@ export default function NewEntry() {
           content: '';
           position: absolute;
           inset: 0;
-          background: rgba(196, 169, 125, 0.07);
+          background: rgba(196,169,125,0.07);
           transform: scaleX(0);
           transform-origin: left;
           transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .entry-save-btn:hover {
-          border-color: #c4a97d;
-          color: #e8dfc8;
-        }
-
-        .entry-save-btn:hover::before {
-          transform: scaleX(1);
-        }
-
-        .entry-save-btn:disabled {
-          opacity: 0.2;
-          cursor: default;
-          pointer-events: none;
-        }
+        .entry-save-btn:hover { border-color: #c4a97d; color: #e8dfc8; }
+        .entry-save-btn:hover::before { transform: scaleX(1); }
+        .entry-save-btn:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
       `}</style>
 
       <div className="entry-root">
@@ -326,18 +423,64 @@ export default function NewEntry() {
           ))}
         </div>
 
+        {/* Time capsule toggle */}
+        <div className="capsule-row">
+          <div className="capsule-label-group">
+            <span className="capsule-label">seal as time capsule</span>
+            <span className="capsule-sublabel">
+              lock this until a future date
+            </span>
+          </div>
+          <label className="capsule-toggle">
+            <input
+              type="checkbox"
+              checked={sealed}
+              onChange={(e) => setSealed(e.target.checked)}
+            />
+            <div className="capsule-toggle-track" />
+            <div className="capsule-toggle-thumb" />
+          </label>
+        </div>
+
+        {sealed && (
+          <div className="capsule-date-group">
+            <label className="capsule-date-label">open on</label>
+            <input
+              type="date"
+              className="capsule-date-input"
+              min={minDate}
+              value={unlockAt}
+              onChange={(e) => setUnlockAt(e.target.value)}
+            />
+            {unlockAt && (
+              <p className="capsule-date-hint">
+                this will stay sealed until{" "}
+                {new Date(unlockAt).toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="entry-footer">
           <span className="entry-char-count">
             {content.length > 0 ? `${content.length} characters` : ""}
           </span>
           <div className="entry-actions">
-            {saved && <span className="entry-saved">kept.</span>}
+            {saved && (
+              <span className="entry-saved">
+                {sealed ? "sealed." : "kept."}
+              </span>
+            )}
             <button
               className="entry-save-btn"
               onClick={handleSave}
-              disabled={!content.trim()}
+              disabled={!content.trim() || (sealed && !unlockAt)}
             >
-              Keep
+              {sealed ? "Seal" : "Keep"}
             </button>
           </div>
         </div>
