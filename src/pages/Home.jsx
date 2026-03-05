@@ -13,16 +13,19 @@ const lines = [
 export default function Home() {
   const navigate = useNavigate();
   const [currentLine, setCurrentLine] = useState(0);
-  const [transitioning, setTransitioning] = useState(false);
+  const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTransitioning(true);
+      // Fade out slowly
+      setOpacity(0);
       setTimeout(() => {
+        // Switch line while invisible
         setCurrentLine((prev) => (prev + 1) % lines.length);
-        setTransitioning(false);
-      }, 2000);
-    }, 5000);
+        // Fade back in slowly
+        setOpacity(1);
+      }, 2500);
+    }, 6000);
     return () => clearInterval(interval);
   }, []);
 
@@ -105,17 +108,7 @@ export default function Home() {
           min-height: 2.6rem;
           max-width: 480px;
           margin: 0 auto;
-          transition: opacity 2s ease, transform 2s ease;
-        }
-
-        .home-rotating-line.transitioning {
-          opacity: 0;
-          transform: translateY(6px);
-        }
-
-        .home-rotating-line.settled {
-          opacity: 1;
-          transform: translateY(0);
+          transition: opacity 2.5s ease;
         }
 
         /* Manifesto */
@@ -245,9 +238,7 @@ export default function Home() {
           <h1 className="home-title">unsent</h1>
           <div className="home-divider" />
 
-          <p
-            className={`home-rotating-line ${transitioning ? "transitioning" : "settled"}`}
-          >
+          <p className="home-rotating-line" style={{ opacity }}>
             {lines[currentLine]}
           </p>
 
