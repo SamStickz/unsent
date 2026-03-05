@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
-import EntryCard from "../components/EntryCard";
+import EntryCard from "./EntryCard";
 
 export default function EntryList() {
   const [entries, setEntries] = useState([]);
