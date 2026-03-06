@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
 
-export default function EntryCard({ entry, onDelete }) {
+export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
   const [confirming, setConfirming] = useState(false);
+  const [replying, setReplying] = useState(false);
+  const [replyContent, setReplyContent] = useState("");
+  const [replyFocused, setReplyFocused] = useState(false);
 
   const isSealed = entry.unlock_at && new Date(entry.unlock_at) > new Date();
 
@@ -38,13 +41,38 @@ export default function EntryCard({ entry, onDelete }) {
     if (!error) onDelete(entry.id);
   };
 
+  const handleReply = async () => {
+    if (!replyContent.trim()) return;
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session) return;
+
+    const { data, error } = await supabase
+      .from("entries")
+      .insert({
+        content: replyContent,
+        user_id: session.user.id,
+        parent_id: entry.id,
+        is_reply: true,
+      })
+      .select()
+      .single();
+
+    if (!error) {
+      setReplyContent("");
+      setReplying(false);
+      if (onReply) onReply(data);
+    }
+  };
+
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Jost:wght@200;300&display=swap');
 
         .entry-card {
-          padding: 2rem 0;
+          padding: 2rem 0 1rem;
           border-bottom: 1px solid #1a1814;
           animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
@@ -54,7 +82,7 @@ export default function EntryCard({ entry, onDelete }) {
           to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* Sealed capsule */
+        /* Sealed */
         .entry-card-sealed {
           display: flex;
           align-items: flex-start;
@@ -99,7 +127,6 @@ export default function EntryCard({ entry, onDelete }) {
           font-size: 0.82rem;
           color: #6b5d48;
           letter-spacing: 0.04em;
-          margin-top: 0.2rem;
         }
 
         .entry-card-seal-opens {
@@ -172,7 +199,13 @@ export default function EntryCard({ entry, onDelete }) {
           color: #6b5d48;
         }
 
-        .entry-card-release {
+        .entry-card-actions {
+          display: flex;
+          align-items: center;
+          gap: 1.2rem;
+        }
+
+        .entry-card-action-btn {
           background: none;
           border: none;
           cursor: pointer;
@@ -187,17 +220,20 @@ export default function EntryCard({ entry, onDelete }) {
           position: relative;
         }
 
-        .entry-card-release::after {
+        .entry-card-action-btn::after {
           content: '';
           position: absolute;
           bottom: -2px; left: 0;
           width: 0%; height: 1px;
-          background: #6b3a3a;
+          background: currentColor;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .entry-card-release:hover { color: #8a4f4f; }
-        .entry-card-release:hover::after { width: 100%; }
+        .entry-card-action-btn:hover { color: #c4a97d; }
+        .entry-card-action-btn:hover::after { width: 100%; }
+
+        .entry-card-release { color: #6b5d48; }
+        .entry-card-release:hover { color: #8a4f4f !important; }
 
         .entry-card-confirm {
           display: flex;
@@ -237,12 +273,129 @@ export default function EntryCard({ entry, onDelete }) {
           transition: color 0.3s ease;
         }
 
-        .entry-card-confirm-no:hover { color: #6b5d48; }
+        .entry-card-confirm-no:hover { color: #c4a97d; }
+
+        /* Reply compose */
+        .reply-compose {
+          margin-top: 1.2rem;
+          padding-top: 1.2rem;
+          border-top: 1px solid #161412;
+          animation: fadeUp 0.4s ease both;
+        }
+
+        .reply-compose-label {
+          font-family: 'Jost', sans-serif;
+          font-size: 0.62rem;
+          font-weight: 300;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #6b5d48;
+          margin-bottom: 0.6rem;
+          display: block;
+        }
+
+        .reply-textarea {
+          width: 100%;
+          min-height: 100px;
+          background: rgba(255,255,255,0.015);
+          border: 1px solid #1a1814;
+          border-radius: 2px;
+          padding: 1rem;
+          font-family: 'Cormorant Garamond', serif;
+          font-weight: 300;
+          font-size: 1rem;
+          color: #c4b99a;
+          line-height: 1.8;
+          resize: none;
+          outline: none;
+          transition: border-color 0.3s ease;
+          caret-color: #c4a97d;
+        }
+
+        .reply-textarea::placeholder { color: #2e2b26; font-style: italic; }
+        .reply-textarea:focus { border-color: #2a2720; }
+
+        .reply-footer {
+          margin-top: 0.8rem;
+          display: flex;
+          justify-content: flex-end;
+          gap: 1rem;
+          align-items: center;
+        }
+
+        .reply-cancel {
+          background: none; border: none; cursor: pointer;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.62rem; font-weight: 300;
+          letter-spacing: 0.18em; text-transform: uppercase;
+          color: #3a352d; padding: 0;
+          transition: color 0.3s ease;
+        }
+
+        .reply-cancel:hover { color: #6b5d48; }
+
+        .reply-send {
+          background: transparent;
+          border: 1px solid #2e2b26;
+          color: #c4a97d;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.62rem; font-weight: 300;
+          letter-spacing: 0.22em; text-transform: uppercase;
+          padding: 0.5rem 1.2rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .reply-send:hover { border-color: #c4a97d; color: #e8dfc8; }
+        .reply-send:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
+
+        /* Replies */
+        .replies-list {
+          margin-top: 0.8rem;
+          padding-left: 1.2rem;
+          border-left: 1px solid #1a1814;
+        }
+
+        .reply-item {
+          padding: 1rem 0;
+          border-bottom: 1px solid #131210;
+          animation: fadeUp 0.5s ease both;
+        }
+
+        .reply-item:last-child { border-bottom: none; }
+
+        .reply-item-label {
+          font-family: 'Jost', sans-serif;
+          font-size: 0.6rem;
+          font-weight: 200;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #3a352d;
+          margin-bottom: 0.4rem;
+        }
+
+        .reply-item-content {
+          font-family: 'Cormorant Garamond', serif;
+          font-weight: 300;
+          font-size: 0.98rem;
+          color: #a89880;
+          line-height: 1.8;
+          white-space: pre-wrap;
+        }
+
+        .reply-item-date {
+          margin-top: 0.5rem;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.6rem;
+          font-weight: 200;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #2a2720;
+        }
       `}</style>
 
       <div className="entry-card">
         {isSealed ? (
-          // Sealed capsule view
           <div className="entry-card-sealed">
             <div className="entry-card-sealed-left">
               <span className="entry-card-seal-icon">○</span>
@@ -261,7 +414,7 @@ export default function EntryCard({ entry, onDelete }) {
             </div>
             {!confirming ? (
               <button
-                className="entry-card-release"
+                className="entry-card-action-btn entry-card-release"
                 onClick={() => setConfirming(true)}
               >
                 release
@@ -285,7 +438,6 @@ export default function EntryCard({ entry, onDelete }) {
             )}
           </div>
         ) : (
-          // Open entry view
           <>
             {entry.recipient && (
               <p className="entry-card-recipient">
@@ -303,31 +455,95 @@ export default function EntryCard({ entry, onDelete }) {
               <span className="entry-card-date">
                 {formatDate(entry.created_at)}
               </span>
-              {!confirming ? (
-                <button
-                  className="entry-card-release"
-                  onClick={() => setConfirming(true)}
-                >
-                  release
-                </button>
-              ) : (
-                <div className="entry-card-confirm">
-                  <span className="entry-card-confirm-text">let this go?</span>
+              <div className="entry-card-actions">
+                {!confirming ? (
+                  <>
+                    <button
+                      className="entry-card-action-btn"
+                      onClick={() => {
+                        setReplying(!replying);
+                        setConfirming(false);
+                      }}
+                    >
+                      {replying ? "cancel" : "reply"}
+                    </button>
+                    <button
+                      className="entry-card-action-btn entry-card-release"
+                      onClick={() => setConfirming(true)}
+                    >
+                      release
+                    </button>
+                  </>
+                ) : (
+                  <div className="entry-card-confirm">
+                    <span className="entry-card-confirm-text">
+                      let this go?
+                    </span>
+                    <button
+                      className="entry-card-confirm-yes"
+                      onClick={handleDelete}
+                    >
+                      yes
+                    </button>
+                    <button
+                      className="entry-card-confirm-no"
+                      onClick={() => setConfirming(false)}
+                    >
+                      no
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Reply compose box */}
+            {replying && (
+              <div className="reply-compose">
+                <span className="reply-compose-label">your reply, now</span>
+                <textarea
+                  className="reply-textarea"
+                  placeholder="what do you want to say back…"
+                  value={replyContent}
+                  onChange={(e) => setReplyContent(e.target.value)}
+                  onFocus={() => setReplyFocused(true)}
+                  onBlur={() => setReplyFocused(false)}
+                  autoFocus
+                />
+                <div className="reply-footer">
                   <button
-                    className="entry-card-confirm-yes"
-                    onClick={handleDelete}
+                    className="reply-cancel"
+                    onClick={() => {
+                      setReplying(false);
+                      setReplyContent("");
+                    }}
                   >
-                    yes
+                    cancel
                   </button>
                   <button
-                    className="entry-card-confirm-no"
-                    onClick={() => setConfirming(false)}
+                    className="reply-send"
+                    onClick={handleReply}
+                    disabled={!replyContent.trim()}
                   >
-                    no
+                    keep this too
                   </button>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
+
+            {/* Replies */}
+            {replies.length > 0 && (
+              <div className="replies-list">
+                {replies.map((reply) => (
+                  <div key={reply.id} className="reply-item">
+                    <p className="reply-item-label">you, later</p>
+                    <p className="reply-item-content">{reply.content}</p>
+                    <p className="reply-item-date">
+                      {formatDate(reply.created_at)}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
           </>
         )}
       </div>

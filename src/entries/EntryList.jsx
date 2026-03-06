@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function EntryList() {
   const [entries, setEntries] = useState([]);
+  const [replies, setReplies] = useState({});
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -27,7 +28,22 @@ export default function EntryList() {
         .select("*")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
-      if (!error) setEntries(data);
+
+      if (!error && data) {
+        // Separate top-level entries from replies
+        const topLevel = data.filter((e) => !e.is_reply);
+        const replyEntries = data.filter((e) => e.is_reply);
+
+        // Group replies by parent_id
+        const replyMap = {};
+        replyEntries.forEach((r) => {
+          if (!replyMap[r.parent_id]) replyMap[r.parent_id] = [];
+          replyMap[r.parent_id].push(r);
+        });
+
+        setEntries(topLevel);
+        setReplies(replyMap);
+      }
       setLoading(false);
     };
     fetchEntries();
@@ -35,6 +51,13 @@ export default function EntryList() {
 
   const handleDelete = (id) => {
     setEntries((prev) => prev.filter((e) => e.id !== id));
+  };
+
+  const handleReply = (newReply) => {
+    setReplies((prev) => ({
+      ...prev,
+      [newReply.parent_id]: [...(prev[newReply.parent_id] || []), newReply],
+    }));
   };
 
   return (
@@ -103,7 +126,6 @@ export default function EntryList() {
           50%       { opacity: 0.8; }
         }
 
-        /* Empty state */
         .list-empty {
           display: flex;
           flex-direction: column;
@@ -211,7 +233,13 @@ export default function EntryList() {
               {entries.length} {entries.length === 1 ? "entry" : "entries"}
             </p>
             {entries.map((entry) => (
-              <EntryCard key={entry.id} entry={entry} onDelete={handleDelete} />
+              <EntryCard
+                key={entry.id}
+                entry={entry}
+                onDelete={handleDelete}
+                onReply={handleReply}
+                replies={replies[entry.id] || []}
+              />
             ))}
           </>
         )}
