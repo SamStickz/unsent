@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
+import ShareCard from "./ShareCard";
 
 export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
   const [confirming, setConfirming] = useState(false);
   const [replying, setReplying] = useState(false);
   const [replyContent, setReplyContent] = useState("");
   const [replyFocused, setReplyFocused] = useState(false);
+  const [sharing, setSharing] = useState(false);
 
   const isSealed = entry.unlock_at && new Date(entry.unlock_at) > new Date();
 
@@ -460,6 +462,12 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
                   <>
                     <button
                       className="entry-card-action-btn"
+                      onClick={() => setSharing(true)}
+                    >
+                      share
+                    </button>
+                    <button
+                      className="entry-card-action-btn"
                       onClick={() => {
                         setReplying(!replying);
                         setConfirming(false);
@@ -547,6 +555,8 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           </>
         )}
       </div>
+
+      {sharing && <ShareCard entry={entry} onClose={() => setSharing(false)} />}
     </>
   );
 }
