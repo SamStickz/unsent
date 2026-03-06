@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import NewEntry from "../entries/NewEntry";
+import Onboarding from "../components/Onboarding";
 
 export default function Dashboard() {
   const [streak, setStreak] = useState(0);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    // Show onboarding only if never seen before
+    const onboarded = localStorage.getItem("unsent_onboarded");
+    if (!onboarded) setShowOnboarding(true);
+  }, []);
 
   useEffect(() => {
     const calcStreak = async () => {
@@ -21,7 +29,6 @@ export default function Dashboard() {
 
       if (error || !data || data.length === 0) return;
 
-      // Get unique days written (YYYY-MM-DD)
       const days = [
         ...new Set(
           data.map((e) => new Date(e.created_at).toLocaleDateString("en-CA")),
@@ -33,7 +40,6 @@ export default function Dashboard() {
         "en-CA",
       );
 
-      // Streak only counts if wrote today or yesterday
       if (days[0] !== today && days[0] !== yesterday) return;
 
       let count = 1;
@@ -98,8 +104,7 @@ export default function Dashboard() {
 
         .dashboard-streak-dot {
           display: inline-block;
-          width: 4px;
-          height: 4px;
+          width: 4px; height: 4px;
           background: #c4a97d;
           border-radius: 50%;
           margin-right: 0.5rem;
@@ -112,6 +117,8 @@ export default function Dashboard() {
           to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
+
+      {showOnboarding && <Onboarding onDone={() => setShowOnboarding(false)} />}
 
       <div className="dashboard">
         <p className="dashboard-greeting">who is this for?</p>

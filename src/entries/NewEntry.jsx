@@ -21,6 +21,8 @@ export default function NewEntry() {
   const [saved, setSaved] = useState(false);
   const [user, setUser] = useState(null);
   const [focusedField, setFocusedField] = useState(null);
+  const [acknowledgement, setAcknowledgement] = useState(null);
+  const [ackVisible, setAckVisible] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
@@ -32,9 +34,46 @@ export default function NewEntry() {
     getUser();
   }, []);
 
+  const getAcknowledgement = async (
+    entryContent,
+    entryMood,
+    entryRecipient,
+  ) => {
+    try {
+      const prompt = `Someone just wrote an unsent message${entryRecipient ? ` to "${entryRecipient}"` : ""}${entryMood ? ` and tagged it as "${entryMood}"` : ""}. 
+
+Here is what they wrote:
+"${entryContent.slice(0, 400)}"
+
+Respond with a single short line — maximum 10 words — that quietly acknowledges what they've done. Not therapy. Not advice. Not a question. Just a gentle, poetic observation that makes them feel heard. The tone should be warm but understated, like a whisper. Examples of the right tone: "you found the words.", "that's been sitting with you for a while.", "you didn't have to explain yourself. but you did.", "it's safe here."
+
+Reply with ONLY the single line. Nothing else.`;
+
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 60,
+          messages: [{ role: "user", content: prompt }],
+        }),
+      });
+
+      const data = await response.json();
+      const line = data.content?.[0]?.text?.trim();
+      return line || null;
+    } catch {
+      return null;
+    }
+  };
+
   const handleSave = async () => {
     if (!content.trim() || !user) return;
     if (sealed && !unlockAt) return;
+
+    const savedContent = content;
+    const savedMood = mood;
+    const savedRecipient = recipient;
 
     const { error } = await supabase.from("entries").insert({
       content,
@@ -52,6 +91,21 @@ export default function NewEntry() {
       setUnlockAt("");
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
+
+      // Get AI acknowledgement in background
+      if (!sealed) {
+        const line = await getAcknowledgement(
+          savedContent,
+          savedMood,
+          savedRecipient,
+        );
+        if (line) {
+          setAcknowledgement(line);
+          setAckVisible(true);
+          setTimeout(() => setAckVisible(false), 5000);
+          setTimeout(() => setAcknowledgement(null), 5800);
+        }
+      }
     }
   };
 
@@ -322,6 +376,23 @@ export default function NewEntry() {
           justify-content: space-between;
         }
 
+        /* Acknowledgement */
+        .entry-ack {
+          margin-top: 2rem;
+          text-align: center;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 1.1rem;
+          color: #a89880;
+          letter-spacing: 0.06em;
+          line-height: 1.7;
+          transition: opacity 0.8s ease;
+        }
+
+        .entry-ack.visible { opacity: 1; }
+        .entry-ack.hidden { opacity: 0; }
+
         .entry-char-count {
           font-size: 0.65rem;
           font-weight: 300;
@@ -484,6 +555,12 @@ export default function NewEntry() {
             </button>
           </div>
         </div>
+
+        {acknowledgement && (
+          <p className={`entry-ack ${ackVisible ? "visible" : "hidden"}`}>
+            {acknowledgement}
+          </p>
+        )}
       </div>
     </>
   );

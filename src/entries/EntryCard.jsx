@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
 import ShareCard from "./ShareCard";
-import ShareCard from "./ShareCard";
+
 
 export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
   const [confirming, setConfirming] = useState(false);
   const [replying, setReplying] = useState(false);
   const [replyContent, setReplyContent] = useState("");
   const [replyFocused, setReplyFocused] = useState(false);
-  const [sharing, setSharing] = useState(false);
+  
   const [sharing, setSharing] = useState(false);
 
   const isSealed = entry.unlock_at && new Date(entry.unlock_at) > new Date();

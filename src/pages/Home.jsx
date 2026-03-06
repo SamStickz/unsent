@@ -128,7 +128,6 @@ export default function Home() {
           color: #7a6f5e;
           line-height: 2;
         }
-
         /* CTA */
         .home-cta {
           margin-top: 4rem;
@@ -244,9 +243,11 @@ export default function Home() {
 
           <div className="home-manifesto">
             <p>
-              no feeds &nbsp;·&nbsp; no sharing &nbsp;·&nbsp; no judgement
+              not a diary &nbsp;·&nbsp; not a therapist
               <br />
               just somewhere to put the words
+              <br />
+              that have nowhere else to go
             </p>
           </div>
         </div>
