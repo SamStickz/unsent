@@ -19,34 +19,35 @@ export default function AppLayout() {
         }
 
         .app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.6rem 2.4rem;
-  border-bottom: 1px solid #1a1814;
-  gap: 3rem;
-}
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 1.4rem 2rem 0;
+          border-bottom: 1px solid #1a1814;
+        }
 
         .app-brand {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.5rem;
+          font-size: 1.4rem;
           color: #e8dfc8;
           letter-spacing: 0.18em;
           text-transform: lowercase;
           text-decoration: none;
+          margin-bottom: 1rem;
         }
 
         .app-nav {
-  display: flex;
-  align-items: center;
-  gap: 1.6rem;
-  flex-shrink: 0;
-}
+          display: flex;
+          align-items: center;
+          gap: 0;
+          width: 100%;
+          justify-content: center;
+        }
 
         .app-nav-link {
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.65rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -54,16 +55,18 @@ export default function AppLayout() {
           text-decoration: none;
           transition: color 0.3s ease;
           position: relative;
+          padding: 0.6rem 1.4rem;
         }
 
         .app-nav-link::after {
           content: '';
           position: absolute;
-          bottom: -3px;
-          left: 0;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
           width: 0%;
           height: 1px;
-          background: #6b5d48;
+          background: #c4a97d;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -74,14 +77,18 @@ export default function AppLayout() {
 
         .app-nav-link.active::after,
         .app-nav-link:hover::after {
-          width: 100%;
-          background: #c4a97d;
+          width: 60%;
         }
 
         .app-nav-sep {
           width: 1px;
-          height: 12px;
+          height: 10px;
           background: #1e1c18;
+          flex-shrink: 0;
+        }
+
+        .app-nav-leave {
+          padding: 0.6rem 1.4rem;
         }
 
         .app-main {
@@ -94,7 +101,7 @@ export default function AppLayout() {
           <NavLink to="/app" className="app-brand">
             unsent
           </NavLink>
-          <div className="app-nav">
+          <nav className="app-nav">
             <NavLink
               to="/app"
               end
@@ -114,8 +121,10 @@ export default function AppLayout() {
               kept
             </NavLink>
             <div className="app-nav-sep" />
-            <LogoutButton />
-          </div>
+            <div className="app-nav-leave">
+              <LogoutButton />
+            </div>
+          </nav>
         </header>
         <main className="app-main">
           <Outlet />
