@@ -420,8 +420,8 @@ Reply with ONLY the single line. Nothing else.`;
 
         .entry-save-btn {
           background: transparent;
-          border: 1px solid #3a352d;
-          color: #c4a97d;
+          border: 1px solid #6b5d48;
+          color: #e8dfc8;
           font-family: 'Jost', sans-serif;
           font-size: 0.68rem;
           font-weight: 300;
@@ -438,7 +438,7 @@ Reply with ONLY the single line. Nothing else.`;
           content: '';
           position: absolute;
           inset: 0;
-          background: rgba(196,169,125,0.07);
+          background: rgba(196,169,125,0.1);
           transform: scaleX(0);
           transform-origin: left;
           transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);

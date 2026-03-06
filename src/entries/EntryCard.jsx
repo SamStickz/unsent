@@ -17,11 +17,11 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
     const d = new Date(ts);
     return (
       d.toLocaleDateString("en-US", {
-        month: "long",
+        month: "short",
         day: "numeric",
         year: "numeric",
       }) +
-      "  ·  " +
+      " · " +
       d.toLocaleTimeString("en-US", {
         hour: "numeric",
         minute: "2-digit",
@@ -166,8 +166,8 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         .entry-card-content {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.05rem;
-          color: #c4b99a;
+          font-size: 1.08rem;
+          color: #d4c9b0;
           line-height: 1.85;
           letter-spacing: 0.02em;
           white-space: pre-wrap;
@@ -180,8 +180,8 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           font-style: italic;
           font-weight: 300;
           font-size: 0.82rem;
-          color: #7a6f5e;
-          border: 1px solid #1e1c18;
+          color: #a89880;
+          border: 1px solid #2e2b26;
           padding: 0.25rem 0.7rem;
           letter-spacing: 0.04em;
           border-radius: 1px;
@@ -192,21 +192,26 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          flex-wrap: nowrap;
+          gap: 0.8rem;
         }
 
         .entry-card-date {
           font-family: 'Jost', sans-serif;
-          font-size: 0.65rem;
+          font-size: 0.6rem;
           font-weight: 200;
-          letter-spacing: 0.18em;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #6b5d48;
+          color: #7a6f5e;
+          white-space: nowrap;
+          flex-shrink: 0;
         }
 
         .entry-card-actions {
           display: flex;
           align-items: center;
-          gap: 1.2rem;
+          gap: 1rem;
+          flex-shrink: 0;
         }
 
         .entry-card-action-btn {
@@ -214,14 +219,15 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           border: none;
           cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.65rem;
+          font-size: 0.62rem;
           font-weight: 300;
-          letter-spacing: 0.2em;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
-          color: #6b5d48;
+          color: #7a6f5e;
           padding: 0;
           transition: color 0.3s ease;
           position: relative;
+          white-space: nowrap;
         }
 
         .entry-card-action-btn::after {
@@ -236,7 +242,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         .entry-card-action-btn:hover { color: #c4a97d; }
         .entry-card-action-btn:hover::after { width: 100%; }
 
-        .entry-card-release { color: #6b5d48; }
+        .entry-card-release { color: #7a6f5e; }
         .entry-card-release:hover { color: #8a4f4f !important; }
 
         .entry-card-confirm {
