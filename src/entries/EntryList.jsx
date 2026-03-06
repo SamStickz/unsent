@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 export default function EntryList() {
   const [entries, setEntries] = useState([]);
   const [replies, setReplies] = useState({});
+  const [onThisDay, setOnThisDay] = useState(null);
+  const [dismissed, setDismissed] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -30,11 +32,9 @@ export default function EntryList() {
         .order("created_at", { ascending: false });
 
       if (!error && data) {
-        // Separate top-level entries from replies
         const topLevel = data.filter((e) => !e.is_reply);
         const replyEntries = data.filter((e) => e.is_reply);
 
-        // Group replies by parent_id
         const replyMap = {};
         replyEntries.forEach((r) => {
           if (!replyMap[r.parent_id]) replyMap[r.parent_id] = [];
@@ -43,6 +43,18 @@ export default function EntryList() {
 
         setEntries(topLevel);
         setReplies(replyMap);
+
+        // On This Day — same month/day, previous year
+        const today = new Date();
+        const match = topLevel.find((e) => {
+          const d = new Date(e.created_at);
+          return (
+            d.getMonth() === today.getMonth() &&
+            d.getDate() === today.getDate() &&
+            d.getFullYear() < today.getFullYear()
+          );
+        });
+        if (match) setOnThisDay(match);
       }
       setLoading(false);
     };
@@ -51,6 +63,7 @@ export default function EntryList() {
 
   const handleDelete = (id) => {
     setEntries((prev) => prev.filter((e) => e.id !== id));
+    if (onThisDay?.id === id) setOnThisDay(null);
   };
 
   const handleReply = (newReply) => {
@@ -59,6 +72,20 @@ export default function EntryList() {
       [newReply.parent_id]: [...(prev[newReply.parent_id] || []), newReply],
     }));
   };
+
+  const yearsAgo = (ts) => {
+    const diff = new Date().getFullYear() - new Date(ts).getFullYear();
+    return diff === 1 ? "a year ago" : `${diff} years ago`;
+  };
+
+  // Compute mood frequencies for mood map
+  const moodFrequency = entries.reduce((acc, e) => {
+    if (e.mood) acc[e.mood] = (acc[e.mood] || 0) + 1;
+    return acc;
+  }, {});
+
+  const moodEntries = Object.entries(moodFrequency).sort((a, b) => b[1] - a[1]);
+  const maxCount = moodEntries[0]?.[1] || 1;
 
   return (
     <>
@@ -109,6 +136,79 @@ export default function EntryList() {
           margin: 1.2rem auto 0;
         }
 
+        /* On This Day */
+        .on-this-day {
+          margin-bottom: 2.4rem;
+          padding: 1.4rem 1.6rem;
+          border: 1px solid #1e1c18;
+          border-left: 2px solid #6b5d48;
+          background: rgba(196,169,125,0.03);
+          animation: fadeUp 0.8s ease both;
+          position: relative;
+        }
+
+        .on-this-day-label {
+          font-family: 'Jost', sans-serif;
+          font-size: 0.6rem;
+          font-weight: 300;
+          letter-spacing: 0.24em;
+          text-transform: uppercase;
+          color: #c4a97d;
+          margin-bottom: 0.6rem;
+          display: block;
+        }
+
+        .on-this-day-ago {
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 0.82rem;
+          color: #6b5d48;
+          margin-bottom: 0.8rem;
+          display: block;
+          letter-spacing: 0.04em;
+        }
+
+        .on-this-day-content {
+          font-family: 'Cormorant Garamond', serif;
+          font-weight: 300;
+          font-size: 1rem;
+          color: #a89880;
+          line-height: 1.8;
+          letter-spacing: 0.02em;
+          white-space: pre-wrap;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .on-this-day-recipient {
+          margin-top: 0.6rem;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.6rem;
+          font-weight: 200;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #6b5d48;
+        }
+
+        .on-this-day-dismiss {
+          position: absolute;
+          top: 1rem; right: 1rem;
+          background: none; border: none;
+          cursor: pointer;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.6rem; font-weight: 200;
+          letter-spacing: 0.18em; text-transform: uppercase;
+          color: #2e2b26;
+          padding: 0;
+          transition: color 0.3s ease;
+        }
+
+        .on-this-day-dismiss:hover { color: #6b5d48; }
+
+        /* Loading */
         .list-loading {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
@@ -126,6 +226,7 @@ export default function EntryList() {
           50%       { opacity: 0.8; }
         }
 
+        /* Empty */
         .list-empty {
           display: flex;
           flex-direction: column;
@@ -201,6 +302,47 @@ export default function EntryList() {
           text-align: center;
           margin-bottom: 1rem;
         }
+
+        /* Mood over time */
+        .mood-map {
+          margin-bottom: 2.4rem;
+          padding: 1.4rem 0;
+          border-top: 1px solid #1a1814;
+          border-bottom: 1px solid #1a1814;
+        }
+
+        .mood-map-label {
+          font-family: 'Jost', sans-serif;
+          font-size: 0.6rem;
+          font-weight: 300;
+          letter-spacing: 0.24em;
+          text-transform: uppercase;
+          color: #6b5d48;
+          margin-bottom: 1rem;
+          display: block;
+          text-align: center;
+        }
+
+        .mood-map-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .mood-map-tag {
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          color: #c4a97d;
+          letter-spacing: 0.04em;
+          opacity: 0.4;
+          transition: opacity 0.3s ease;
+          line-height: 1.4;
+        }
+
+        .mood-map-tag:hover { opacity: 1; }
       `}</style>
 
       <div className="list-root">
@@ -211,6 +353,49 @@ export default function EntryList() {
             words that never left, but needed somewhere to go
           </p>
         </div>
+
+        {/* Mood over time */}
+        {!loading && moodEntries.length > 0 && (
+          <div className="mood-map">
+            <span className="mood-map-label">how you've been feeling</span>
+            <div className="mood-map-tags">
+              {moodEntries.map(([mood, count]) => {
+                const scale = 0.78 + (count / maxCount) * 0.6;
+                const opacity = 0.3 + (count / maxCount) * 0.7;
+                return (
+                  <span
+                    key={mood}
+                    className="mood-map-tag"
+                    style={{ fontSize: `${scale}rem`, opacity }}
+                    title={`${count} ${count === 1 ? "time" : "times"}`}
+                  >
+                    {mood}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* On This Day banner */}
+        {onThisDay && !dismissed && (
+          <div className="on-this-day">
+            <span className="on-this-day-label">on this day</span>
+            <span className="on-this-day-ago">
+              {yearsAgo(onThisDay.created_at)}, you wrote
+            </span>
+            <p className="on-this-day-content">{onThisDay.content}</p>
+            {onThisDay.recipient && (
+              <p className="on-this-day-recipient">for {onThisDay.recipient}</p>
+            )}
+            <button
+              className="on-this-day-dismiss"
+              onClick={() => setDismissed(true)}
+            >
+              close
+            </button>
+          </div>
+        )}
 
         {loading ? (
           <p className="list-loading">gathering your words…</p>
