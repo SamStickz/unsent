@@ -8,6 +8,7 @@ export default function RequireAuth({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Check existing session
     supabase.auth.getSession().then(({ data }) => {
       if (!data.session) {
         navigate("/login");
@@ -16,6 +17,20 @@ export default function RequireAuth({ children }) {
         setLoading(false);
       }
     });
+
+    // Listen for auth changes (login, logout)
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) {
+        navigate("/login");
+      } else {
+        setUser(session.user);
+        setLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   if (loading)
