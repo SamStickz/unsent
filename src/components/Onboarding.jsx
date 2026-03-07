@@ -11,7 +11,7 @@ const slides = [
   },
   {
     title: "yours alone.",
-    body: "no feeds. no sharing. no one reads this.\nwhat you write here stays here.",
+    body: "no feeds. no public timeline.\nshare only if and when you choose to.",
   },
   {
     title: "whenever you're ready.",
@@ -184,9 +184,7 @@ export default function Onboarding({ onDone }) {
 
       <div className="ob-overlay">
         <div className={`ob-inner ${exiting ? "exiting" : ""}`}>
-          <span className="ob-step">
-            {current + 1} of {slides.length}
-          </span>
+          <span className="ob-step">{current + 1} of {slides.length}</span>
           <h2 className="ob-title">{slide.title}</h2>
           <div className="ob-divider" />
           <p className="ob-body">{slide.body}</p>
@@ -195,10 +193,7 @@ export default function Onboarding({ onDone }) {
           </button>
           <div className="ob-dots">
             {slides.map((_, i) => (
-              <div
-                key={i}
-                className={`ob-dot ${i === current ? "active" : ""}`}
-              />
+              <div key={i} className={`ob-dot ${i === current ? "active" : ""}`} />
             ))}
           </div>
         </div>
