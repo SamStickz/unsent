@@ -46,7 +46,6 @@ export default function Home() {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          min-height: 100vh;
           padding: 2rem;
           font-family: 'Jost', sans-serif;
           text-align: center;
@@ -105,7 +104,10 @@ export default function Home() {
           color: #e0d5be;
           letter-spacing: 0.06em;
           line-height: 1.7;
-          min-height: 2.6rem;
+          height: 3.2rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           max-width: 480px;
           margin: 0 auto;
           transition: opacity 2.5s ease;
@@ -130,11 +132,11 @@ export default function Home() {
         }
         /* CTA */
         .home-cta {
-          margin-top: 4rem;
+          margin-top: 5rem;
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 1.2rem;
+          gap: 2rem;
           animation: fadeUp 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
           animation-delay: 0.3s;
           position: relative;
@@ -213,22 +215,19 @@ export default function Home() {
 
         /* Footer */
         .home-footer {
-          position: fixed;
-          bottom: 2rem;
-          left: 0;
-          right: 0;
+          margin-top: 4rem;
           text-align: center;
           font-size: 0.86rem;
           font-weight: 200;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #e0d5be;
-          z-index: 1;
+          color: #9a8e7e;
+          padding-bottom: 2rem;
         }
 
         .home-footer span {
           margin: 0 0.6rem;
-          color: #e0d5be;
+          color: #9a8e7e;
         }
       `}</style>
 
