@@ -7,7 +7,7 @@ export default function SplashScreen({ onDone }) {
     const timer = setTimeout(() => {
       setFading(true);
       setTimeout(onDone, 800);
-    }, 2000);
+    }, 5000);
     return () => clearTimeout(timer);
   }, []);
 
