@@ -80,8 +80,8 @@ export default function Dashboard() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.1rem;
-          color: #a89880;
+          font-size: 1.18rem;
+          color: #c4b99a;
           letter-spacing: 0.1em;
           text-align: center;
           margin-bottom: 0.8rem;
@@ -91,11 +91,11 @@ export default function Dashboard() {
 
         .dashboard-streak {
           font-family: 'Jost', sans-serif;
-          font-size: 0.62rem;
+          font-size: 0.7rem;
           font-weight: 200;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #6b5d48;
+          color: #8a7a68;
           text-align: center;
           margin-bottom: 2.4rem;
           animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
