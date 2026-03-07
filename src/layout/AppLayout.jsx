@@ -47,11 +47,11 @@ export default function AppLayout() {
 
         .app-nav-link {
           font-family: 'Jost', sans-serif;
-          font-size: 0.65rem;
+          font-size: 1.1rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #7a6f5e;
+          color: #d4c9b0;
           text-decoration: none;
           transition: color 0.3s ease;
           position: relative;

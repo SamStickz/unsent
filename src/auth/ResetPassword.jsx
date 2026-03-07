@@ -70,8 +70,8 @@ export default function ResetPassword() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1rem;
-          color: #7a6f5e;
+          font-size: 1.2rem;
+          color: #d4c9b0;
           text-align: center;
           margin-bottom: 2.4rem;
           letter-spacing: 0.08em;
@@ -81,11 +81,11 @@ export default function ResetPassword() {
 
         .field-label {
           display: block;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #7a6f5e;
+          color: #d4c9b0;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
@@ -141,7 +141,7 @@ export default function ResetPassword() {
           align-items: center;
         }
 
-        .eye-btn:hover { color: #7a6f5e; }
+        .eye-btn:hover { color: #d4c9b0; }
 
         .eye-btn svg {
           width: 16px; height: 16px;
@@ -152,7 +152,7 @@ export default function ResetPassword() {
         }
 
         .error-msg {
-          font-size: 0.72rem;
+          font-size: 1.2rem;
           color: #b87474;
           margin-bottom: 1.6rem;
           text-align: center;
@@ -163,8 +163,8 @@ export default function ResetPassword() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1rem;
-          color: #a89880;
+          font-size: 1.2rem;
+          color: #ddd4bc;
           text-align: center;
           letter-spacing: 0.06em;
           line-height: 1.8;
@@ -180,7 +180,7 @@ export default function ResetPassword() {
           border: 1px solid #3a352d;
           color: #c4a97d;
           font-family: 'Jost', sans-serif;
-          font-size: 0.72rem;
+          font-size: 1.2rem;
           font-weight: 300;
           letter-spacing: 0.3em;
           text-transform: uppercase;

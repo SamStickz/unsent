@@ -60,11 +60,11 @@ export default function Signup() {
 
         .brand-tagline {
           margin-top: 0.5rem;
-          font-size: 0.72rem;
+          font-size: 1.2rem;
           font-weight: 200;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #7a6f5e;
+          color: #d4c9b0;
         }
 
         .divider {
@@ -78,8 +78,8 @@ export default function Signup() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1rem;
-          color: #7a6f5e;
+          font-size: 1.2rem;
+          color: #d4c9b0;
           text-align: center;
           margin-bottom: 2.4rem;
           letter-spacing: 0.08em;
@@ -92,11 +92,11 @@ export default function Signup() {
 
         .field-label {
           display: block;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #7a6f5e;
+          color: #d4c9b0;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
@@ -153,7 +153,7 @@ export default function Signup() {
           line-height: 1;
         }
 
-        .eye-btn:hover { color: #7a6f5e; }
+        .eye-btn:hover { color: #d4c9b0; }
 
         .eye-btn svg {
           width: 16px;
@@ -166,7 +166,7 @@ export default function Signup() {
         }
 
         .error-msg {
-          font-size: 0.72rem;
+          font-size: 1.2rem;
           font-weight: 300;
           letter-spacing: 0.1em;
           color: #b87474;
@@ -183,7 +183,7 @@ export default function Signup() {
           border: 1px solid #3a352d;
           color: #c4a97d;
           font-family: 'Jost', sans-serif;
-          font-size: 0.72rem;
+          font-size: 1.2rem;
           font-weight: 300;
           letter-spacing: 0.3em;
           text-transform: uppercase;
@@ -213,11 +213,11 @@ export default function Signup() {
         }
 
         .footer-links a {
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #6b5d48;
+          color: #e0d5be;
           text-decoration: none;
           cursor: pointer;
           transition: color 0.3s ease;
@@ -231,7 +231,7 @@ export default function Signup() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.82rem;
+          font-size: 1.1rem;
           color: #4a4439;
           letter-spacing: 0.06em;
           line-height: 1.7;

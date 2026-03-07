@@ -70,18 +70,18 @@ export default function ForgotPassword() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1rem;
-          color: #7a6f5e;
+          font-size: 1.2rem;
+          color: #d4c9b0;
           text-align: center;
           margin-bottom: 0.6rem;
           letter-spacing: 0.08em;
         }
 
         .forgot-subtitle {
-          font-size: 0.7rem;
+          font-size: 0.86rem;
           font-weight: 200;
           letter-spacing: 0.14em;
-          color: #6b5d48;
+          color: #e0d5be;
           text-align: center;
           margin-bottom: 2.4rem;
           line-height: 1.8;
@@ -91,11 +91,11 @@ export default function ForgotPassword() {
 
         .field-label {
           display: block;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #7a6f5e;
+          color: #d4c9b0;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
@@ -132,7 +132,7 @@ export default function ForgotPassword() {
         .field-group.is-focused .field-line { width: 100%; }
 
         .error-msg {
-          font-size: 0.72rem;
+          font-size: 1.2rem;
           color: #b87474;
           margin-bottom: 1.6rem;
           text-align: center;
@@ -143,8 +143,8 @@ export default function ForgotPassword() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1rem;
-          color: #a89880;
+          font-size: 1.2rem;
+          color: #ddd4bc;
           text-align: center;
           letter-spacing: 0.06em;
           line-height: 1.8;
@@ -160,7 +160,7 @@ export default function ForgotPassword() {
           border: 1px solid #3a352d;
           color: #c4a97d;
           font-family: 'Jost', sans-serif;
-          font-size: 0.72rem;
+          font-size: 1.2rem;
           font-weight: 300;
           letter-spacing: 0.3em;
           text-transform: uppercase;
@@ -187,11 +187,11 @@ export default function ForgotPassword() {
           display: block;
           margin-top: 2rem;
           text-align: center;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #6b5d48;
+          color: #e0d5be;
           cursor: pointer;
           transition: color 0.3s ease;
           background: none;
