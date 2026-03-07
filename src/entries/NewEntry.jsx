@@ -23,6 +23,9 @@ export default function NewEntry() {
   const [focusedField, setFocusedField] = useState(null);
   const [acknowledgement, setAcknowledgement] = useState(null);
   const [ackVisible, setAckVisible] = useState(false);
+  const [toSelf, setToSelf] = useState(false);
+  const [selfMode, setSelfMode] = useState(null); // "then" | "later"
+  const [selfAge, setSelfAge] = useState("");
 
   useEffect(() => {
     const getUser = async () => {
@@ -67,17 +70,24 @@ Reply with ONLY the single line. Nothing else.`;
     }
   };
 
+  const getEffectiveRecipient = () => {
+    if (!toSelf) return recipient.trim() || null;
+    if (selfMode === "then") return selfAge ? `me at ${selfAge}` : "me then";
+    if (selfMode === "later") return "me later";
+    return "myself";
+  };
+
   const handleSave = async () => {
     if (!content.trim() || !user) return;
     if (sealed && !unlockAt) return;
 
     const savedContent = content;
     const savedMood = mood;
-    const savedRecipient = recipient;
+    const savedRecipient = getEffectiveRecipient();
 
     const { error } = await supabase.from("entries").insert({
       content,
-      recipient: recipient.trim() || null,
+      recipient: getEffectiveRecipient(),
       mood: mood || null,
       unlock_at: sealed ? new Date(unlockAt).toISOString() : null,
       user_id: user.id,
@@ -89,6 +99,7 @@ Reply with ONLY the single line. Nothing else.`;
       setMood(null);
       setSealed(false);
       setUnlockAt("");
+      setSelfAge("");
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
 
@@ -119,8 +130,100 @@ Reply with ONLY the single line. Nothing else.`;
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
 
-        .entry-root {
-          max-width: 640px;
+        /* To self toggle */
+        .to-toggle {
+          display: flex;
+          gap: 0;
+          margin-bottom: 2rem;
+          border: 1px solid #1e1c18;
+          width: fit-content;
+        }
+
+        .to-toggle-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.68rem;
+          font-weight: 300;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #6b5d48;
+          padding: 0.5rem 1.1rem;
+          transition: all 0.3s ease;
+        }
+
+        .to-toggle-btn.active {
+          background: rgba(196,169,125,0.08);
+          color: #c4a97d;
+          border-color: transparent;
+        }
+
+        /* Self mode selector */
+        .self-mode-group {
+          margin-bottom: 1.6rem;
+          animation: fadeUp 0.4s ease both;
+        }
+
+        .self-mode-label {
+          font-family: 'Jost', sans-serif;
+          font-size: 0.68rem;
+          font-weight: 200;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #6b5d48;
+          display: block;
+          margin-bottom: 0.8rem;
+        }
+
+        .self-mode-options {
+          display: flex;
+          gap: 0.8rem;
+        }
+
+        .self-mode-btn {
+          background: none;
+          border: 1px solid #1e1c18;
+          cursor: pointer;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 0.98rem;
+          color: #8a7a68;
+          padding: 0.4rem 1rem;
+          letter-spacing: 0.04em;
+          transition: all 0.3s ease;
+        }
+
+        .self-mode-btn.active {
+          border-color: #8a7a68;
+          color: #c4b99a;
+          background: rgba(196,169,125,0.05);
+        }
+
+        .self-age-group {
+          margin-top: 1rem;
+          animation: fadeUp 0.3s ease both;
+        }
+
+        .self-age-input {
+          background: none;
+          border: none;
+          border-bottom: 1px solid #2a2720;
+          color: #c4b99a;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 1.08rem;
+          letter-spacing: 0.04em;
+          padding: 0.4rem 0;
+          width: 160px;
+          outline: none;
+          transition: border-color 0.3s ease;
+        }
+
+        .self-age-input::placeholder { color: #2a2720; }
+        .self-age-input:focus { border-color: #c4a97d; }
           margin: 0 auto;
           padding: 3rem 2rem 6rem;
           font-family: 'Jost', sans-serif;
@@ -136,7 +239,7 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.15rem;
+          font-size: 1.22rem;
           color: #c4b99a;
           text-align: center;
           margin-bottom: 2.4rem;
@@ -155,7 +258,7 @@ Reply with ONLY the single line. Nothing else.`;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #7a6f5e;
+          color: #9a8e7e;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
@@ -173,7 +276,7 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.1rem;
+          font-size: 1.18rem;
           color: #e8dfc8;
           outline: none;
           transition: border-color 0.4s ease;
@@ -181,7 +284,7 @@ Reply with ONLY the single line. Nothing else.`;
           caret-color: #c4a97d;
         }
 
-        .recipient-input::placeholder { color: #7a6f5e; font-style: italic; }
+        .recipient-input::placeholder { color: #9a8e7e; font-style: italic; }
 
         .recipient-line {
           position: absolute;
@@ -202,7 +305,7 @@ Reply with ONLY the single line. Nothing else.`;
           padding: 1.6rem;
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.15rem;
+          font-size: 1.22rem;
           color: #e8dfc8;
           line-height: 1.8;
           letter-spacing: 0.02em;
@@ -212,8 +315,8 @@ Reply with ONLY the single line. Nothing else.`;
           caret-color: #c4a97d;
         }
 
-        .entry-textarea::placeholder { color: #7a6f5e; font-style: italic; }
-        .entry-textarea:focus { border-color: #6b5d48; background: rgba(255,255,255,0.03); }
+        .entry-textarea::placeholder { color: #9a8e7e; font-style: italic; }
+        .entry-textarea:focus { border-color: #8a7a68; background: rgba(255,255,255,0.03); }
 
         .mood-label {
           display: block;
@@ -221,7 +324,7 @@ Reply with ONLY the single line. Nothing else.`;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #7a6f5e;
+          color: #9a8e7e;
           margin: 1.6rem 0 0.8rem;
         }
 
@@ -239,15 +342,15 @@ Reply with ONLY the single line. Nothing else.`;
           font-style: italic;
           font-weight: 300;
           font-size: 0.88rem;
-          color: #7a6f5e;
+          color: #9a8e7e;
           cursor: pointer;
           transition: all 0.3s ease;
           letter-spacing: 0.04em;
           border-radius: 1px;
         }
 
-        .mood-tag:hover { border-color: #7a6f5e; color: #6b5d48; }
-        .mood-tag.selected { border-color: #6b5d48; color: #c4a97d; background: rgba(196,169,125,0.05); }
+        .mood-tag:hover { border-color: #9a8e7e; color: #8a7a68; }
+        .mood-tag.selected { border-color: #8a7a68; color: #c4a97d; background: rgba(196,169,125,0.05); }
 
         /* Capsule toggle */
         .capsule-row {
@@ -270,15 +373,15 @@ Reply with ONLY the single line. Nothing else.`;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #7a6f5e;
+          color: #9a8e7e;
         }
 
         .capsule-sublabel {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.82rem;
-          color: #6b5d48;
+          font-size: 0.98rem;
+          color: #8a7a68;
           letter-spacing: 0.04em;
         }
 
@@ -305,7 +408,7 @@ Reply with ONLY the single line. Nothing else.`;
 
         .capsule-toggle input:checked + .capsule-toggle-track {
           background: rgba(196,169,125,0.15);
-          border-color: #6b5d48;
+          border-color: #8a7a68;
         }
 
         .capsule-toggle-thumb {
@@ -339,7 +442,7 @@ Reply with ONLY the single line. Nothing else.`;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #7a6f5e;
+          color: #9a8e7e;
           margin-bottom: 0.6rem;
         }
 
@@ -364,7 +467,7 @@ Reply with ONLY the single line. Nothing else.`;
           font-style: italic;
           font-weight: 300;
           font-size: 0.8rem;
-          color: #6b5d48;
+          color: #8a7a68;
           letter-spacing: 0.04em;
         }
 
@@ -383,8 +486,8 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.1rem;
-          color: #a89880;
+          font-size: 1.18rem;
+          color: #c4b99a;
           letter-spacing: 0.06em;
           line-height: 1.7;
           transition: opacity 0.8s ease;
@@ -394,10 +497,10 @@ Reply with ONLY the single line. Nothing else.`;
         .entry-ack.hidden { opacity: 0; }
 
         .entry-char-count {
-          font-size: 0.65rem;
+          font-size: 0.72rem;
           font-weight: 300;
           letter-spacing: 0.15em;
-          color: #6b5d48;
+          color: #8a7a68;
         }
 
         .entry-actions {
@@ -411,7 +514,7 @@ Reply with ONLY the single line. Nothing else.`;
           font-style: italic;
           font-weight: 300;
           font-size: 0.85rem;
-          color: #6b5d48;
+          color: #8a7a68;
           letter-spacing: 0.08em;
           animation: fadeIn 0.5s ease both;
         }
@@ -456,21 +559,75 @@ Reply with ONLY the single line. Nothing else.`;
           this space is just for you.
         </p>
 
-        <div
-          className={`recipient-group ${focusedField === "recipient" ? "is-focused" : ""}`}
-        >
-          <label className="recipient-label">for</label>
-          <input
-            type="text"
-            className="recipient-input"
-            placeholder="a name, a memory, a version of yourself…"
-            value={recipient}
-            onChange={(e) => setRecipient(e.target.value)}
-            onFocus={() => setFocusedField("recipient")}
-            onBlur={() => setFocusedField(null)}
-          />
-          <div className="recipient-line" />
+        {/* To someone / to myself toggle */}
+        <div className="to-toggle">
+          <button
+            className={`to-toggle-btn ${!toSelf ? "active" : ""}`}
+            onClick={() => {
+              setToSelf(false);
+              setSelfMode(null);
+            }}
+          >
+            to someone
+          </button>
+          <button
+            className={`to-toggle-btn ${toSelf ? "active" : ""}`}
+            onClick={() => setToSelf(true)}
+          >
+            to myself
+          </button>
         </div>
+
+        {/* Recipient — someone else */}
+        {!toSelf && (
+          <div
+            className={`recipient-group ${focusedField === "recipient" ? "is-focused" : ""}`}
+          >
+            <label className="recipient-label">for</label>
+            <input
+              type="text"
+              className="recipient-input"
+              placeholder="a name, a feeling, or leave it open…"
+              value={recipient}
+              onChange={(e) => setRecipient(e.target.value)}
+              onFocus={() => setFocusedField("recipient")}
+              onBlur={() => setFocusedField(null)}
+            />
+            <div className="recipient-line" />
+          </div>
+        )}
+
+        {/* Self mode — past or future */}
+        {toSelf && (
+          <div className="self-mode-group">
+            <span className="self-mode-label">which version?</span>
+            <div className="self-mode-options">
+              <button
+                className={`self-mode-btn ${selfMode === "then" ? "active" : ""}`}
+                onClick={() => setSelfMode("then")}
+              >
+                me then
+              </button>
+              <button
+                className={`self-mode-btn ${selfMode === "later" ? "active" : ""}`}
+                onClick={() => setSelfMode("later")}
+              >
+                me later
+              </button>
+            </div>
+            {selfMode === "then" && (
+              <div className="self-age-group">
+                <input
+                  type="text"
+                  className="self-age-input"
+                  placeholder="at what age or year?"
+                  value={selfAge}
+                  onChange={(e) => setSelfAge(e.target.value)}
+                />
+              </div>
+            )}
+          </div>
+        )}
 
         <textarea
           className="entry-textarea"
@@ -478,7 +635,13 @@ Reply with ONLY the single line. Nothing else.`;
           onChange={(e) => setContent(e.target.value)}
           onFocus={() => setFocusedField("content")}
           onBlur={() => setFocusedField(null)}
-          placeholder="say it here…"
+          placeholder={
+            toSelf && selfMode === "then"
+              ? "what would you tell that version of you…"
+              : toSelf && selfMode === "later"
+                ? "what do you want your future self to know…"
+                : "say what's on your mind…"
+          }
         />
 
         <span className="mood-label">how this feels</span>
