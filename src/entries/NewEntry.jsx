@@ -144,11 +144,11 @@ Reply with ONLY the single line. Nothing else.`;
           border: none;
           cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #6b5d48;
+          color: #e0d5be;
           padding: 0.5rem 1.1rem;
           transition: all 0.3s ease;
         }
@@ -167,11 +167,11 @@ Reply with ONLY the single line. Nothing else.`;
 
         .self-mode-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 200;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #6b5d48;
+          color: #e0d5be;
           display: block;
           margin-bottom: 0.8rem;
         }
@@ -188,16 +188,16 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.98rem;
-          color: #8a7a68;
+          font-size: 1.4rem;
+          color: #e0d5be;
           padding: 0.4rem 1rem;
           letter-spacing: 0.04em;
           transition: all 0.3s ease;
         }
 
         .self-mode-btn.active {
-          border-color: #8a7a68;
-          color: #c4b99a;
+          border-color: #e0d5be;
+          color: #e0d5be;
           background: rgba(196,169,125,0.05);
         }
 
@@ -210,11 +210,11 @@ Reply with ONLY the single line. Nothing else.`;
           background: none;
           border: none;
           border-bottom: 1px solid #2a2720;
-          color: #c4b99a;
+          color: #e0d5be;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.08rem;
+          font-size: 1.2rem;
           letter-spacing: 0.04em;
           padding: 0.4rem 0;
           width: 160px;
@@ -239,8 +239,8 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.22rem;
-          color: #c4b99a;
+          font-size: 1.35rem;
+          color: #e0d5be;
           text-align: center;
           margin-bottom: 2.4rem;
           letter-spacing: 0.06em;
@@ -254,11 +254,11 @@ Reply with ONLY the single line. Nothing else.`;
 
         .recipient-label {
           display: block;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #9a8e7e;
+          color: #d4c9b0;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
@@ -276,7 +276,7 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.18rem;
+          font-size: 1.3rem;
           color: #e8dfc8;
           outline: none;
           transition: border-color 0.4s ease;
@@ -284,7 +284,7 @@ Reply with ONLY the single line. Nothing else.`;
           caret-color: #c4a97d;
         }
 
-        .recipient-input::placeholder { color: #9a8e7e; font-style: italic; }
+        .recipient-input::placeholder { color: #d4c9b0; font-style: italic; }
 
         .recipient-line {
           position: absolute;
@@ -305,7 +305,7 @@ Reply with ONLY the single line. Nothing else.`;
           padding: 1.6rem;
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.22rem;
+          font-size: 1.35rem;
           color: #e8dfc8;
           line-height: 1.8;
           letter-spacing: 0.02em;
@@ -315,16 +315,16 @@ Reply with ONLY the single line. Nothing else.`;
           caret-color: #c4a97d;
         }
 
-        .entry-textarea::placeholder { color: #9a8e7e; font-style: italic; }
-        .entry-textarea:focus { border-color: #8a7a68; background: rgba(255,255,255,0.03); }
+        .entry-textarea::placeholder { color: #d4c9b0; font-style: italic; }
+        .entry-textarea:focus { border-color: #e0d5be; background: rgba(255,255,255,0.03); }
 
         .mood-label {
           display: block;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #9a8e7e;
+          color: #d4c9b0;
           margin: 1.6rem 0 0.8rem;
         }
 
@@ -341,16 +341,16 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.88rem;
-          color: #9a8e7e;
+          font-size: 1rem;
+          color: #d4c9b0;
           cursor: pointer;
           transition: all 0.3s ease;
           letter-spacing: 0.04em;
           border-radius: 1px;
         }
 
-        .mood-tag:hover { border-color: #9a8e7e; color: #8a7a68; }
-        .mood-tag.selected { border-color: #8a7a68; color: #c4a97d; background: rgba(196,169,125,0.05); }
+        .mood-tag:hover { border-color: #d4c9b0; color: #e0d5be; }
+        .mood-tag.selected { border-color: #e0d5be; color: #c4a97d; background: rgba(196,169,125,0.05); }
 
         /* Capsule toggle */
         .capsule-row {
@@ -369,19 +369,19 @@ Reply with ONLY the single line. Nothing else.`;
         }
 
         .capsule-label {
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #9a8e7e;
+          color: #d4c9b0;
         }
 
         .capsule-sublabel {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.98rem;
-          color: #8a7a68;
+          font-size: 1.4rem;
+          color: #e0d5be;
           letter-spacing: 0.04em;
         }
 
@@ -408,7 +408,7 @@ Reply with ONLY the single line. Nothing else.`;
 
         .capsule-toggle input:checked + .capsule-toggle-track {
           background: rgba(196,169,125,0.15);
-          border-color: #8a7a68;
+          border-color: #e0d5be;
         }
 
         .capsule-toggle-thumb {
@@ -438,11 +438,11 @@ Reply with ONLY the single line. Nothing else.`;
 
         .capsule-date-label {
           display: block;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #9a8e7e;
+          color: #d4c9b0;
           margin-bottom: 0.6rem;
         }
 
@@ -452,7 +452,7 @@ Reply with ONLY the single line. Nothing else.`;
           border-bottom: 1px solid #2e2b26;
           padding: 0.5rem 0;
           font-family: 'Jost', sans-serif;
-          font-size: 0.88rem;
+          font-size: 1rem;
           font-weight: 300;
           color: #c4a97d;
           outline: none;
@@ -466,8 +466,8 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.8rem;
-          color: #8a7a68;
+          font-size: 0.94rem;
+          color: #e0d5be;
           letter-spacing: 0.04em;
         }
 
@@ -486,8 +486,8 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.18rem;
-          color: #c4b99a;
+          font-size: 1.3rem;
+          color: #e0d5be;
           letter-spacing: 0.06em;
           line-height: 1.7;
           transition: opacity 0.8s ease;
@@ -497,10 +497,10 @@ Reply with ONLY the single line. Nothing else.`;
         .entry-ack.hidden { opacity: 0; }
 
         .entry-char-count {
-          font-size: 0.72rem;
+          font-size: 1rem;
           font-weight: 300;
           letter-spacing: 0.15em;
-          color: #8a7a68;
+          color: #e0d5be;
         }
 
         .entry-actions {
@@ -513,8 +513,8 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.85rem;
-          color: #8a7a68;
+          font-size: 1.4rem;
+          color: #e0d5be;
           letter-spacing: 0.08em;
           animation: fadeIn 0.5s ease both;
         }
@@ -526,7 +526,7 @@ Reply with ONLY the single line. Nothing else.`;
           border: 1px solid #6b5d48;
           color: #e8dfc8;
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.28em;
           text-transform: uppercase;

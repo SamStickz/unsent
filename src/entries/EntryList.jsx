@@ -163,7 +163,7 @@ export default function EntryList() {
         .list-title {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.75rem;
+          font-size: 2rem;
           color: #e8dfc8;
           letter-spacing: 0.14em;
           text-transform: lowercase;
@@ -174,8 +174,8 @@ export default function EntryList() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.96rem;
-          color: #9a8e7e;
+          font-size: 1.1rem;
+          color: #d4c9b0;
           letter-spacing: 0.08em;
         }
 
@@ -199,7 +199,7 @@ export default function EntryList() {
 
         .anniversary-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.24em;
           text-transform: uppercase;
@@ -212,8 +212,8 @@ export default function EntryList() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.08rem;
-          color: #c4b99a;
+          font-size: 1.2rem;
+          color: #e0d5be;
           margin-bottom: 0.7rem;
           display: block;
           letter-spacing: 0.04em;
@@ -223,8 +223,8 @@ export default function EntryList() {
         .anniversary-content {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.08rem;
-          color: #9a8e7e;
+          font-size: 1.2rem;
+          color: #d4c9b0;
           line-height: 1.8;
           display: -webkit-box;
           -webkit-line-clamp: 2;
@@ -239,12 +239,12 @@ export default function EntryList() {
           background: none; border: none;
           cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem; font-weight: 200;
+          font-size: 0.84rem; font-weight: 200;
           letter-spacing: 0.18em; text-transform: uppercase;
-          color: #5a5040; padding: 0;
+          color: #9a8e7e; padding: 0;
           transition: color 0.3s ease;
         }
-        .anniversary-dismiss:hover { color: #8a7a68; }
+        .anniversary-dismiss:hover { color: #e0d5be; }
 
         /* On This Day */
         .on-this-day {
@@ -259,7 +259,7 @@ export default function EntryList() {
 
         .on-this-day-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.24em;
           text-transform: uppercase;
@@ -272,8 +272,8 @@ export default function EntryList() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.9rem;
-          color: #8a7a68;
+          font-size: 1.05rem;
+          color: #e0d5be;
           margin-bottom: 0.8rem;
           display: block;
           letter-spacing: 0.04em;
@@ -282,8 +282,8 @@ export default function EntryList() {
         .on-this-day-content {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.08rem;
-          color: #c4b99a;
+          font-size: 1.2rem;
+          color: #e0d5be;
           line-height: 1.8;
           white-space: pre-wrap;
           display: -webkit-box;
@@ -295,11 +295,11 @@ export default function EntryList() {
         .on-this-day-recipient {
           margin-top: 0.6rem;
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 200;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #8a7a68;
+          color: #e0d5be;
         }
 
         .on-this-day-dismiss {
@@ -308,20 +308,20 @@ export default function EntryList() {
           background: none; border: none;
           cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem; font-weight: 200;
+          font-size: 0.84rem; font-weight: 200;
           letter-spacing: 0.18em; text-transform: uppercase;
-          color: #5a5040; padding: 0;
+          color: #9a8e7e; padding: 0;
           transition: color 0.3s ease;
         }
-        .on-this-day-dismiss:hover { color: #8a7a68; }
+        .on-this-day-dismiss:hover { color: #e0d5be; }
 
         /* Loading */
         .list-loading {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.08rem;
-          color: #8a7a68;
+          font-size: 1.2rem;
+          color: #e0d5be;
           text-align: center;
           letter-spacing: 0.1em;
           padding: 4rem 0;
@@ -354,19 +354,19 @@ export default function EntryList() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.28rem;
-          color: #c4b99a;
+          font-size: 1.45rem;
+          color: #e0d5be;
           letter-spacing: 0.06em;
           text-align: center;
           margin-bottom: 0.8rem;
         }
 
         .list-empty-sub {
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 200;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #8a7a68;
+          color: #e0d5be;
           text-align: center;
           line-height: 1.8;
           margin-bottom: 2.4rem;
@@ -377,7 +377,7 @@ export default function EntryList() {
           border: 1px solid #2e2b26;
           color: #c4a97d;
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.28em;
           text-transform: uppercase;
@@ -401,11 +401,11 @@ export default function EntryList() {
         .list-empty-btn:hover::before { transform: scaleX(1); }
 
         .list-count {
-          font-size: 0.72rem;
+          font-size: 1rem;
           font-weight: 200;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #8a7a68;
+          color: #e0d5be;
           text-align: center;
           margin-bottom: 1rem;
         }
@@ -420,11 +420,11 @@ export default function EntryList() {
 
         .mood-map-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.24em;
           text-transform: uppercase;
-          color: #8a7a68;
+          color: #e0d5be;
           margin-bottom: 1rem;
           display: block;
           text-align: center;
@@ -486,11 +486,11 @@ export default function EntryList() {
 
         .mood-timeline-month {
           font-family: 'Jost', sans-serif;
-          font-size: 0.5rem;
+          font-size: 0.86rem;
           font-weight: 200;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: #6b5d48;
+          color: #e0d5be;
           white-space: nowrap;
         }
 

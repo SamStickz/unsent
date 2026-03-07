@@ -102,7 +102,7 @@ export default function Home() {
           font-style: italic;
           font-weight: 300;
           font-size: clamp(1rem, 3.5vw, 1.3rem);
-          color: #c4b99a;
+          color: #e0d5be;
           letter-spacing: 0.06em;
           line-height: 1.7;
           min-height: 2.6rem;
@@ -121,11 +121,11 @@ export default function Home() {
 
         .home-manifesto p {
           font-family: 'Jost', sans-serif;
-          font-size: 0.8rem;
+          font-size: 0.94rem;
           font-weight: 200;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #9a8e7e;
+          color: #d4c9b0;
           line-height: 2;
         }
         /* CTA */
@@ -146,7 +146,7 @@ export default function Home() {
           border: 1px solid #3a352d;
           color: #c4a97d;
           font-family: 'Jost', sans-serif;
-          font-size: 0.8rem;
+          font-size: 0.94rem;
           font-weight: 300;
           letter-spacing: 0.35em;
           text-transform: uppercase;
@@ -181,11 +181,11 @@ export default function Home() {
           background: none;
           border: none;
           font-family: 'Jost', sans-serif;
-          font-size: 0.8rem;
+          font-size: 0.94rem;
           font-weight: 300;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #8a7a68;
+          color: #e0d5be;
           cursor: pointer;
           padding: 0;
           transition: color 0.3s ease;
@@ -204,7 +204,7 @@ export default function Home() {
         }
 
         .home-btn-secondary:hover {
-          color: #9a8e7e;
+          color: #d4c9b0;
         }
 
         .home-btn-secondary:hover::after {
@@ -218,17 +218,17 @@ export default function Home() {
           left: 0;
           right: 0;
           text-align: center;
-          font-size: 0.7rem;
+          font-size: 0.86rem;
           font-weight: 200;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #8a7a68;
+          color: #e0d5be;
           z-index: 1;
         }
 
         .home-footer span {
           margin: 0 0.6rem;
-          color: #8a7a68;
+          color: #e0d5be;
         }
       `}</style>
 
