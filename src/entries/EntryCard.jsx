@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
-import ShareCard from "./ShareCard";
 
+import ShareCard from "./ShareCard";
 
 export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
   const [confirming, setConfirming] = useState(false);
@@ -145,29 +145,29 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         /* Open card */
         .entry-card-recipient { /* label */
           font-family: 'Jost', sans-serif;
-          font-size: 0.72rem;
+          font-size: 0.6rem;
           font-weight: 300;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #d4c9b0;
+          color: #7a6f5e;
           margin-bottom: 0.8rem;
         }
 
         .entry-card-recipient span {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
-          font-size: 1.4rem;
+          font-size: 0.95rem;
           letter-spacing: 0.06em;
           text-transform: none;
-          color: #e0d5be;
+          color: #a89880;
           margin-left: 0.4rem;
         }
 
         .entry-card-content {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.05rem;
-          color: #d4c9b0;
+          font-size: 1.08rem;
+          color: #e0d5be;
           line-height: 1.85;
           letter-spacing: 0.02em;
           white-space: pre-wrap;
@@ -179,10 +179,10 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.82rem;
-          color: #e0d5be;
-          border: 1px solid #2e2b26;
-          padding: 0.25rem 0.7rem;
+          font-size: 0.75rem;
+          color: #7a6f5e;
+          border: 1px solid #1e1c18;
+          padding: 0.2rem 0.6rem;
           letter-spacing: 0.04em;
           border-radius: 1px;
         }
@@ -192,17 +192,17 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          flex-wrap: nowrap;
-          gap: 0.8rem;
+          flex-wrap: wrap;
+          gap: 0.6rem;
         }
 
         .entry-card-date { /* small */
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.58rem;
           font-weight: 200;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #d4c9b0;
+          color: #5a5040;
           white-space: nowrap;
           flex-shrink: 0;
         }
@@ -210,7 +210,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         .entry-card-actions {
           display: flex;
           align-items: center;
-          gap: 1rem;
+          gap: 0.8rem;
           flex-shrink: 0;
         }
 
@@ -219,11 +219,11 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           border: none;
           cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.72rem;
+          font-size: 0.58rem;
           font-weight: 300;
-          letter-spacing: 0.16em;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: #d4c9b0;
+          color: #5a5040;
           padding: 0;
           transition: color 0.3s ease;
           position: relative;
@@ -242,7 +242,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         .entry-card-action-btn:hover { color: #c4a97d; }
         .entry-card-action-btn:hover::after { width: 100%; }
 
-        .entry-card-release { color: #d4c9b0; }
+        .entry-card-release { color: #5a5040; }
         .entry-card-release:hover { color: #8a4f4f !important; }
 
         .entry-card-confirm {
