@@ -183,7 +183,7 @@ export default function Home() {
           background: none;
           border: none;
           font-family: 'Jost', sans-serif;
-          font-size: 0.94rem;
+          font-size: 0.78rem;
           font-weight: 300;
           letter-spacing: 0.18em;
           text-transform: uppercase;
@@ -217,7 +217,7 @@ export default function Home() {
         .home-footer {
           margin-top: 4rem;
           text-align: center;
-          font-size: 0.86rem;
+          font-size: 0.72rem;
           font-weight: 200;
           letter-spacing: 0.22em;
           text-transform: uppercase;

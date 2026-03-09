@@ -91,7 +91,7 @@ export default function Dashboard() {
 
         .dashboard-streak {
           font-family: 'Jost', sans-serif;
-          font-size: 0.86rem;
+          font-size: 0.7rem;
           font-weight: 200;
           letter-spacing: 0.2em;
           text-transform: uppercase;

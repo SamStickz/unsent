@@ -144,7 +144,7 @@ Reply with ONLY the single line. Nothing else.`;
           border: none;
           cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.84rem;
+          font-size: 0.7rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -167,7 +167,7 @@ Reply with ONLY the single line. Nothing else.`;
 
         .self-mode-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.84rem;
+          font-size: 0.7rem;
           font-weight: 200;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -254,7 +254,7 @@ Reply with ONLY the single line. Nothing else.`;
 
         .recipient-label {
           display: block;
-          font-size: 0.84rem;
+          font-size: 0.72rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -320,7 +320,7 @@ Reply with ONLY the single line. Nothing else.`;
 
         .mood-label {
           display: block;
-          font-size: 0.84rem;
+          font-size: 0.72rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -341,7 +341,7 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1rem;
+          font-size: 0.78rem;
           color: #d4c9b0;
           cursor: pointer;
           transition: all 0.3s ease;
@@ -369,7 +369,7 @@ Reply with ONLY the single line. Nothing else.`;
         }
 
         .capsule-label {
-          font-size: 0.84rem;
+          font-size: 0.72rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -380,7 +380,7 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.4rem;
+          font-size: 0.68rem;
           color: #e0d5be;
           letter-spacing: 0.04em;
         }
@@ -497,7 +497,7 @@ Reply with ONLY the single line. Nothing else.`;
         .entry-ack.hidden { opacity: 0; }
 
         .entry-char-count {
-          font-size: 1rem;
+          font-size: 0.68rem;
           font-weight: 300;
           letter-spacing: 0.15em;
           color: #e0d5be;
@@ -513,7 +513,7 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.4rem;
+          font-size: 0.82rem;
           color: #e0d5be;
           letter-spacing: 0.08em;
           animation: fadeIn 0.5s ease both;

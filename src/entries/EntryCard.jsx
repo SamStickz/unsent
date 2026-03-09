@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
-
 import ShareCard from "./ShareCard";
+
 
 export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
   const [confirming, setConfirming] = useState(false);
   const [replying, setReplying] = useState(false);
   const [replyContent, setReplyContent] = useState("");
   const [replyFocused, setReplyFocused] = useState(false);
-
+  
   const [sharing, setSharing] = useState(false);
 
   const isSealed = entry.unlock_at && new Date(entry.unlock_at) > new Date();
@@ -108,7 +108,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
 
         .entry-card-seal-label {
           font-family: 'Jost', sans-serif;
-          font-size: 1rem;
+          font-size: 0.7rem;
           font-weight: 300;
           letter-spacing: 0.22em;
           text-transform: uppercase;
@@ -135,7 +135,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
 
         .entry-card-seal-opens {
           font-family: 'Jost', sans-serif;
-          font-size: 0.86rem;
+          font-size: 0.7rem;
           font-weight: 200;
           letter-spacing: 0.18em;
           text-transform: uppercase;
@@ -143,9 +143,9 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         }
 
         /* Open card */
-        .entry-card-recipient {
+        .entry-card-recipient { /* label */
           font-family: 'Jost', sans-serif;
-          font-size: 1rem;
+          font-size: 0.72rem;
           font-weight: 300;
           letter-spacing: 0.22em;
           text-transform: uppercase;
@@ -166,7 +166,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         .entry-card-content {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.2rem;
+          font-size: 1.05rem;
           color: #d4c9b0;
           line-height: 1.85;
           letter-spacing: 0.02em;
@@ -179,7 +179,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.05rem;
+          font-size: 0.82rem;
           color: #e0d5be;
           border: 1px solid #2e2b26;
           padding: 0.25rem 0.7rem;
@@ -196,9 +196,9 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           gap: 0.8rem;
         }
 
-        .entry-card-date {
+        .entry-card-date { /* small */
           font-family: 'Jost', sans-serif;
-          font-size: 0.84rem;
+          font-size: 0.68rem;
           font-weight: 200;
           letter-spacing: 0.12em;
           text-transform: uppercase;
@@ -214,12 +214,12 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           flex-shrink: 0;
         }
 
-        .entry-card-action-btn {
+        .entry-card-action-btn { /* small */
           background: none;
           border: none;
           cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.86rem;
+          font-size: 0.72rem;
           font-weight: 300;
           letter-spacing: 0.16em;
           text-transform: uppercase;
@@ -295,7 +295,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
 
         .reply-compose-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.86rem;
+          font-size: 0.7rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -376,7 +376,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
 
         .reply-item-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.84rem;
+          font-size: 0.68rem;
           font-weight: 200;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -387,7 +387,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         .reply-item-content {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.4rem;
+          font-size: 0.98rem;
           color: #e0d5be;
           line-height: 1.8;
           white-space: pre-wrap;
@@ -396,7 +396,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         .reply-item-date {
           margin-top: 0.5rem;
           font-family: 'Jost', sans-serif;
-          font-size: 0.84rem;
+          font-size: 0.68rem;
           font-weight: 200;
           letter-spacing: 0.15em;
           text-transform: uppercase;

@@ -174,7 +174,7 @@ export default function EntryList() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.1rem;
+          font-size: 0.92rem;
           color: #d4c9b0;
           letter-spacing: 0.08em;
         }
@@ -199,7 +199,7 @@ export default function EntryList() {
 
         .anniversary-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.84rem;
+          font-size: 0.68rem;
           font-weight: 300;
           letter-spacing: 0.24em;
           text-transform: uppercase;
@@ -259,7 +259,7 @@ export default function EntryList() {
 
         .on-this-day-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.84rem;
+          font-size: 0.68rem;
           font-weight: 300;
           letter-spacing: 0.24em;
           text-transform: uppercase;
@@ -272,7 +272,7 @@ export default function EntryList() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.05rem;
+          font-size: 0.82rem;
           color: #e0d5be;
           margin-bottom: 0.8rem;
           display: block;
@@ -295,7 +295,7 @@ export default function EntryList() {
         .on-this-day-recipient {
           margin-top: 0.6rem;
           font-family: 'Jost', sans-serif;
-          font-size: 0.84rem;
+          font-size: 0.68rem;
           font-weight: 200;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -362,7 +362,7 @@ export default function EntryList() {
         }
 
         .list-empty-sub {
-          font-size: 0.84rem;
+          font-size: 0.72rem;
           font-weight: 200;
           letter-spacing: 0.18em;
           text-transform: uppercase;
@@ -401,7 +401,7 @@ export default function EntryList() {
         .list-empty-btn:hover::before { transform: scaleX(1); }
 
         .list-count {
-          font-size: 1rem;
+          font-size: 0.7rem;
           font-weight: 200;
           letter-spacing: 0.22em;
           text-transform: uppercase;
@@ -420,7 +420,7 @@ export default function EntryList() {
 
         .mood-map-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.84rem;
+          font-size: 0.7rem;
           font-weight: 300;
           letter-spacing: 0.24em;
           text-transform: uppercase;
@@ -486,7 +486,7 @@ export default function EntryList() {
 
         .mood-timeline-month {
           font-family: 'Jost', sans-serif;
-          font-size: 0.86rem;
+          font-size: 0.58rem;
           font-weight: 200;
           letter-spacing: 0.1em;
           text-transform: uppercase;
