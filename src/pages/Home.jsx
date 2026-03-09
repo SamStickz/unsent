@@ -81,7 +81,7 @@ export default function Home() {
         .home-title {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: clamp(3.5rem, 12vw, 6.5rem);
+          font-size: clamp(2.8rem, 10vw, 5.5rem);
           color: #e8dfc8;
           letter-spacing: 0.22em;
           text-transform: lowercase;
@@ -90,9 +90,9 @@ export default function Home() {
 
         .home-divider {
           width: 1px;
-          height: 48px;
+          height: 32px;
           background: linear-gradient(180deg, transparent, #3a352d, transparent);
-          margin: 2rem auto;
+          margin: 1.2rem auto;
         }
 
         /* Rotating lines */
@@ -100,11 +100,11 @@ export default function Home() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: clamp(1rem, 3.5vw, 1.3rem);
+          font-size: clamp(0.9rem, 3vw, 1.1rem);
           color: #e0d5be;
           letter-spacing: 0.06em;
           line-height: 1.7;
-          height: 3.2rem;
+          height: 2.4rem;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -115,7 +115,7 @@ export default function Home() {
 
         /* Manifesto */
         .home-manifesto {
-          margin-top: 3.5rem;
+          margin-top: 2rem;
           max-width: 360px;
           margin-left: auto;
           margin-right: auto;
@@ -123,16 +123,17 @@ export default function Home() {
 
         .home-manifesto p {
           font-family: 'Jost', sans-serif;
-          font-size: 0.94rem;
+          font-size: 0.72rem;
           font-weight: 200;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #d4c9b0;
+          color: #7a6f5e;
           line-height: 2;
         }
+
         /* CTA */
         .home-cta {
-          margin-top: 5rem;
+          margin-top: 2.5rem;
           display: flex;
           flex-direction: column;
           align-items: center;

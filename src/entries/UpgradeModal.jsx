@@ -33,11 +33,13 @@ export default function UpgradeModal({ onClose, reason }) {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        console.error("Paystack error:", data.error);
-        setLoading(false);
+        // Fallback — open Paystack directly with plan link
+        window.location.href = `https://paystack.com/pay/${import.meta.env.VITE_PAYSTACK_PLAN_CODE}`;
       }
     } catch (err) {
-      console.error(err);
+      // Fallback on any error
+      window.location.href = `https://paystack.com/pay/${import.meta.env.VITE_PAYSTACK_PLAN_CODE}`;
+    } finally {
       setLoading(false);
     }
   };

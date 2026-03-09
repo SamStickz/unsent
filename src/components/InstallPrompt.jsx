@@ -7,11 +7,13 @@ export default function InstallPrompt() {
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    // Don't show if already installed or dismissed before
+    // Only show on mobile
+    const isMobile = /iphone|ipad|ipod|android/i.test(navigator.userAgent);
+    if (!isMobile) return;
+
     const alreadyDismissed = localStorage.getItem("unsent_install_dismissed");
     if (alreadyDismissed) return;
 
-    // Check if already running as installed PWA
     if (window.matchMedia("(display-mode: standalone)").matches) return;
 
     // iOS detection
