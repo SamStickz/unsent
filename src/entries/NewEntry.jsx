@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import { useProStatus } from "../lib/useProStatus";
+import UpgradeModal from "./UpgradeModal";
+
+const FREE_LIMIT = 20;
 
 const MOODS = [
   "still hurting",
@@ -26,6 +30,26 @@ export default function NewEntry() {
   const [toSelf, setToSelf] = useState(false);
   const [selfMode, setSelfMode] = useState(null); // "then" | "later"
   const [selfAge, setSelfAge] = useState("");
+  const { isPro } = useProStatus();
+  const [entryCount, setEntryCount] = useState(0);
+  const [showUpgrade, setShowUpgrade] = useState(false);
+  const [upgradeReason, setUpgradeReason] = useState("limit");
+
+  useEffect(() => {
+    const getCount = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) return;
+      const { count } = await supabase
+        .from("entries")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", session.user.id)
+        .eq("is_reply", false);
+      setEntryCount(count || 0);
+    };
+    getCount();
+  }, []);
 
   useEffect(() => {
     const getUser = async () => {
@@ -80,6 +104,13 @@ Reply with ONLY the single line. Nothing else.`;
   const handleSave = async () => {
     if (!content.trim() || !user) return;
     if (sealed && !unlockAt) return;
+
+    // Check entry limit for free users
+    if (!isPro && entryCount >= FREE_LIMIT) {
+      setUpgradeReason("limit");
+      setShowUpgrade(true);
+      return;
+    }
 
     const savedContent = content;
     const savedMood = mood;
@@ -662,14 +693,23 @@ Reply with ONLY the single line. Nothing else.`;
           <div className="capsule-label-group">
             <span className="capsule-label">seal as time capsule</span>
             <span className="capsule-sublabel">
-              lock this until a future date
+              {isPro
+                ? "lock this until a future date"
+                : "pro feature — unlock to use"}
             </span>
           </div>
           <label className="capsule-toggle">
             <input
               type="checkbox"
               checked={sealed}
-              onChange={(e) => setSealed(e.target.checked)}
+              onChange={(e) => {
+                if (!isPro) {
+                  setUpgradeReason("capsule");
+                  setShowUpgrade(true);
+                  return;
+                }
+                setSealed(e.target.checked);
+              }}
             />
             <div className="capsule-toggle-track" />
             <div className="capsule-toggle-thumb" />
@@ -725,6 +765,13 @@ Reply with ONLY the single line. Nothing else.`;
           </p>
         )}
       </div>
+
+      {showUpgrade && (
+        <UpgradeModal
+          reason={upgradeReason}
+          onClose={() => setShowUpgrade(false)}
+        />
+      )}
     </>
   );
 }
