@@ -15,22 +15,31 @@ export default function UpgradeModal({ onClose, reason }) {
     getUser();
   }, []);
 
-  const handlePaystack = () => {
+  const handlePaystack = async () => {
     if (!user) return;
     setLoading(true);
 
-    const ref = `unsent_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    try {
+      const ref = `unsent_${Date.now()}_${Math.random().toString(36).slice(2)}`;
 
-    const params = new URLSearchParams({
-      key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
-      email: user.email,
-      plan: import.meta.env.VITE_PAYSTACK_PLAN_CODE,
-      ref,
-      currency: "USD",
-      callback_url: `${window.location.origin}/app?upgraded=true`,
-    });
+      const res = await fetch("/api/paystack-init", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: user.email, ref }),
+      });
 
-    window.location.href = `https://checkout.paystack.com/pay?${params.toString()}`;
+      const data = await res.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error("Paystack error:", data.error);
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
   };
 
   const reasonText =
