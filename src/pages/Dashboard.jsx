@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import NewEntry from "../entries/NewEntry";
 import Onboarding from "../components/Onboarding";
@@ -6,11 +7,34 @@ import Onboarding from "../components/Onboarding";
 export default function Dashboard() {
   const [streak, setStreak] = useState(0);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [justUpgraded, setJustUpgraded] = useState(false);
 
   useEffect(() => {
-    // Show onboarding only if never seen before
     const onboarded = localStorage.getItem("unsent_onboarded");
     if (!onboarded) setShowOnboarding(true);
+  }, []);
+
+  // Handle post-payment redirect
+  useEffect(() => {
+    const upgraded = searchParams.get("upgraded");
+    if (upgraded === "true") {
+      const markPro = async () => {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        if (!session) return;
+        await supabase.from("profiles").upsert({
+          id: session.user.id,
+          is_pro: true,
+          upgraded_at: new Date().toISOString(),
+        });
+        setJustUpgraded(true);
+        setSearchParams({});
+        setTimeout(() => setJustUpgraded(false), 4000);
+      };
+      markPro();
+    }
   }, []);
 
   useEffect(() => {
@@ -121,6 +145,23 @@ export default function Dashboard() {
       {showOnboarding && <Onboarding onDone={() => setShowOnboarding(false)} />}
 
       <div className="dashboard">
+        {justUpgraded && (
+          <p
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontStyle: "italic",
+              fontWeight: 300,
+              fontSize: "1rem",
+              color: "#c4a97d",
+              letterSpacing: "0.06em",
+              textAlign: "center",
+              marginBottom: "1.4rem",
+              animation: "fadeUp 0.6s ease both",
+            }}
+          >
+            welcome to unsent pro.
+          </p>
+        )}
         <p className="dashboard-greeting">who is this for?</p>
         {streak >= 2 && (
           <p className="dashboard-streak">

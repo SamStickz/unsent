@@ -19,33 +19,18 @@ export default function UpgradeModal({ onClose, reason }) {
     if (!user) return;
     setLoading(true);
 
-    const handler = window.PaystackPop.setup({
+    const ref = `unsent_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+
+    const params = new URLSearchParams({
       key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
       email: user.email,
       plan: import.meta.env.VITE_PAYSTACK_PLAN_CODE,
+      ref,
       currency: "USD",
-      callback: async (response) => {
-        // Payment successful — update user profile in Supabase
-        if (response.status === "success") {
-          await supabase.from("profiles").upsert({
-            id: user.id,
-            is_pro: true,
-            paystack_ref: response.reference,
-            upgraded_at: new Date().toISOString(),
-          });
-
-          // Reload so app reflects pro status
-          window.location.reload();
-        }
-        setLoading(false);
-        onClose();
-      },
-      onClose: () => {
-        setLoading(false);
-      },
+      callback_url: `${window.location.origin}/app?upgraded=true`,
     });
 
-    handler.openIframe();
+    window.location.href = `https://checkout.paystack.com/pay?${params.toString()}`;
   };
 
   const reasonText =
@@ -237,7 +222,7 @@ export default function UpgradeModal({ onClose, reason }) {
           </div>
 
           <p className="upgrade-price">
-            <strong>$4</strong> / month
+            <strong>$3</strong> / month
           </p>
 
           <button
