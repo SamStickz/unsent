@@ -60,11 +60,11 @@ export default function Signup() {
 
         .brand-tagline {
           margin-top: 0.5rem;
-          font-size: 1.2rem;
+          font-size: 0.7rem;
           font-weight: 200;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #d4c9b0;
+          color: #7a6f5e;
         }
 
         .divider {
@@ -92,16 +92,16 @@ export default function Signup() {
 
         .field-label {
           display: block;
-          font-size: 0.84rem;
+          font-size: 0.65rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #d4c9b0;
+          color: #7a6f5e;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
 
-        .field-group.is-focused .field-label { color: #c4a97d; }
+        .field-group.is-focused .field-label { color: #7a6f5e; }
 
         .field-input-wrap {
           position: relative;
@@ -166,7 +166,7 @@ export default function Signup() {
         }
 
         .error-msg {
-          font-size: 1.2rem;
+          font-size: 0.78rem;
           font-weight: 300;
           letter-spacing: 0.1em;
           color: #b87474;
@@ -213,17 +213,17 @@ export default function Signup() {
         }
 
         .footer-links a {
-          font-size: 0.84rem;
+          font-size: 0.65rem;
           font-weight: 300;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #e0d5be;
+          color: #6b5d48;
           text-decoration: none;
           cursor: pointer;
           transition: color 0.3s ease;
         }
 
-        .footer-links a:hover { color: #c4a97d; }
+        .footer-links a:hover { color: #6b5d48; }
 
         .promise {
           margin-top: 3rem;

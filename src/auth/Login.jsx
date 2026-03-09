@@ -63,11 +63,11 @@ export default function Login() {
 
         .brand-tagline {
           margin-top: 0.5rem;
-          font-size: 1.2rem;
+          font-size: 0.7rem;
           font-weight: 200;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #d4c9b0;
+          color: #7a6f5e;
         }
 
         .divider {
@@ -84,11 +84,11 @@ export default function Login() {
 
         .field-label {
           display: block;
-          font-size: 0.84rem;
+          font-size: 0.65rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #d4c9b0;
+          color: #7a6f5e;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
@@ -109,7 +109,7 @@ export default function Login() {
           padding: 0.6rem 0;
           padding-right: 2rem;
           font-family: 'Jost', sans-serif;
-          font-size: 0.95rem;
+          font-size: 0.92rem;
           font-weight: 300;
           color: #e8dfc8;
           outline: none;
@@ -118,7 +118,7 @@ export default function Login() {
           caret-color: #c4a97d;
         }
 
-        .field-input::placeholder { color: #4a4439; }
+        .field-input::placeholder { color: #3a352d; }
         .field-input:focus { border-bottom-color: #c4a97d; }
 
         .field-line {
@@ -158,7 +158,7 @@ export default function Login() {
         }
 
         .error-msg {
-          font-size: 1.2rem;
+          font-size: 0.78rem;
           font-weight: 300;
           letter-spacing: 0.1em;
           color: #b87474;
@@ -170,12 +170,12 @@ export default function Login() {
         .login-btn {
           width: 100%;
           margin-top: 2rem;
-          padding: 0.95rem;
+          padding: 0.75rem;
           background: transparent;
           border: 1px solid #3a352d;
           color: #c4a97d;
           font-family: 'Jost', sans-serif;
-          font-size: 1.2rem;
+          font-size: 0.72rem;
           font-weight: 300;
           letter-spacing: 0.3em;
           text-transform: uppercase;
@@ -209,18 +209,18 @@ export default function Login() {
         }
 
         .footer-links a {
-          font-size: 0.84rem;
+          font-size: 0.65rem;
           font-weight: 300;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #e0d5be;
+          color: #6b5d48;
           text-decoration: none;
           transition: color 0.3s ease;
           cursor: pointer;
         }
 
         .footer-links a:hover { color: #c4a97d; }
-        .footer-sep { color: #c4b99a; margin: 0 0.8rem; font-size: 0.92rem; }
+        .footer-sep { color: #3a352d; margin: 0 0.8rem; font-size: 0.65rem; }
       `}</style>
 
       <div className="login-root">

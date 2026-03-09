@@ -91,16 +91,16 @@ export default function ForgotPassword() {
 
         .field-label {
           display: block;
-          font-size: 0.84rem;
+          font-size: 0.65rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #d4c9b0;
+          color: #7a6f5e;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
 
-        .field-group.is-focused .field-label { color: #c4a97d; }
+        .field-group.is-focused .field-label { color: #7a6f5e; }
 
         .field-input {
           width: 100%;
@@ -132,7 +132,7 @@ export default function ForgotPassword() {
         .field-group.is-focused .field-line { width: 100%; }
 
         .error-msg {
-          font-size: 1.2rem;
+          font-size: 0.78rem;
           color: #b87474;
           margin-bottom: 1.6rem;
           text-align: center;
