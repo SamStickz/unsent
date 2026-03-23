@@ -396,7 +396,9 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
               <span className="entry-card-seal-icon">○</span>
               <span className="entry-card-seal-label">sealed</span>
               {entry.recipient && (
-                <span className="entry-card-seal-recipient">for {entry.recipient}</span>
+                <span className="entry-card-seal-recipient">
+                  for {entry.recipient}
+                </span>
               )}
               <span className="entry-card-seal-date">
                 written {formatDate(entry.created_at)}
@@ -406,14 +408,27 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
               </span>
             </div>
             {!confirming ? (
-              <button className="entry-card-action-btn entry-card-release" onClick={() => setConfirming(true)}>
+              <button
+                className="entry-card-action-btn entry-card-release"
+                onClick={() => setConfirming(true)}
+              >
                 release
               </button>
             ) : (
               <div className="entry-card-confirm">
                 <span className="entry-card-confirm-text">let this go?</span>
-                <button className="entry-card-confirm-yes" onClick={handleDelete}>yes</button>
-                <button className="entry-card-confirm-no" onClick={() => setConfirming(false)}>no</button>
+                <button
+                  className="entry-card-confirm-yes"
+                  onClick={handleDelete}
+                >
+                  yes
+                </button>
+                <button
+                  className="entry-card-confirm-no"
+                  onClick={() => setConfirming(false)}
+                >
+                  no
+                </button>
               </div>
             )}
           </div>
@@ -432,7 +447,9 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
             )}
 
             <div className="entry-card-meta">
-              <span className="entry-card-date">{formatDate(entry.created_at)}</span>
+              <span className="entry-card-date">
+                {formatDate(entry.created_at)}
+              </span>
               <div className="entry-card-actions">
                 {!confirming ? (
                   <>
@@ -444,7 +461,10 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
                     </button>
                     <button
                       className="entry-card-action-btn"
-                      onClick={() => { setReplying(!replying); setConfirming(false); }}
+                      onClick={() => {
+                        setReplying(!replying);
+                        setConfirming(false);
+                      }}
                     >
                       {replying ? t.cancel : "reply"}
                     </button>
@@ -457,9 +477,21 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
                   </>
                 ) : (
                   <div className="entry-card-confirm">
-                    <span className="entry-card-confirm-text">let this go?</span>
-                    <button className="entry-card-confirm-yes" onClick={handleDelete}>yes</button>
-                    <button className="entry-card-confirm-no" onClick={() => setConfirming(false)}>no</button>
+                    <span className="entry-card-confirm-text">
+                      let this go?
+                    </span>
+                    <button
+                      className="entry-card-confirm-yes"
+                      onClick={handleDelete}
+                    >
+                      yes
+                    </button>
+                    <button
+                      className="entry-card-confirm-no"
+                      onClick={() => setConfirming(false)}
+                    >
+                      no
+                    </button>
                   </div>
                 )}
               </div>
@@ -471,7 +503,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
                 <span className="reply-compose-label">your reply, now</span>
                 <textarea
                   className="reply-textarea"
-                  placeholder=t.reply_placeholder
+                  placeholder={t.reply_placeholder} // ✅
                   value={replyContent}
                   onChange={(e) => setReplyContent(e.target.value)}
                   onFocus={() => setReplyFocused(true)}
@@ -479,7 +511,13 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
                   autoFocus
                 />
                 <div className="reply-footer">
-                  <button className="reply-cancel" onClick={() => { setReplying(false); setReplyContent(""); }}>
+                  <button
+                    className="reply-cancel"
+                    onClick={() => {
+                      setReplying(false);
+                      setReplyContent("");
+                    }}
+                  >
                     cancel
                   </button>
                   <button
@@ -500,7 +538,9 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
                   <div key={reply.id} className="reply-item">
                     <p className="reply-item-label">you, later</p>
                     <p className="reply-item-content">{reply.content}</p>
-                    <p className="reply-item-date">{formatDate(reply.created_at)}</p>
+                    <p className="reply-item-date">
+                      {formatDate(reply.created_at)}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -509,9 +549,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         )}
       </div>
 
-      {sharing && (
-        <ShareCard entry={entry} onClose={() => setSharing(false)} />
-      )}
+      {sharing && <ShareCard entry={entry} onClose={() => setSharing(false)} />}
     </>
   );
 }
