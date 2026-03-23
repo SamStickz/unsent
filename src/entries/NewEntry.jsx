@@ -161,13 +161,12 @@ Reply with ONLY the single line. Nothing else.`;
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
 
-        /* To self toggle */
+        /* To self toggle — text switcher, no border box */
         .to-toggle {
           display: flex;
-          gap: 0;
+          gap: 1.4rem;
           margin-bottom: 2rem;
-          border: 1px solid #1e1c18;
-          width: fit-content;
+          align-items: center;
         }
 
         .to-toggle-btn {
@@ -175,20 +174,33 @@ Reply with ONLY the single line. Nothing else.`;
           border: none;
           cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.7rem;
+          font-size: 0.6rem;
           font-weight: 300;
-          letter-spacing: 0.2em;
+          letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #e0d5be;
-          padding: 0.5rem 1.1rem;
-          transition: all 0.3s ease;
+          color: #3a352d;
+          padding: 0;
+          transition: color 0.3s ease;
+          position: relative;
+          padding-bottom: 3px;
+        }
+
+        .to-toggle-btn::after {
+          content: '';
+          position: absolute;
+          bottom: 0; left: 0;
+          width: 0%;
+          height: 1px;
+          background: #c4a97d;
+          transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .to-toggle-btn.active {
-          background: rgba(196,169,125,0.08);
           color: #c4a97d;
-          border-color: transparent;
         }
+
+        .to-toggle-btn.active::after { width: 100%; }
+        .to-toggle-sep { color: #2a2720; font-size: 0.6rem; }
 
         /* Self mode selector */
         .self-mode-group {
@@ -285,11 +297,11 @@ Reply with ONLY the single line. Nothing else.`;
 
         .recipient-label {
           display: block;
-          font-size: 0.72rem;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #d4c9b0;
+          color: #4a4030;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
@@ -351,37 +363,39 @@ Reply with ONLY the single line. Nothing else.`;
 
         .mood-label {
           display: block;
-          font-size: 0.72rem;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #d4c9b0;
+          color: #4a4030;
           margin: 1.6rem 0 0.8rem;
         }
 
         .mood-tags {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.6rem;
+          gap: 0.5rem;
         }
 
         .mood-tag {
           background: transparent;
-          border: 1px solid #1e1c18;
-          padding: 0.4rem 0.9rem;
+          border: none;
+          border-bottom: 1px solid #1a1814;
+          padding: 0.2rem 0;
+          margin-right: 0.6rem;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.78rem;
-          color: #d4c9b0;
+          font-size: 0.88rem;
+          color: #3a352d;
           cursor: pointer;
           transition: all 0.3s ease;
           letter-spacing: 0.04em;
-          border-radius: 1px;
+          border-radius: 0;
         }
 
-        .mood-tag:hover { border-color: #d4c9b0; color: #e0d5be; }
-        .mood-tag.selected { border-color: #e0d5be; color: #c4a97d; background: rgba(196,169,125,0.05); }
+        .mood-tag:hover { color: #8a7a68; border-color: #3a352d; }
+        .mood-tag.selected { color: #c4a97d; border-color: #c4a97d; }
 
         /* Capsule toggle */
         .capsule-row {
@@ -554,32 +568,21 @@ Reply with ONLY the single line. Nothing else.`;
 
         .entry-save-btn {
           background: transparent;
-          border: 1px solid #6b5d48;
-          color: #e8dfc8;
+          border: none;
+          border-bottom: 1px solid #3a352d;
+          color: #8a7a68;
           font-family: 'Jost', sans-serif;
-          font-size: 0.84rem;
+          font-size: 0.6rem;
           font-weight: 300;
           letter-spacing: 0.28em;
           text-transform: uppercase;
-          padding: 0.7rem 1.8rem;
+          padding: 0.3rem 0;
           cursor: pointer;
           transition: all 0.4s ease;
           position: relative;
-          overflow: hidden;
         }
 
-        .entry-save-btn::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: rgba(196,169,125,0.1);
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .entry-save-btn:hover { border-color: #c4a97d; color: #e8dfc8; }
-        .entry-save-btn:hover::before { transform: scaleX(1); }
+        .entry-save-btn:hover { color: #c4a97d; border-color: #c4a97d; }
         .entry-save-btn:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
       `}</style>
 

@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
-
 import ShareCard from "./ShareCard";
+
 
 export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
   const [confirming, setConfirming] = useState(false);
   const [replying, setReplying] = useState(false);
   const [replyContent, setReplyContent] = useState("");
   const [replyFocused, setReplyFocused] = useState(false);
-  
   const [sharing, setSharing] = useState(false);
+  
 
   const isSealed = entry.unlock_at && new Date(entry.unlock_at) > new Date();
 
@@ -76,10 +76,12 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Jost:wght@200;300&display=swap');
 
         .entry-card {
-          padding: 2rem 0 1rem;
-          border-bottom: 1px solid #1a1814;
+          padding: 2.4rem 0 1.6rem;
+          border-bottom: 1px solid #111009;
           animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
+
+        .entry-card:last-child { border-bottom: none; }
 
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(12px); }
@@ -101,55 +103,55 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         }
 
         .entry-card-seal-icon {
-          font-size: 1.05rem;
-          opacity: 0.4;
+          font-size: 0.7rem;
+          opacity: 0.2;
           margin-bottom: 0.2rem;
         }
 
         .entry-card-seal-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.7rem;
+          font-size: 0.56rem;
           font-weight: 300;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #e0d5be;
+          color: #4a4030;
         }
 
         .entry-card-seal-recipient {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.02rem;
-          color: #d4c9b0;
+          font-size: 0.95rem;
+          color: #a89880;
           letter-spacing: 0.04em;
         }
 
         .entry-card-seal-date {
-          font-family: 'Cormorant Garamond', serif;
-          font-style: italic;
-          font-weight: 300;
-          font-size: 1.05rem;
-          color: #e0d5be;
-          letter-spacing: 0.04em;
+          font-family: 'Jost', sans-serif;
+          font-weight: 200;
+          font-size: 0.56rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #3a352d;
         }
 
         .entry-card-seal-opens {
           font-family: 'Jost', sans-serif;
-          font-size: 0.7rem;
+          font-size: 0.56rem;
           font-weight: 200;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #e0d5be;
+          color: #4a4030;
         }
 
         /* Open card */
-        .entry-card-recipient { /* label */
+        .entry-card-recipient {
           font-family: 'Jost', sans-serif;
           font-size: 0.6rem;
           font-weight: 300;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #7a6f5e;
+          color: #4a4030;
           margin-bottom: 0.8rem;
         }
 
@@ -159,7 +161,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           font-size: 0.95rem;
           letter-spacing: 0.06em;
           text-transform: none;
-          color: #a89880;
+          color: #8a7a68;
           margin-left: 0.4rem;
         }
 
@@ -180,11 +182,11 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           font-style: italic;
           font-weight: 300;
           font-size: 0.75rem;
-          color: #7a6f5e;
-          border: 1px solid #1e1c18;
-          padding: 0.2rem 0.6rem;
+          color: #4a4030;
+          border: none;
+          border-bottom: 1px solid #1a1814;
+          padding: 0.1rem 0;
           letter-spacing: 0.04em;
-          border-radius: 1px;
         }
 
         .entry-card-meta {
@@ -196,13 +198,13 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           gap: 0.6rem;
         }
 
-        .entry-card-date { /* small */
+        .entry-card-date {
           font-family: 'Jost', sans-serif;
           font-size: 0.58rem;
           font-weight: 200;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #5a5040;
+          color: #3a352d;
           white-space: nowrap;
           flex-shrink: 0;
         }
@@ -214,16 +216,16 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           flex-shrink: 0;
         }
 
-        .entry-card-action-btn { /* small */
+        .entry-card-action-btn {
           background: none;
           border: none;
           cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.58rem;
+          font-size: 0.56rem;
           font-weight: 300;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: #5a5040;
+          color: #3a352d;
           padding: 0;
           transition: color 0.3s ease;
           position: relative;
@@ -239,16 +241,16 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .entry-card-action-btn:hover { color: #c4a97d; }
+        .entry-card-action-btn:hover { color: #8a7a68; }
         .entry-card-action-btn:hover::after { width: 100%; }
 
-        .entry-card-release { color: #5a5040; }
+        .entry-card-release { color: #3a352d; }
         .entry-card-release:hover { color: #8a4f4f !important; }
 
         .entry-card-confirm {
           display: flex;
           align-items: center;
-          gap: 1.2rem;
+          gap: 1rem;
           animation: fadeIn 0.3s ease both;
         }
 
@@ -258,17 +260,17 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.05rem;
-          color: #d4c9b0;
+          font-size: 0.82rem;
+          color: #6b5d48;
           letter-spacing: 0.06em;
         }
 
         .entry-card-confirm-yes {
           background: none; border: none; cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 1rem; font-weight: 300;
+          font-size: 0.56rem; font-weight: 300;
           letter-spacing: 0.2em; text-transform: uppercase;
-          color: #8a4f4f; padding: 0;
+          color: #6b3f3f; padding: 0;
           transition: color 0.3s ease;
         }
 
@@ -277,9 +279,9 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         .entry-card-confirm-no {
           background: none; border: none; cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 1rem; font-weight: 300;
+          font-size: 0.56rem; font-weight: 300;
           letter-spacing: 0.2em; text-transform: uppercase;
-          color: #e0d5be; padding: 0;
+          color: #4a4030; padding: 0;
           transition: color 0.3s ease;
         }
 
@@ -289,32 +291,32 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         .reply-compose {
           margin-top: 1.2rem;
           padding-top: 1.2rem;
-          border-top: 1px solid #161412;
+          border-top: 1px solid #111009;
           animation: fadeUp 0.4s ease both;
         }
 
         .reply-compose-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.7rem;
+          font-size: 0.56rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #e0d5be;
-          margin-bottom: 0.6rem;
+          color: #4a4030;
+          margin-bottom: 0.8rem;
           display: block;
         }
 
         .reply-textarea {
           width: 100%;
-          min-height: 100px;
-          background: rgba(255,255,255,0.015);
-          border: 1px solid #1a1814;
-          border-radius: 2px;
-          padding: 1rem;
+          min-height: 90px;
+          background: transparent;
+          border: none;
+          border-bottom: 1px solid #1a1814;
+          padding: 0.4rem 0;
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.2rem;
-          color: #e0d5be;
+          font-size: 1rem;
+          color: #c4b99a;
           line-height: 1.8;
           resize: none;
           outline: none;
@@ -322,53 +324,53 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
           caret-color: #c4a97d;
         }
 
-        .reply-textarea::placeholder { color: #9a8e7e; font-style: italic; }
-        .reply-textarea:focus { border-color: #2a2720; }
+        .reply-textarea::placeholder { color: #2a2720; font-style: italic; }
+        .reply-textarea:focus { border-color: #3a352d; }
 
         .reply-footer {
           margin-top: 0.8rem;
           display: flex;
           justify-content: flex-end;
-          gap: 1rem;
+          gap: 1.2rem;
           align-items: center;
         }
 
         .reply-cancel {
           background: none; border: none; cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.86rem; font-weight: 300;
+          font-size: 0.56rem; font-weight: 300;
           letter-spacing: 0.18em; text-transform: uppercase;
-          color: #e0d5be; padding: 0;
+          color: #3a352d; padding: 0;
           transition: color 0.3s ease;
         }
 
-        .reply-cancel:hover { color: #e0d5be; }
+        .reply-cancel:hover { color: #8a7a68; }
 
         .reply-send {
-          background: transparent;
-          border: 1px solid #2e2b26;
-          color: #c4a97d;
+          background: transparent; border: none;
+          border-bottom: 1px solid #3a352d;
+          color: #6b5d48;
           font-family: 'Jost', sans-serif;
-          font-size: 0.86rem; font-weight: 300;
+          font-size: 0.56rem; font-weight: 300;
           letter-spacing: 0.22em; text-transform: uppercase;
-          padding: 0.5rem 1.2rem;
+          padding: 0.2rem 0;
           cursor: pointer;
           transition: all 0.3s ease;
         }
 
-        .reply-send:hover { border-color: #c4a97d; color: #e8dfc8; }
+        .reply-send:hover { border-color: #c4a97d; color: #c4a97d; }
         .reply-send:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
 
         /* Replies */
         .replies-list {
-          margin-top: 0.8rem;
+          margin-top: 1rem;
           padding-left: 1.2rem;
-          border-left: 1px solid #1a1814;
+          border-left: 1px solid #111009;
         }
 
         .reply-item {
-          padding: 1rem 0;
-          border-bottom: 1px solid #131210;
+          padding: 0.8rem 0;
+          border-bottom: 1px solid #0e0d0b;
           animation: fadeUp 0.5s ease both;
         }
 
@@ -376,27 +378,27 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
 
         .reply-item-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.52rem;
           font-weight: 200;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #e0d5be;
+          color: #3a352d;
           margin-bottom: 0.4rem;
         }
 
         .reply-item-content {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 0.98rem;
-          color: #e0d5be;
+          font-size: 0.95rem;
+          color: #8a7a68;
           line-height: 1.8;
           white-space: pre-wrap;
         }
 
         .reply-item-date {
-          margin-top: 0.5rem;
+          margin-top: 0.4rem;
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.52rem;
           font-weight: 200;
           letter-spacing: 0.15em;
           text-transform: uppercase;

@@ -145,7 +145,7 @@ export default function EntryList() {
         .list-root {
           max-width: 640px;
           margin: 0 auto;
-          padding: 3rem 2rem 6rem;
+          padding: 2.4rem 0 6rem;
           font-family: 'Jost', sans-serif;
           animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
@@ -156,54 +156,53 @@ export default function EntryList() {
         }
 
         .list-header {
-          margin-bottom: 3rem;
+          margin-bottom: 2.4rem;
           text-align: center;
         }
 
         .list-title {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 2rem;
-          color: #e8dfc8;
-          letter-spacing: 0.14em;
+          font-size: 1.3rem;
+          color: #8a7a68;
+          letter-spacing: 0.18em;
           text-transform: lowercase;
         }
 
         .list-subtitle {
-          margin-top: 0.6rem;
+          margin-top: 0.5rem;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.92rem;
-          color: #d4c9b0;
-          letter-spacing: 0.08em;
+          font-size: 0.78rem;
+          color: #4a4030;
+          letter-spacing: 0.06em;
         }
 
         .list-divider {
-          width: 32px;
+          width: 24px;
           height: 1px;
-          background: linear-gradient(90deg, transparent, #2e2b26, transparent);
-          margin: 1.2rem auto 0;
+          background: linear-gradient(90deg, transparent, #1e1c18, transparent);
+          margin: 0.8rem auto 0;
         }
 
         /* Anniversary banner */
         .anniversary-banner {
-          margin-bottom: 2rem;
-          padding: 1.4rem 1.6rem;
-          border: 1px solid #1e1c18;
-          border-left: 2px solid #c4a97d;
-          background: rgba(196,169,125,0.04);
+          margin-bottom: 2.4rem;
+          padding: 1.2rem 1.4rem;
+          border-left: 1px solid #c4a97d;
+          background: transparent;
           animation: fadeUp 0.8s ease both;
           position: relative;
         }
 
         .anniversary-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.56rem;
           font-weight: 300;
           letter-spacing: 0.24em;
           text-transform: uppercase;
-          color: #c4a97d;
+          color: #6b5d48;
           margin-bottom: 0.4rem;
           display: block;
         }
@@ -212,9 +211,9 @@ export default function EntryList() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.2rem;
-          color: #e0d5be;
-          margin-bottom: 0.7rem;
+          font-size: 0.92rem;
+          color: #8a7a68;
+          margin-bottom: 0.5rem;
           display: block;
           letter-spacing: 0.04em;
           line-height: 1.5;
@@ -223,8 +222,8 @@ export default function EntryList() {
         .anniversary-content {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.2rem;
-          color: #d4c9b0;
+          font-size: 1rem;
+          color: #c4b99a;
           line-height: 1.8;
           display: -webkit-box;
           -webkit-line-clamp: 2;
@@ -235,36 +234,35 @@ export default function EntryList() {
 
         .anniversary-dismiss {
           position: absolute;
-          top: 1rem; right: 1rem;
+          top: 1rem; right: 0;
           background: none; border: none;
           cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.84rem; font-weight: 200;
+          font-size: 0.56rem; font-weight: 200;
           letter-spacing: 0.18em; text-transform: uppercase;
-          color: #9a8e7e; padding: 0;
+          color: #3a352d; padding: 0;
           transition: color 0.3s ease;
         }
-        .anniversary-dismiss:hover { color: #e0d5be; }
+        .anniversary-dismiss:hover { color: #8a7a68; }
 
         /* On This Day */
         .on-this-day {
           margin-bottom: 2.4rem;
-          padding: 1.4rem 1.6rem;
-          border: 1px solid #1e1c18;
-          border-left: 2px solid #6b5d48;
-          background: rgba(196,169,125,0.02);
+          padding: 1.2rem 1.4rem;
+          border-left: 1px solid #2e2b26;
+          background: transparent;
           animation: fadeUp 0.8s ease both;
           position: relative;
         }
 
         .on-this-day-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.56rem;
           font-weight: 300;
           letter-spacing: 0.24em;
           text-transform: uppercase;
-          color: #c4a97d;
-          margin-bottom: 0.6rem;
+          color: #4a4030;
+          margin-bottom: 0.5rem;
           display: block;
         }
 
@@ -272,9 +270,9 @@ export default function EntryList() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 0.82rem;
-          color: #e0d5be;
-          margin-bottom: 0.8rem;
+          font-size: 0.78rem;
+          color: #6b5d48;
+          margin-bottom: 0.6rem;
           display: block;
           letter-spacing: 0.04em;
         }
@@ -282,8 +280,8 @@ export default function EntryList() {
         .on-this-day-content {
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.2rem;
-          color: #e0d5be;
+          font-size: 1rem;
+          color: #a89880;
           line-height: 1.8;
           white-space: pre-wrap;
           display: -webkit-box;
@@ -293,27 +291,27 @@ export default function EntryList() {
         }
 
         .on-this-day-recipient {
-          margin-top: 0.6rem;
+          margin-top: 0.5rem;
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.56rem;
           font-weight: 200;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #e0d5be;
+          color: #4a4030;
         }
 
         .on-this-day-dismiss {
           position: absolute;
-          top: 1rem; right: 1rem;
+          top: 1rem; right: 0;
           background: none; border: none;
           cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.84rem; font-weight: 200;
+          font-size: 0.56rem; font-weight: 200;
           letter-spacing: 0.18em; text-transform: uppercase;
-          color: #9a8e7e; padding: 0;
+          color: #3a352d; padding: 0;
           transition: color 0.3s ease;
         }
-        .on-this-day-dismiss:hover { color: #e0d5be; }
+        .on-this-day-dismiss:hover { color: #8a7a68; }
 
         /* Loading */
         .list-loading {
@@ -414,17 +412,17 @@ export default function EntryList() {
         .mood-map {
           margin-bottom: 2.4rem;
           padding: 1.4rem 0;
-          border-top: 1px solid #1a1814;
-          border-bottom: 1px solid #1a1814;
+          border-top: 1px solid #111009;
+          border-bottom: 1px solid #111009;
         }
 
         .mood-map-label {
           font-family: 'Jost', sans-serif;
-          font-size: 0.7rem;
+          font-size: 0.56rem;
           font-weight: 300;
           letter-spacing: 0.24em;
           text-transform: uppercase;
-          color: #e0d5be;
+          color: #4a4030;
           margin-bottom: 1rem;
           display: block;
           text-align: center;
