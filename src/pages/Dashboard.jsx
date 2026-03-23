@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import NewEntry from "../entries/NewEntry";
+import { useLang } from "../lib/LangContext";
 import Onboarding from "../components/Onboarding";
 
 export default function Dashboard() {
   const [streak, setStreak] = useState(0);
+  const { t } = useLang();
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [justUpgraded, setJustUpgraded] = useState(false);
@@ -81,10 +83,10 @@ export default function Dashboard() {
   }, []);
 
   const streakText = (n) => {
-    if (n === 2) return "you've written two days in a row.";
-    if (n === 3) return "three days in a row. keep going.";
-    if (n >= 7) return `${n} days. you keep coming back.`;
-    return `${n} days in a row.`;
+    if (n === 2) return t.streak_2;
+    if (n === 3) return t.streak_3;
+    if (n >= 7) return t.streak_n(n);
+    return t.streak_default(n);
   };
 
   return (
@@ -104,8 +106,8 @@ export default function Dashboard() {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.3rem;
-          color: #e0d5be;
+          font-size: 0.88rem;
+          color: #2e2a24;
           letter-spacing: 0.1em;
           text-align: center;
           margin-bottom: 0.8rem;
@@ -115,11 +117,11 @@ export default function Dashboard() {
 
         .dashboard-streak {
           font-family: 'Jost', sans-serif;
-          font-size: 0.7rem;
+          font-size: 0.58rem;
           font-weight: 200;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #e0d5be;
+          color: #2e2a24;
           text-align: center;
           margin-bottom: 2.4rem;
           animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;

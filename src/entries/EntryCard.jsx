@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
 import ShareCard from "./ShareCard";
-
+import { useLang } from "../lib/LangContext";
 
 export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
   const [confirming, setConfirming] = useState(false);
@@ -9,59 +9,42 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
   const [replyContent, setReplyContent] = useState("");
   const [replyFocused, setReplyFocused] = useState(false);
   const [sharing, setSharing] = useState(false);
-  
+  const { t } = useLang();
+ 
 
   const isSealed = entry.unlock_at && new Date(entry.unlock_at) > new Date();
 
   const formatDate = (ts) => {
     const d = new Date(ts);
-    return (
-      d.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      }) +
-      " · " +
-      d.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-      })
-    );
+    return d.toLocaleDateString("en-US", {
+      month: "short", day: "numeric", year: "numeric"
+    }) + " · " + d.toLocaleTimeString("en-US", {
+      hour: "numeric", minute: "2-digit"
+    });
   };
 
   const formatUnlockDate = (ts) => {
     return new Date(ts).toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
+      month: "long", day: "numeric", year: "numeric"
     });
   };
 
   const handleDelete = async () => {
-    const { error } = await supabase
-      .from("entries")
-      .delete()
-      .eq("id", entry.id);
+    const { error } = await supabase.from("entries").delete().eq("id", entry.id);
     if (!error) onDelete(entry.id);
   };
 
   const handleReply = async () => {
     if (!replyContent.trim()) return;
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
+    const { data: { session } } = await supabase.auth.getSession();
     if (!session) return;
 
-    const { data, error } = await supabase
-      .from("entries")
-      .insert({
-        content: replyContent,
-        user_id: session.user.id,
-        parent_id: entry.id,
-        is_reply: true,
-      })
-      .select()
-      .single();
+    const { data, error } = await supabase.from("entries").insert({
+      content: replyContent,
+      user_id: session.user.id,
+      parent_id: entry.id,
+      is_reply: true,
+    }).select().single();
 
     if (!error) {
       setReplyContent("");
@@ -413,9 +396,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
               <span className="entry-card-seal-icon">○</span>
               <span className="entry-card-seal-label">sealed</span>
               {entry.recipient && (
-                <span className="entry-card-seal-recipient">
-                  for {entry.recipient}
-                </span>
+                <span className="entry-card-seal-recipient">for {entry.recipient}</span>
               )}
               <span className="entry-card-seal-date">
                 written {formatDate(entry.created_at)}
@@ -425,27 +406,14 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
               </span>
             </div>
             {!confirming ? (
-              <button
-                className="entry-card-action-btn entry-card-release"
-                onClick={() => setConfirming(true)}
-              >
+              <button className="entry-card-action-btn entry-card-release" onClick={() => setConfirming(true)}>
                 release
               </button>
             ) : (
               <div className="entry-card-confirm">
                 <span className="entry-card-confirm-text">let this go?</span>
-                <button
-                  className="entry-card-confirm-yes"
-                  onClick={handleDelete}
-                >
-                  yes
-                </button>
-                <button
-                  className="entry-card-confirm-no"
-                  onClick={() => setConfirming(false)}
-                >
-                  no
-                </button>
+                <button className="entry-card-confirm-yes" onClick={handleDelete}>yes</button>
+                <button className="entry-card-confirm-no" onClick={() => setConfirming(false)}>no</button>
               </div>
             )}
           </div>
@@ -464,9 +432,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
             )}
 
             <div className="entry-card-meta">
-              <span className="entry-card-date">
-                {formatDate(entry.created_at)}
-              </span>
+              <span className="entry-card-date">{formatDate(entry.created_at)}</span>
               <div className="entry-card-actions">
                 {!confirming ? (
                   <>
@@ -478,12 +444,9 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
                     </button>
                     <button
                       className="entry-card-action-btn"
-                      onClick={() => {
-                        setReplying(!replying);
-                        setConfirming(false);
-                      }}
+                      onClick={() => { setReplying(!replying); setConfirming(false); }}
                     >
-                      {replying ? "cancel" : "reply"}
+                      {replying ? t.cancel : "reply"}
                     </button>
                     <button
                       className="entry-card-action-btn entry-card-release"
@@ -494,21 +457,9 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
                   </>
                 ) : (
                   <div className="entry-card-confirm">
-                    <span className="entry-card-confirm-text">
-                      let this go?
-                    </span>
-                    <button
-                      className="entry-card-confirm-yes"
-                      onClick={handleDelete}
-                    >
-                      yes
-                    </button>
-                    <button
-                      className="entry-card-confirm-no"
-                      onClick={() => setConfirming(false)}
-                    >
-                      no
-                    </button>
+                    <span className="entry-card-confirm-text">let this go?</span>
+                    <button className="entry-card-confirm-yes" onClick={handleDelete}>yes</button>
+                    <button className="entry-card-confirm-no" onClick={() => setConfirming(false)}>no</button>
                   </div>
                 )}
               </div>
@@ -520,7 +471,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
                 <span className="reply-compose-label">your reply, now</span>
                 <textarea
                   className="reply-textarea"
-                  placeholder="what do you want to say back…"
+                  placeholder=t.reply_placeholder
                   value={replyContent}
                   onChange={(e) => setReplyContent(e.target.value)}
                   onFocus={() => setReplyFocused(true)}
@@ -528,13 +479,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
                   autoFocus
                 />
                 <div className="reply-footer">
-                  <button
-                    className="reply-cancel"
-                    onClick={() => {
-                      setReplying(false);
-                      setReplyContent("");
-                    }}
-                  >
+                  <button className="reply-cancel" onClick={() => { setReplying(false); setReplyContent(""); }}>
                     cancel
                   </button>
                   <button
@@ -555,9 +500,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
                   <div key={reply.id} className="reply-item">
                     <p className="reply-item-label">you, later</p>
                     <p className="reply-item-content">{reply.content}</p>
-                    <p className="reply-item-date">
-                      {formatDate(reply.created_at)}
-                    </p>
+                    <p className="reply-item-date">{formatDate(reply.created_at)}</p>
                   </div>
                 ))}
               </div>
@@ -566,7 +509,9 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         )}
       </div>
 
-      {sharing && <ShareCard entry={entry} onClose={() => setSharing(false)} />}
+      {sharing && (
+        <ShareCard entry={entry} onClose={() => setSharing(false)} />
+      )}
     </>
   );
 }

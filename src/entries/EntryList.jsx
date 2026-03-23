@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import EntryCard from "./EntryCard";
+import { useLang } from "../lib/LangContext";
 import { useNavigate } from "react-router-dom";
 
 const MOOD_COLORS = {
@@ -16,6 +17,7 @@ const MOOD_COLORS = {
 
 export default function EntryList() {
   const [entries, setEntries] = useState([]);
+  const { t } = useLang();
   const [replies, setReplies] = useState({});
   const [onThisDay, setOnThisDay] = useState(null);
   const [anniversary, setAnniversary] = useState(null);
@@ -102,7 +104,7 @@ export default function EntryList() {
 
   const yearsAgo = (ts) => {
     const diff = new Date().getFullYear() - new Date(ts).getFullYear();
-    return diff === 1 ? "one year ago" : `${diff} years ago`;
+    return diff === 1 ? t.one_year_ago : t.years_ago(diff);
   };
 
   // Mood frequency
@@ -569,14 +571,14 @@ export default function EntryList() {
           <div className="anniversary-banner">
             <span className="anniversary-label">an anniversary</span>
             <span className="anniversary-years">
-              {yearsAgo(anniversary.created_at)} today, you wrote something.
+              {t.anniversary_text(yearsAgo(anniversary.created_at))}
             </span>
             <p className="anniversary-content">{anniversary.content}</p>
             <button
               className="anniversary-dismiss"
               onClick={() => setAnniversaryDismissed(true)}
             >
-              close
+              {t.close}
             </button>
           </div>
         )}
@@ -586,7 +588,7 @@ export default function EntryList() {
           <div className="on-this-day">
             <span className="on-this-day-label">on this day</span>
             <span className="on-this-day-ago">
-              {yearsAgo(onThisDay.created_at)}, you wrote
+              {t.on_this_day_ago(yearsAgo(onThisDay.created_at))}
             </span>
             <p className="on-this-day-content">{onThisDay.content}</p>
             {onThisDay.recipient && (
@@ -596,7 +598,7 @@ export default function EntryList() {
               className="on-this-day-dismiss"
               onClick={() => setDismissed(true)}
             >
-              close
+              {t.close}
             </button>
           </div>
         )}
@@ -608,9 +610,9 @@ export default function EntryList() {
             <div className="list-empty-line" />
             <p className="list-empty-title">nothing here yet</p>
             <p className="list-empty-sub">
-              the words are waiting.
+              {t.words_waiting}
               <br />
-              whenever you're ready.
+              {t.whenever_ready}
             </p>
             <button className="list-empty-btn" onClick={() => navigate("/app")}>
               write something
@@ -619,7 +621,12 @@ export default function EntryList() {
         ) : (
           <>
             <p className="list-count">
-              {entries.length} {entries.length === 1 ? "entry" : "entries"}
+              {entries.length}{" "}
+              {entries.length === 1
+                ? t.one_year_ago.includes("year")
+                  ? t.one_year_ago
+                  : "entry"
+                : "entries"}
             </p>
             {entries.map((entry) => (
               <EntryCard

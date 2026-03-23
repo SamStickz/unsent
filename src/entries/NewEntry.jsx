@@ -2,19 +2,11 @@ import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { useProStatus } from "../lib/useProStatus";
 import UpgradeModal from "./UpgradeModal";
+import { useLang } from "../lib/LangContext";
 
 const FREE_LIMIT = 20;
 
-const MOODS = [
-  "still hurting",
-  "finding peace",
-  "letting go",
-  "missing you",
-  "finally free",
-  "not yet ready",
-  "grateful now",
-  "just numb",
-];
+
 
 export default function NewEntry() {
   const [content, setContent] = useState("");
@@ -31,15 +23,14 @@ export default function NewEntry() {
   const [selfMode, setSelfMode] = useState(null); // "then" | "later"
   const [selfAge, setSelfAge] = useState("");
   const { isPro } = useProStatus();
+  const { t } = useLang();
   const [entryCount, setEntryCount] = useState(0);
   const [showUpgrade, setShowUpgrade] = useState(false);
   const [upgradeReason, setUpgradeReason] = useState("limit");
 
   useEffect(() => {
     const getCount = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
       const { count } = await supabase
         .from("entries")
@@ -53,19 +44,13 @@ export default function NewEntry() {
 
   useEffect(() => {
     const getUser = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      const { data: { session } } = await supabase.auth.getSession();
       if (session) setUser(session.user);
     };
     getUser();
   }, []);
 
-  const getAcknowledgement = async (
-    entryContent,
-    entryMood,
-    entryRecipient,
-  ) => {
+  const getAcknowledgement = async (entryContent, entryMood, entryRecipient) => {
     try {
       const prompt = `Someone just wrote an unsent message${entryRecipient ? ` to "${entryRecipient}"` : ""}${entryMood ? ` and tagged it as "${entryMood}"` : ""}. 
 
@@ -96,8 +81,8 @@ Reply with ONLY the single line. Nothing else.`;
 
   const getEffectiveRecipient = () => {
     if (!toSelf) return recipient.trim() || null;
-    if (selfMode === "then") return selfAge ? `me at ${selfAge}` : "me then";
-    if (selfMode === "later") return "me later";
+    if (selfMode === "then") return selfAge ? `me at ${selfAge}` : t.me_then;
+    if (selfMode === "later") return t.me_later;
     return "myself";
   };
 
@@ -136,11 +121,7 @@ Reply with ONLY the single line. Nothing else.`;
 
       // Get AI acknowledgement in background
       if (!sealed) {
-        const line = await getAcknowledgement(
-          savedContent,
-          savedMood,
-          savedRecipient,
-        );
+        const line = await getAcknowledgement(savedContent, savedMood, savedRecipient);
         if (line) {
           setAcknowledgement(line);
           setAckVisible(true);
@@ -282,8 +263,8 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.35rem;
-          color: #e0d5be;
+          font-size: 1rem;
+          color: #4a4030;
           text-align: center;
           margin-bottom: 2.4rem;
           letter-spacing: 0.06em;
@@ -314,20 +295,20 @@ Reply with ONLY the single line. Nothing else.`;
           width: 100%;
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1e1c18;
+          border-bottom: 1px solid #1a1814;
           padding: 0.5rem 0;
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.3rem;
-          color: #e8dfc8;
+          font-size: 1.1rem;
+          color: #c4b99a;
           outline: none;
           transition: border-color 0.4s ease;
           letter-spacing: 0.04em;
           caret-color: #c4a97d;
         }
 
-        .recipient-input::placeholder { color: #d4c9b0; font-style: italic; }
+        .recipient-input::placeholder { color: #2a2720; font-style: italic; }
 
         .recipient-line {
           position: absolute;
@@ -341,25 +322,25 @@ Reply with ONLY the single line. Nothing else.`;
 
         .entry-textarea {
           width: 100%;
-          min-height: 220px;
-          background: rgba(255,255,255,0.02);
-          border: 1px solid #1e1c18;
-          border-radius: 2px;
-          padding: 1.6rem;
+          min-height: 200px;
+          background: transparent;
+          border: none;
+          border-bottom: 1px solid #1a1814;
+          padding: 0.8rem 0;
           font-family: 'Cormorant Garamond', serif;
           font-weight: 300;
-          font-size: 1.35rem;
-          color: #e8dfc8;
-          line-height: 1.8;
+          font-size: 1.15rem;
+          color: #e0d5be;
+          line-height: 1.9;
           letter-spacing: 0.02em;
           resize: none;
           outline: none;
-          transition: border-color 0.4s ease, background 0.4s ease;
+          transition: border-color 0.4s ease;
           caret-color: #c4a97d;
         }
 
-        .entry-textarea::placeholder { color: #d4c9b0; font-style: italic; }
-        .entry-textarea:focus { border-color: #e0d5be; background: rgba(255,255,255,0.03); }
+        .entry-textarea::placeholder { color: #2a2720; font-style: italic; }
+        .entry-textarea:focus { border-color: #2e2b26; }
 
         .mood-label {
           display: block;
@@ -588,19 +569,15 @@ Reply with ONLY the single line. Nothing else.`;
 
       <div className="entry-root">
         <p className="entry-prompt">
-          write the message you couldn't send.
-          <br />
-          this space is just for you.
+          {t.write_prompt.split("\n")[0]}<br />
+          {t.write_prompt.split("\n")[1]}
         </p>
 
         {/* To someone / to myself toggle */}
         <div className="to-toggle">
           <button
             className={`to-toggle-btn ${!toSelf ? "active" : ""}`}
-            onClick={() => {
-              setToSelf(false);
-              setSelfMode(null);
-            }}
+            onClick={() => { setToSelf(false); setSelfMode(null); }}
           >
             to someone
           </button>
@@ -614,14 +591,12 @@ Reply with ONLY the single line. Nothing else.`;
 
         {/* Recipient — someone else */}
         {!toSelf && (
-          <div
-            className={`recipient-group ${focusedField === "recipient" ? "is-focused" : ""}`}
-          >
+          <div className={`recipient-group ${focusedField === "recipient" ? "is-focused" : ""}`}>
             <label className="recipient-label">for</label>
             <input
               type="text"
               className="recipient-input"
-              placeholder="a name, a feeling, or leave it open…"
+              placeholder=t.recipient_placeholder
               value={recipient}
               onChange={(e) => setRecipient(e.target.value)}
               onFocus={() => setFocusedField("recipient")}
@@ -673,14 +648,14 @@ Reply with ONLY the single line. Nothing else.`;
             toSelf && selfMode === "then"
               ? "what would you tell that version of you…"
               : toSelf && selfMode === "later"
-                ? "what do you want your future self to know…"
-                : "say what's on your mind…"
+              ? "what do you want your future self to know…"
+              : "say what's on your mind…"
           }
         />
 
         <span className="mood-label">how this feels</span>
         <div className="mood-tags">
-          {MOODS.map((m) => (
+          {t.moods.map((m) => (
             <button
               key={m}
               className={`mood-tag ${mood === m ? "selected" : ""}`}
@@ -696,9 +671,7 @@ Reply with ONLY the single line. Nothing else.`;
           <div className="capsule-label-group">
             <span className="capsule-label">seal as time capsule</span>
             <span className="capsule-sublabel">
-              {isPro
-                ? "lock this until a future date"
-                : "pro feature — unlock to use"}
+              {isPro ? t.capsule_sub : "pro feature — unlock to use"}
             </span>
           </div>
           <label className="capsule-toggle">
@@ -731,11 +704,8 @@ Reply with ONLY the single line. Nothing else.`;
             />
             {unlockAt && (
               <p className="capsule-date-hint">
-                this will stay sealed until{" "}
-                {new Date(unlockAt).toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
+                this will stay sealed until {new Date(unlockAt).toLocaleDateString("en-US", {
+                  month: "long", day: "numeric", year: "numeric"
                 })}
               </p>
             )}

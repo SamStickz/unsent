@@ -1,7 +1,10 @@
 import { Outlet, NavLink } from "react-router-dom";
 import LogoutButton from "../components/LogoutButton";
+import { useLang } from "../lib/LangContext";
+import { LANGUAGES } from "../lib/lang";
 
 export default function AppLayout() {
+  const { lang, chooseLang } = useLang();
   return (
     <>
       <style>{`
@@ -104,14 +107,52 @@ export default function AppLayout() {
       <div className="app-root">
         <header className="app-header">
           <div className="app-header-inner">
-            <NavLink to="/app" className="app-brand">unsent</NavLink>
+            <NavLink to="/app" className="app-brand">
+              unsent
+            </NavLink>
             <nav className="app-nav">
-              <NavLink to="/app" end className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}>
+              <NavLink
+                to="/app"
+                end
+                className={({ isActive }) =>
+                  `app-nav-link ${isActive ? "active" : ""}`
+                }
+              >
                 write
               </NavLink>
-              <NavLink to="/app/entries" className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}>
+              <NavLink
+                to="/app/entries"
+                className={({ isActive }) =>
+                  `app-nav-link ${isActive ? "active" : ""}`
+                }
+              >
                 kept
               </NavLink>
+              <div
+                style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}
+              >
+                {Object.keys(LANGUAGES).map((code) => (
+                  <button
+                    key={code}
+                    onClick={() => chooseLang(code)}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      fontFamily: "'Jost', sans-serif",
+                      fontSize: "0.52rem",
+                      fontWeight: 300,
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase",
+                      color: lang === code ? "#c4a97d" : "#2a2720",
+                      padding: 0,
+                      transition: "color 0.3s ease",
+                    }}
+                  >
+                    {code}
+                  </button>
+                ))}
+              </div>
               <LogoutButton />
             </nav>
           </div>

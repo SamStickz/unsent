@@ -1,17 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-const lines = [
-  "for the person you can't call anymore.",
-  "for the apology that came too late.",
-  "for the love you never said out loud.",
-  "for the argument you're still having in your head.",
-  "for the goodbye you never got to give.",
-  "for the version of you that needed to hear this.",
-];
+import { useLang } from "../lib/LangContext";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { t } = useLang();
+  const lines = t.rotating;
   const [currentLine, setCurrentLine] = useState(0);
   const [opacity, setOpacity] = useState(1);
 
@@ -243,11 +237,11 @@ export default function Home() {
 
           <div className="home-manifesto">
             <p>
-              not a diary &nbsp;·&nbsp; not a therapist
+              {t.manifesto_1}
               <br />
-              just somewhere to put the words
+              {t.manifesto_2}
               <br />
-              that have nowhere else to go
+              {t.manifesto_3}
             </p>
           </div>
         </div>
@@ -257,13 +251,13 @@ export default function Home() {
             className="home-btn-primary"
             onClick={() => navigate("/signup")}
           >
-            Begin
+            {t.begin}
           </button>
           <button
             className="home-btn-secondary"
             onClick={() => navigate("/login")}
           >
-            I have an account
+            {t.have_account}
           </button>
         </div>
 

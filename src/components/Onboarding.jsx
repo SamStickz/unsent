@@ -19,8 +19,12 @@ const slides = [
   },
 ];
 
+import { useLang } from "../lib/LangContext";
+
 export default function Onboarding({ onDone }) {
   const [current, setCurrent] = useState(0);
+  const { t } = useLang();
+  const slides = t.onboarding;
   const [exiting, setExiting] = useState(false);
 
   const handleNext = () => {
@@ -84,11 +88,11 @@ export default function Onboarding({ onDone }) {
 
         .ob-step {
           font-family: 'Jost', sans-serif;
-          font-size: 0.58rem;
+          font-size: 0.76rem;
           font-weight: 200;
           letter-spacing: 0.24em;
           text-transform: uppercase;
-          color: #3a352d;
+          color: #d4c9b0;
           margin-bottom: 2.4rem;
         }
 
@@ -113,8 +117,8 @@ export default function Onboarding({ onDone }) {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
           font-weight: 300;
-          font-size: 1.05rem;
-          color: #7a6f5e;
+          font-size: 1.25rem;
+          color: #d4c9b0;
           line-height: 1.85;
           letter-spacing: 0.04em;
           white-space: pre-line;
@@ -126,7 +130,7 @@ export default function Onboarding({ onDone }) {
           border: 1px solid #2e2b26;
           color: #c4a97d;
           font-family: 'Jost', sans-serif;
-          font-size: 0.68rem;
+          font-size: 0.84rem;
           font-weight: 300;
           letter-spacing: 0.3em;
           text-transform: uppercase;
@@ -173,27 +177,32 @@ export default function Onboarding({ onDone }) {
           bottom: 2.4rem;
           background: none; border: none; cursor: pointer;
           font-family: 'Jost', sans-serif;
-          font-size: 0.6rem; font-weight: 200;
+          font-size: 0.92rem; font-weight: 200;
           letter-spacing: 0.2em; text-transform: uppercase;
-          color: #2a2720;
+          color: #7a6a58;
           transition: color 0.3s ease;
         }
 
-        .ob-skip:hover { color: #6b5d48; }
+        .ob-skip:hover { color: #e0d5be; }
       `}</style>
 
       <div className="ob-overlay">
         <div className={`ob-inner ${exiting ? "exiting" : ""}`}>
-          <span className="ob-step">{current + 1} of {slides.length}</span>
+          <span className="ob-step">
+            {current + 1} of {slides.length}
+          </span>
           <h2 className="ob-title">{slide.title}</h2>
           <div className="ob-divider" />
           <p className="ob-body">{slide.body}</p>
           <button className="ob-next" onClick={handleNext}>
-            {current < slides.length - 1 ? "continue" : "begin writing"}
+            {current < slides.length - 1 ? t.continue : t.begin_writing}
           </button>
           <div className="ob-dots">
             {slides.map((_, i) => (
-              <div key={i} className={`ob-dot ${i === current ? "active" : ""}`} />
+              <div
+                key={i}
+                className={`ob-dot ${i === current ? "active" : ""}`}
+              />
             ))}
           </div>
         </div>
