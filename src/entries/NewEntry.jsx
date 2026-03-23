@@ -569,7 +569,8 @@ Reply with ONLY the single line. Nothing else.`;
 
       <div className="entry-root">
         <p className="entry-prompt">
-          {t.write_prompt.split("\n")[0]}<br />
+          {t.write_prompt.split("\n")[0]}
+          <br />
           {t.write_prompt.split("\n")[1]}
         </p>
 
@@ -577,7 +578,10 @@ Reply with ONLY the single line. Nothing else.`;
         <div className="to-toggle">
           <button
             className={`to-toggle-btn ${!toSelf ? "active" : ""}`}
-            onClick={() => { setToSelf(false); setSelfMode(null); }}
+            onClick={() => {
+              setToSelf(false);
+              setSelfMode(null);
+            }}
           >
             to someone
           </button>
@@ -591,12 +595,14 @@ Reply with ONLY the single line. Nothing else.`;
 
         {/* Recipient — someone else */}
         {!toSelf && (
-          <div className={`recipient-group ${focusedField === "recipient" ? "is-focused" : ""}`}>
+          <div
+            className={`recipient-group ${focusedField === "recipient" ? "is-focused" : ""}`}
+          >
             <label className="recipient-label">for</label>
             <input
               type="text"
               className="recipient-input"
-              placeholder=t.recipient_placeholder
+              placeholder={t.recipient_placeholder} // ✅
               value={recipient}
               onChange={(e) => setRecipient(e.target.value)}
               onFocus={() => setFocusedField("recipient")}
@@ -648,8 +654,8 @@ Reply with ONLY the single line. Nothing else.`;
             toSelf && selfMode === "then"
               ? "what would you tell that version of you…"
               : toSelf && selfMode === "later"
-              ? "what do you want your future self to know…"
-              : "say what's on your mind…"
+                ? "what do you want your future self to know…"
+                : "say what's on your mind…"
           }
         />
 
@@ -704,8 +710,11 @@ Reply with ONLY the single line. Nothing else.`;
             />
             {unlockAt && (
               <p className="capsule-date-hint">
-                this will stay sealed until {new Date(unlockAt).toLocaleDateString("en-US", {
-                  month: "long", day: "numeric", year: "numeric"
+                this will stay sealed until{" "}
+                {new Date(unlockAt).toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
                 })}
               </p>
             )}
