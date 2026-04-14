@@ -10,6 +10,7 @@ import Signup from "../auth/Signup";
 import ForgotPassword from "../auth/ForgotPassword";
 import ResetPassword from "../auth/ResetPassword";
 import Dashboard from "../pages/Dashboard";
+import TheVoid from "../pages/TheVoid";
 import EntryList from "../entries/EntryList";
 
 const router = createBrowserRouter([
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/app", element: <Dashboard /> },
       { path: "/app/entries", element: <EntryList /> },
+      { path: "/app/void", element: <TheVoid /> },
     ],
   },
   {

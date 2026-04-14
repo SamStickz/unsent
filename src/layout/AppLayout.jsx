@@ -1,10 +1,11 @@
 import { Outlet, NavLink } from "react-router-dom";
-import LogoutButton from "../components/LogoutButton";
 import { useLang } from "../lib/LangContext";
 import { LANGUAGES } from "../lib/lang";
+import LogoutButton from "../components/LogoutButton";
 
 export default function AppLayout() {
   const { lang, chooseLang } = useLang();
+
   return (
     <>
       <style>{`
@@ -68,7 +69,7 @@ export default function AppLayout() {
           font-weight: 300;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #4a4030;
+          color: #7a6f5e;
           text-decoration: none;
           transition: color 0.3s ease;
           position: relative;
@@ -127,6 +128,14 @@ export default function AppLayout() {
                 }
               >
                 kept
+              </NavLink>
+              <NavLink
+                to="/app/void"
+                className={({ isActive }) =>
+                  `app-nav-link ${isActive ? "active" : ""}`
+                }
+              >
+                void
               </NavLink>
               <div
                 style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}
