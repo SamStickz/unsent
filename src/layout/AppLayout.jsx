@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 import { useLang } from "../lib/LangContext";
 import { LANGUAGES } from "../lib/lang";
 import LogoutButton from "../components/LogoutButton";
@@ -7,34 +7,30 @@ import LogoutButton from "../components/LogoutButton";
 export default function AppLayout() {
   const { lang, chooseLang } = useLang();
   const [menuOpen, setMenuOpen] = useState(false);
-
   const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Jost:wght@200;300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@200;300;400&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #0e0d0b; }
+        body { background-color: #111214; }
 
         .app-root {
           min-height: 100vh;
-          background-color: #0e0d0b;
-          background-image:
-            radial-gradient(ellipse 80% 50% at 50% -5%, rgba(180,155,110,0.06) 0%, transparent 70%),
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-          font-family: 'Jost', sans-serif;
+          background-color: #111214;
+          font-family: 'Inter', sans-serif;
         }
 
         .app-header {
           position: sticky;
           top: 0;
           z-index: 50;
-          background: rgba(14,13,11,0.96);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border-bottom: 1px solid #111009;
+          background: rgba(17,18,20,0.97);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border-bottom: 1px solid #1c1e22;
           padding: 0 2rem;
         }
 
@@ -48,31 +44,29 @@ export default function AppLayout() {
         }
 
         .app-brand {
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 300;
-          font-size: 1rem;
-          color: #8a7a68;
-          letter-spacing: 0.22em;
-          text-transform: lowercase;
+          font-family: 'IM Fell English', serif;
+          font-weight: 400;
+          font-size: 1.05rem;
+          color: #5a5f6a;
+          letter-spacing: 0.06em;
           text-decoration: none;
           transition: color 0.3s ease;
         }
-        .app-brand:hover { color: #c4b99a; }
+        .app-brand:hover { color: #8a8f9a; }
 
-        /* desktop nav */
         .app-nav {
           display: flex;
           align-items: center;
-          gap: 1.8rem;
+          gap: 2rem;
         }
 
         .app-nav-link {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.6rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.58rem;
           font-weight: 300;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #7a6f5e;
+          letter-spacing: 0.2em;
+          text-transform: lowercase;
+          color: #2e3138;
           text-decoration: none;
           transition: color 0.3s ease;
           position: relative;
@@ -84,15 +78,14 @@ export default function AppLayout() {
           bottom: -1px; left: 0;
           width: 0%;
           height: 1px;
-          background: #c4a97d;
+          background: #4a4f5a;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .app-nav-link:hover { color: #8a7a68; }
-        .app-nav-link.active { color: #c4a97d; }
+        .app-nav-link:hover { color: #4a4f5a; }
+        .app-nav-link.active { color: #6b7080; }
         .app-nav-link.active::after,
         .app-nav-link:hover::after { width: 100%; }
 
-        /* hamburger button */
         .hamburger {
           display: none;
           flex-direction: column;
@@ -106,68 +99,60 @@ export default function AppLayout() {
         }
         .hamburger span {
           display: block;
-          width: 22px;
+          width: 20px;
           height: 1px;
-          background: #8a7a68;
+          background: #3a3d44;
           transition: all 0.3s ease;
           transform-origin: center;
         }
-        .hamburger.open span:nth-child(1) {
-          transform: translateY(6px) rotate(45deg);
-        }
-        .hamburger.open span:nth-child(2) {
-          opacity: 0;
-        }
-        .hamburger.open span:nth-child(3) {
-          transform: translateY(-6px) rotate(-45deg);
-        }
+        .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-        /* mobile drawer */
         .mobile-drawer {
           display: none;
           position: fixed;
           inset: 0;
-          background: #0e0d0b;
+          background: #0f1012;
           z-index: 49;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 2.8rem;
+          gap: 3rem;
           animation: drawerFade 0.3s ease both;
         }
         .mobile-drawer.open { display: flex; }
 
         @keyframes drawerFade {
-          from { opacity: 0; transform: translateY(-10px); }
+          from { opacity: 0; transform: translateY(-8px); }
           to   { opacity: 1; transform: translateY(0); }
         }
 
         .mobile-nav-link {
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 300;
-          font-size: 2.2rem;
-          letter-spacing: 0.18em;
-          text-transform: lowercase;
-          color: #7a6f5e;
+          font-family: 'IM Fell English', serif;
+          font-weight: 400;
+          font-size: 2.4rem;
+          letter-spacing: 0.06em;
+          color: #2e3138;
           text-decoration: none;
           transition: color 0.3s ease;
         }
         .mobile-nav-link:hover,
-        .mobile-nav-link.active { color: #c4a97d; }
+        .mobile-nav-link.active { color: #6b7080; }
 
         .mobile-lang {
           display: flex;
-          gap: 1.2rem;
+          gap: 1.4rem;
         }
         .mobile-lang button {
           background: none;
           border: none;
           cursor: pointer;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.65rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.58rem;
           font-weight: 300;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
+          letter-spacing: 0.18em;
+          text-transform: lowercase;
           padding: 0;
           transition: color 0.3s ease;
         }
@@ -180,7 +165,7 @@ export default function AppLayout() {
           animation: pageFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         @keyframes pageFade {
-          from { opacity: 0; transform: translateY(10px); }
+          from { opacity: 0; transform: translateY(8px); }
           to   { opacity: 1; transform: translateY(0); }
         }
 
@@ -197,7 +182,6 @@ export default function AppLayout() {
               unsent
             </NavLink>
 
-            {/* desktop nav */}
             <nav className="app-nav">
               <NavLink
                 to="/app"
@@ -235,12 +219,12 @@ export default function AppLayout() {
                       background: "none",
                       border: "none",
                       cursor: "pointer",
-                      fontFamily: "'Jost', sans-serif",
+                      fontFamily: "'Inter', sans-serif",
                       fontSize: "0.52rem",
                       fontWeight: 300,
-                      letterSpacing: "0.18em",
-                      textTransform: "uppercase",
-                      color: lang === code ? "#c4a97d" : "#2a2720",
+                      letterSpacing: "0.16em",
+                      textTransform: "lowercase",
+                      color: lang === code ? "#6b7080" : "#222428",
                       padding: 0,
                       transition: "color 0.3s ease",
                     }}
@@ -252,7 +236,6 @@ export default function AppLayout() {
               <LogoutButton />
             </nav>
 
-            {/* hamburger */}
             <button
               className={`hamburger ${menuOpen ? "open" : ""}`}
               onClick={() => setMenuOpen((v) => !v)}
@@ -265,7 +248,6 @@ export default function AppLayout() {
           </div>
         </header>
 
-        {/* mobile drawer */}
         <div className={`mobile-drawer ${menuOpen ? "open" : ""}`}>
           <NavLink
             to="/app"
@@ -303,7 +285,7 @@ export default function AppLayout() {
                   chooseLang(code);
                   closeMenu();
                 }}
-                style={{ color: lang === code ? "#c4a97d" : "#3a3228" }}
+                style={{ color: lang === code ? "#6b7080" : "#222428" }}
               >
                 {code}
               </button>

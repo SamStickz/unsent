@@ -22,20 +22,17 @@ export default function Login() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@200;300;400&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         .login-root {
           min-height: 100vh;
-          background-color: #0e0d0b;
-          background-image:
-            radial-gradient(ellipse 80% 60% at 50% -10%, rgba(180,155,110,0.07) 0%, transparent 70%),
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+          background-color: #111214;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-family: 'Jost', sans-serif;
+          font-family: 'Inter', sans-serif;
           padding: 2rem;
         }
 
@@ -53,47 +50,46 @@ export default function Login() {
         .brand { text-align: center; margin-bottom: 3rem; }
 
         .brand-name {
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 300;
+          font-family: 'IM Fell English', serif;
+          font-weight: 400;
           font-size: 2.6rem;
-          color: #e8dfc8;
-          letter-spacing: 0.18em;
-          text-transform: lowercase;
+          color: #c8cdd6;
+          letter-spacing: 0.06em;
         }
 
         .brand-tagline {
-          margin-top: 0.5rem;
-          font-size: 0.7rem;
-          font-weight: 200;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #7a6f5e;
+          margin-top: 0.6rem;
+          font-family: 'IM Fell English', serif;
+          font-style: italic;
+          font-size: 0.82rem;
+          letter-spacing: 0.04em;
+          color: #2e3138;
         }
 
         .divider {
-          width: 32px;
+          width: 24px;
           height: 1px;
-          background: linear-gradient(90deg, transparent, #6b5d48, transparent);
-          margin: 1.2rem auto 0;
+          background: #1e2026;
+          margin: 1rem auto 0;
         }
 
         .field-group {
-          margin-bottom: 1.4rem;
+          margin-bottom: 1.6rem;
           position: relative;
         }
 
         .field-label {
           display: block;
-          font-size: 0.65rem;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #7a6f5e;
+          text-transform: lowercase;
+          color: #2a2d34;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
 
-        .field-group.is-focused .field-label { color: #c4a97d; }
+        .field-group.is-focused .field-label { color: #4a4f5a; }
 
         .field-input-wrap {
           position: relative;
@@ -105,27 +101,27 @@ export default function Login() {
           width: 100%;
           background: transparent;
           border: none;
-          border-bottom: 1px solid #2e2b26;
+          border-bottom: 1px solid #1a1c20;
           padding: 0.6rem 0;
           padding-right: 2rem;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.92rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.88rem;
           font-weight: 300;
-          color: #e8dfc8;
+          color: #c8cdd6;
           outline: none;
           transition: border-color 0.4s ease;
           letter-spacing: 0.04em;
-          caret-color: #c4a97d;
+          caret-color: #4a4f5a;
         }
 
-        .field-input::placeholder { color: #3a352d; }
-        .field-input:focus { border-bottom-color: #c4a97d; }
+        .field-input::placeholder { color: #1e2026; }
+        .field-input:focus { border-bottom-color: #2e3138; }
 
         .field-line {
           position: absolute;
           bottom: 0; left: 0;
           height: 1px; width: 0%;
-          background: #c4a97d;
+          background: #3a3d44;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -138,33 +134,29 @@ export default function Login() {
           border: none;
           cursor: pointer;
           padding: 0;
-          color: #4a4439;
+          color: #222428;
           transition: color 0.3s ease;
           display: flex;
           align-items: center;
-          line-height: 1;
         }
-
-        .eye-btn:hover { color: #d4c9b0; }
-
+        .eye-btn:hover { color: #4a4f5a; }
         .eye-btn svg {
-          width: 16px;
-          height: 16px;
-          stroke: currentColor;
-          fill: none;
+          width: 15px; height: 15px;
+          stroke: currentColor; fill: none;
           stroke-width: 1.5;
           stroke-linecap: round;
           stroke-linejoin: round;
         }
 
         .error-msg {
-          font-size: 0.78rem;
-          font-weight: 300;
-          letter-spacing: 0.1em;
-          color: #b87474;
+          font-family: 'IM Fell English', serif;
+          font-style: italic;
+          font-size: 0.82rem;
+          color: #6b4a4a;
           margin-bottom: 1.6rem;
           text-align: center;
           animation: fadeUp 0.4s ease both;
+          letter-spacing: 0.04em;
         }
 
         .login-btn {
@@ -172,31 +164,18 @@ export default function Login() {
           margin-top: 2rem;
           padding: 0.75rem;
           background: transparent;
-          border: 1px solid #3a352d;
-          color: #c4a97d;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.72rem;
+          border: 1px solid #1e2026;
+          color: #3a3d44;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.6rem;
           font-weight: 300;
           letter-spacing: 0.3em;
-          text-transform: uppercase;
+          text-transform: lowercase;
           cursor: pointer;
           transition: all 0.4s ease;
-          position: relative;
-          overflow: hidden;
         }
 
-        .login-btn::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: rgba(196,169,125,0.07);
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .login-btn:hover { border-color: #c4a97d; color: #e8dfc8; }
-        .login-btn:hover::before { transform: scaleX(1); }
+        .login-btn:hover { border-color: #2e3138; color: #6b7080; }
         .login-btn:active { opacity: 0.7; }
 
         .footer-links {
@@ -205,22 +184,20 @@ export default function Login() {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0;
         }
 
         .footer-links a {
-          font-size: 0.65rem;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.15em;
-          text-transform: uppercase;
-          color: #6b5d48;
+          text-transform: lowercase;
+          color: #222428;
           text-decoration: none;
           transition: color 0.3s ease;
           cursor: pointer;
         }
-
-        .footer-links a:hover { color: #c4a97d; }
-        .footer-sep { color: #3a352d; margin: 0 0.8rem; font-size: 0.65rem; }
+        .footer-links a:hover { color: #4a4f5a; }
+        .footer-sep { color: #1a1c20; margin: 0 0.8rem; font-size: 0.58rem; }
       `}</style>
 
       <div className="login-root">
@@ -236,7 +213,7 @@ export default function Login() {
           <div
             className={`field-group ${focused === "email" ? "is-focused" : ""}`}
           >
-            <label className="field-label">Email</label>
+            <label className="field-label">email</label>
             <div className="field-input-wrap">
               <input
                 type="email"
@@ -254,7 +231,7 @@ export default function Login() {
           <div
             className={`field-group ${focused === "password" ? "is-focused" : ""}`}
           >
-            <label className="field-label">Password</label>
+            <label className="field-label">password</label>
             <div className="field-input-wrap">
               <input
                 type={showPassword ? "text" : "password"}
@@ -287,13 +264,13 @@ export default function Login() {
           </div>
 
           <button className="login-btn" onClick={handleLogin}>
-            Enter
+            enter
           </button>
 
           <div className="footer-links">
-            <a onClick={() => navigate("/forgot")}>Forgot password</a>
+            <a onClick={() => navigate("/forgot")}>forgot password</a>
             <span className="footer-sep">·</span>
-            <a onClick={() => navigate("/signup")}>Create account</a>
+            <a onClick={() => navigate("/signup")}>create account</a>
           </div>
         </div>
       </div>

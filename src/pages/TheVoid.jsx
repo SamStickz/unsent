@@ -14,14 +14,14 @@ const MOODS = [
 ];
 
 const MOOD_COLORS = {
-  "still hurting": "#a07060",
-  "finding peace": "#7a9080",
-  "letting go": "#8a7a9a",
-  "missing you": "#7a8a9a",
-  "finally free": "#a09060",
-  "not yet ready": "#9a7a60",
-  "grateful now": "#7a9070",
-  "just numb": "#7a7a8a",
+  "still hurting": "#5a4a4a",
+  "finding peace": "#4a5a52",
+  "letting go": "#4a4f5a",
+  "missing you": "#4a4d5a",
+  "finally free": "#52504a",
+  "not yet ready": "#4e4a5a",
+  "grateful now": "#4a5a4e",
+  "just numb": "#4a4a52",
 };
 
 function timeAgo(ts) {
@@ -83,7 +83,6 @@ export default function TheVoid() {
 
     setPosts(data || []);
 
-    // Fetch my me-toos
     const {
       data: { session },
     } = await supabase.auth.getSession();
@@ -103,11 +102,7 @@ export default function TheVoid() {
 
     const { data, error } = await supabase
       .from("void_posts")
-      .insert({
-        user_id: user.id,
-        content: content.trim(),
-        mood: mood || null,
-      })
+      .insert({ user_id: user.id, content: content.trim(), mood: mood || null })
       .select()
       .single();
 
@@ -172,7 +167,7 @@ export default function TheVoid() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Jost:wght@200;300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@200;300;400&display=swap');
 
         .void-root {
           padding: 2rem 0 6rem;
@@ -185,47 +180,49 @@ export default function TheVoid() {
         }
 
         .void-header {
-          margin-bottom: 2rem;
+          margin-bottom: 2.4rem;
           text-align: center;
         }
 
         .void-title {
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 300;
-          font-size: 1.3rem;
-          color: #8a7a68;
-          letter-spacing: 0.18em;
-          text-transform: lowercase;
+          font-family: 'IM Fell English', serif;
+          font-weight: 400;
+          font-size: 1.2rem;
+          color: #2e3138;
+          letter-spacing: 0.1em;
         }
 
         .void-identity {
           margin-top: 0.5rem;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.65rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem;
           font-weight: 200;
           letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #5a5040;
+          text-transform: lowercase;
+          color: #1e2026;
         }
 
         .void-identity span {
-          color: #6b5d48;
-          font-style: normal;
+          color: #3a3d44;
+          font-style: italic;
+          font-family: 'IM Fell English', serif;
+          font-size: 0.72rem;
+          letter-spacing: 0.06em;
         }
 
-        /* Compose */
+        /* Compose trigger */
         .void-compose-btn {
           display: block;
           width: 100%;
           background: none;
           border: none;
-          border-bottom: 1px solid #111009;
+          border-bottom: 1px solid #1c1e22;
           padding: 0.8rem 0;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 0.95rem;
-          color: #5a5040;
+          font-weight: 400;
+          font-size: 0.9rem;
+          color: #2a2d34;
           text-align: left;
           cursor: pointer;
           transition: color 0.3s ease;
@@ -233,8 +230,9 @@ export default function TheVoid() {
           letter-spacing: 0.04em;
         }
 
-        .void-compose-btn:hover { color: #6b5d48; }
+        .void-compose-btn:hover { color: #3a3d44; }
 
+        /* Compose form */
         .void-compose {
           margin-bottom: 2rem;
           animation: fadeUp 0.4s ease both;
@@ -245,21 +243,21 @@ export default function TheVoid() {
           min-height: 120px;
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1a1814;
+          border-bottom: 1px solid #1c1e22;
           padding: 0.4rem 0;
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 300;
-          font-size: 1.08rem;
-          color: #e0d5be;
-          line-height: 1.85;
+          font-family: 'IM Fell English', serif;
+          font-weight: 400;
+          font-size: 1.05rem;
+          color: #4a4f5a;
+          line-height: 1.9;
           resize: none;
           outline: none;
-          caret-color: #c4a97d;
+          caret-color: #2e3138;
           transition: border-color 0.3s ease;
         }
 
-        .void-textarea::placeholder { color: #5a5040; font-style: italic; }
-        .void-textarea:focus { border-color: #5a5040; }
+        .void-textarea::placeholder { color: #1e2026; font-style: italic; }
+        .void-textarea:focus { border-color: #2a2d34; }
 
         .void-mood-row {
           display: flex;
@@ -271,20 +269,21 @@ export default function TheVoid() {
         .void-mood-tag {
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1a1814;
+          border-bottom: 1px solid #1c1e22;
           padding: 0.15rem 0;
           margin-right: 0.5rem;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
+          font-weight: 400;
           font-size: 0.82rem;
-          color: #5a5040;
+          color: #2a2d34;
           cursor: pointer;
           transition: all 0.3s ease;
+          letter-spacing: 0.04em;
         }
 
-        .void-mood-tag:hover { color: #8a7a68; border-color: #5a5040; }
-        .void-mood-tag.selected { color: #c4a97d; border-color: #c4a97d; }
+        .void-mood-tag:hover { color: #4a4f5a; border-color: #2e3138; }
+        .void-mood-tag.selected { color: #6b7080; border-color: #4a4f5a; }
 
         .void-compose-footer {
           display: flex;
@@ -296,58 +295,59 @@ export default function TheVoid() {
 
         .void-cancel {
           background: none; border: none; cursor: pointer;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.65rem; font-weight: 300;
-          letter-spacing: 0.2em; text-transform: uppercase;
-          color: #5a5040; padding: 0;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem; font-weight: 300;
+          letter-spacing: 0.2em; text-transform: lowercase;
+          color: #1e2026; padding: 0;
           transition: color 0.3s ease;
         }
 
-        .void-cancel:hover { color: #8a7a68; }
+        .void-cancel:hover { color: #3a3d44; }
 
         .void-post-btn {
           background: none; border: none;
-          border-bottom: 1px solid #3a352d;
+          border-bottom: 1px solid #1e2026;
           cursor: pointer;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.7rem; font-weight: 300;
-          letter-spacing: 0.22em; text-transform: uppercase;
-          color: #6b5d48; padding: 0.2rem 0;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.58rem; font-weight: 300;
+          letter-spacing: 0.22em; text-transform: lowercase;
+          color: #2e3138; padding: 0.2rem 0;
           transition: all 0.3s ease;
         }
 
-        .void-post-btn:hover { color: #c4a97d; border-color: #c4a97d; }
-        .void-post-btn:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
+        .void-post-btn:hover { color: #6b7080; border-color: #3a3d44; }
+        .void-post-btn:disabled { opacity: 0.15; cursor: default; pointer-events: none; }
 
         /* Posts */
         .void-post {
           padding: 2rem 0 1.4rem;
-          border-bottom: 1px solid #111009;
+          border-bottom: 1px solid #1c1e22;
           animation: fadeUp 0.5s ease both;
         }
 
         .void-post:last-child { border-bottom: none; }
 
         .void-post-content {
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 300;
-          font-size: 1.08rem;
-          color: #e0d5be;
-          line-height: 1.85;
+          font-family: 'IM Fell English', serif;
+          font-weight: 400;
+          font-size: 1.05rem;
+          color: #3a3d44;
+          line-height: 1.9;
           white-space: pre-wrap;
           margin-bottom: 0.9rem;
         }
 
         .void-post-mood {
           display: inline-block;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 0.75rem;
-          border-bottom: 1px solid #1a1814;
+          font-weight: 400;
+          font-size: 0.72rem;
+          border-bottom: 1px solid #1c1e22;
           padding: 0.1rem 0;
           margin-bottom: 0.9rem;
           letter-spacing: 0.04em;
+          opacity: 0.7;
         }
 
         .void-post-meta {
@@ -359,11 +359,11 @@ export default function TheVoid() {
         }
 
         .void-post-author {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 0.78rem;
-          color: #7a6f5e;
+          font-weight: 400;
+          font-size: 0.75rem;
+          color: #2a2d34;
           letter-spacing: 0.04em;
         }
 
@@ -374,51 +374,58 @@ export default function TheVoid() {
         }
 
         .void-post-time {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.62rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.52rem;
           font-weight: 200;
           letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: #5a5040;
+          text-transform: lowercase;
+          color: #1e2026;
         }
 
         .void-metoo {
           background: none; border: none; cursor: pointer;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.62rem; font-weight: 300;
-          letter-spacing: 0.14em; text-transform: uppercase;
-          color: #5a5040; padding: 0;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem; font-weight: 300;
+          letter-spacing: 0.14em; text-transform: lowercase;
+          color: #1e2026; padding: 0;
           transition: color 0.3s ease;
           display: flex; align-items: center; gap: 0.3rem;
         }
 
-        .void-metoo:hover { color: #8a7a68; }
-        .void-metoo.active { color: #c4a97d; }
+        .void-metoo:hover { color: #3a3d44; }
+        .void-metoo.active { color: #4a4f5a; }
 
+        /* Empty / loading */
         .void-empty {
           text-align: center;
           padding: 4rem 0;
         }
 
         .void-empty-text {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 0.95rem;
-          color: #5a5040;
+          font-weight: 400;
+          font-size: 0.9rem;
+          color: #2a2d34;
           letter-spacing: 0.06em;
-          line-height: 1.8;
+          line-height: 2;
         }
 
         .void-loading {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
+          font-weight: 400;
           font-size: 0.9rem;
-          color: #5a5040;
+          color: #1e2026;
           text-align: center;
           padding: 3rem 0;
           letter-spacing: 0.06em;
+          animation: breathe 2.4s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+          0%, 100% { opacity: 0.2; }
+          50%       { opacity: 0.5; }
         }
       `}</style>
 
@@ -430,7 +437,6 @@ export default function TheVoid() {
           </p>
         </div>
 
-        {/* Compose */}
         {!composing ? (
           <button
             className="void-compose-btn"
@@ -485,9 +491,8 @@ export default function TheVoid() {
           </div>
         )}
 
-        {/* Posts */}
         {loadingPosts ? (
-          <p className="void-loading">listening to the void…</p>
+          <p className="void-loading">listening…</p>
         ) : posts.length === 0 ? (
           <div className="void-empty">
             <p className="void-empty-text">
@@ -504,8 +509,8 @@ export default function TheVoid() {
                 <span
                   className="void-post-mood"
                   style={{
-                    color: MOOD_COLORS[post.mood] || "#6b5d48",
-                    borderColor: MOOD_COLORS[post.mood] || "#1a1814",
+                    color: MOOD_COLORS[post.mood] || "#3a3d44",
+                    borderColor: MOOD_COLORS[post.mood] || "#1c1e22",
                   }}
                 >
                   {post.mood}

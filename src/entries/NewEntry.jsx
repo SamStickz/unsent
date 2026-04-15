@@ -6,8 +6,6 @@ import { useLang } from "../lib/LangContext";
 
 const FREE_LIMIT = 20;
 
-
-
 export default function NewEntry() {
   const [content, setContent] = useState("");
   const [recipient, setRecipient] = useState("");
@@ -20,7 +18,7 @@ export default function NewEntry() {
   const [acknowledgement, setAcknowledgement] = useState(null);
   const [ackVisible, setAckVisible] = useState(false);
   const [toSelf, setToSelf] = useState(false);
-  const [selfMode, setSelfMode] = useState(null); // "then" | "later"
+  const [selfMode, setSelfMode] = useState(null);
   const [selfAge, setSelfAge] = useState("");
   const { isPro } = useProStatus();
   const { t } = useLang();
@@ -30,7 +28,9 @@ export default function NewEntry() {
 
   useEffect(() => {
     const getCount = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) return;
       const { count } = await supabase
         .from("entries")
@@ -44,13 +44,19 @@ export default function NewEntry() {
 
   useEffect(() => {
     const getUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (session) setUser(session.user);
     };
     getUser();
   }, []);
 
-  const getAcknowledgement = async (entryContent, entryMood, entryRecipient) => {
+  const getAcknowledgement = async (
+    entryContent,
+    entryMood,
+    entryRecipient,
+  ) => {
     try {
       const prompt = `Someone just wrote an unsent message${entryRecipient ? ` to "${entryRecipient}"` : ""}${entryMood ? ` and tagged it as "${entryMood}"` : ""}. 
 
@@ -90,7 +96,6 @@ Reply with ONLY the single line. Nothing else.`;
     if (!content.trim() || !user) return;
     if (sealed && !unlockAt) return;
 
-    // Check entry limit for free users
     if (!isPro && entryCount >= FREE_LIMIT) {
       setUpgradeReason("limit");
       setShowUpgrade(true);
@@ -119,9 +124,12 @@ Reply with ONLY the single line. Nothing else.`;
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
 
-      // Get AI acknowledgement in background
       if (!sealed) {
-        const line = await getAcknowledgement(savedContent, savedMood, savedRecipient);
+        const line = await getAcknowledgement(
+          savedContent,
+          savedMood,
+          savedRecipient,
+        );
         if (line) {
           setAcknowledgement(line);
           setAckVisible(true);
@@ -132,7 +140,6 @@ Reply with ONLY the single line. Nothing else.`;
     }
   };
 
-  // Min date for capsule — tomorrow
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   const minDate = tomorrow.toISOString().split("T")[0];
@@ -140,9 +147,35 @@ Reply with ONLY the single line. Nothing else.`;
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@200;300;400&display=swap');
 
-        /* To self toggle — text switcher, no border box */
+        .entry-root {
+          width: 100%;
+          max-width: 640px;
+          margin: 0 auto;
+          padding: 3rem 0 6rem;
+          font-family: 'Inter', sans-serif;
+          animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .entry-prompt {
+          font-family: 'IM Fell English', serif;
+          font-style: italic;
+          font-weight: 400;
+          font-size: 0.95rem;
+          color: #2e3138;
+          text-align: center;
+          margin-bottom: 2.4rem;
+          letter-spacing: 0.06em;
+          line-height: 1.8;
+        }
+
+        /* To toggle */
         .to-toggle {
           display: flex;
           gap: 1.4rem;
@@ -154,16 +187,16 @@ Reply with ONLY the single line. Nothing else.`;
           background: none;
           border: none;
           cursor: pointer;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.6rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #3a352d;
+          text-transform: lowercase;
+          color: #2a2d34;
           padding: 0;
+          padding-bottom: 3px;
           transition: color 0.3s ease;
           position: relative;
-          padding-bottom: 3px;
         }
 
         .to-toggle-btn::after {
@@ -172,30 +205,26 @@ Reply with ONLY the single line. Nothing else.`;
           bottom: 0; left: 0;
           width: 0%;
           height: 1px;
-          background: #c4a97d;
+          background: #4a4f5a;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .to-toggle-btn.active {
-          color: #c4a97d;
-        }
-
+        .to-toggle-btn.active { color: #6b7080; }
         .to-toggle-btn.active::after { width: 100%; }
-        .to-toggle-sep { color: #2a2720; font-size: 0.6rem; }
 
-        /* Self mode selector */
+        /* Self mode */
         .self-mode-group {
           margin-bottom: 1.6rem;
           animation: fadeUp 0.4s ease both;
         }
 
         .self-mode-label {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.7rem;
-          font-weight: 200;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem;
+          font-weight: 300;
           letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #e0d5be;
+          text-transform: lowercase;
+          color: #2e3138;
           display: block;
           margin-bottom: 0.8rem;
         }
@@ -207,22 +236,21 @@ Reply with ONLY the single line. Nothing else.`;
 
         .self-mode-btn {
           background: none;
-          border: 1px solid #1e1c18;
+          border: 1px solid #1c1e22;
           cursor: pointer;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 1.4rem;
-          color: #e0d5be;
+          font-weight: 400;
+          font-size: 1.3rem;
+          color: #3a3d44;
           padding: 0.4rem 1rem;
           letter-spacing: 0.04em;
           transition: all 0.3s ease;
         }
 
         .self-mode-btn.active {
-          border-color: #e0d5be;
-          color: #e0d5be;
-          background: rgba(196,169,125,0.05);
+          border-color: #3a3d44;
+          color: #6b7080;
         }
 
         .self-age-group {
@@ -233,12 +261,12 @@ Reply with ONLY the single line. Nothing else.`;
         .self-age-input {
           background: none;
           border: none;
-          border-bottom: 1px solid #2a2720;
-          color: #e0d5be;
-          font-family: 'Cormorant Garamond', serif;
+          border-bottom: 1px solid #1c1e22;
+          color: #5a5f6a;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 1.2rem;
+          font-weight: 400;
+          font-size: 1.1rem;
           letter-spacing: 0.04em;
           padding: 0.4rem 0;
           width: 160px;
@@ -246,31 +274,10 @@ Reply with ONLY the single line. Nothing else.`;
           transition: border-color 0.3s ease;
         }
 
-        .self-age-input::placeholder { color: #2a2720; }
-        .self-age-input:focus { border-color: #c4a97d; }
-          margin: 0 auto;
-          padding: 3rem 2rem 6rem;
-          font-family: 'Jost', sans-serif;
-          animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
+        .self-age-input::placeholder { color: #1e2026; font-style: italic; }
+        .self-age-input:focus { border-color: #2e3138; }
 
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .entry-prompt {
-          font-family: 'Cormorant Garamond', serif;
-          font-style: italic;
-          font-weight: 300;
-          font-size: 1rem;
-          color: #4a4030;
-          text-align: center;
-          margin-bottom: 2.4rem;
-          letter-spacing: 0.06em;
-          line-height: 1.7;
-        }
-
+        /* Recipient */
         .recipient-group {
           margin-bottom: 1.6rem;
           position: relative;
@@ -278,77 +285,77 @@ Reply with ONLY the single line. Nothing else.`;
 
         .recipient-label {
           display: block;
-          font-size: 0.58rem;
+          font-size: 0.54rem;
           font-weight: 300;
           letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #4a4030;
+          text-transform: lowercase;
+          color: #2a2d34;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
 
-        .recipient-group.is-focused .recipient-label {
-          color: #c4a97d;
-        }
+        .recipient-group.is-focused .recipient-label { color: #4a4f5a; }
 
         .recipient-input {
           width: 100%;
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1a1814;
+          border-bottom: 1px solid #1c1e22;
           padding: 0.5rem 0;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 1.1rem;
-          color: #c4b99a;
+          font-weight: 400;
+          font-size: 1.05rem;
+          color: #5a5f6a;
           outline: none;
           transition: border-color 0.4s ease;
           letter-spacing: 0.04em;
-          caret-color: #c4a97d;
+          caret-color: #3a3d44;
         }
 
-        .recipient-input::placeholder { color: #2a2720; font-style: italic; }
+        .recipient-input::placeholder { color: #1e2026; font-style: italic; }
 
         .recipient-line {
           position: absolute;
           bottom: 0; left: 0;
           height: 1px; width: 0%;
-          background: #c4a97d;
+          background: #2e3138;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .recipient-group.is-focused .recipient-line { width: 100%; }
 
+        /* Textarea */
         .entry-textarea {
           width: 100%;
           min-height: 200px;
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1a1814;
+          border-bottom: 1px solid #1c1e22;
           padding: 0.8rem 0;
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 300;
-          font-size: 1.15rem;
-          color: #e0d5be;
+          font-family: 'IM Fell English', serif;
+          font-weight: 400;
+          font-size: 1.1rem;
+          color: #4a4f5a;
           line-height: 1.9;
           letter-spacing: 0.02em;
           resize: none;
           outline: none;
           transition: border-color 0.4s ease;
-          caret-color: #c4a97d;
+          caret-color: #3a3d44;
         }
 
-        .entry-textarea::placeholder { color: #2a2720; font-style: italic; }
-        .entry-textarea:focus { border-color: #2e2b26; }
+        .entry-textarea::placeholder { color: #1e2026; font-style: italic; }
+        .entry-textarea:focus { border-color: #2a2d34; }
 
+        /* Mood */
         .mood-label {
           display: block;
-          font-size: 0.58rem;
+          font-size: 0.54rem;
           font-weight: 300;
           letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #4a4030;
+          text-transform: lowercase;
+          color: #2a2d34;
           margin: 1.6rem 0 0.8rem;
         }
 
@@ -361,31 +368,31 @@ Reply with ONLY the single line. Nothing else.`;
         .mood-tag {
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1a1814;
+          border-bottom: 1px solid #1c1e22;
           padding: 0.2rem 0;
           margin-right: 0.6rem;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 0.88rem;
-          color: #3a352d;
+          font-weight: 400;
+          font-size: 0.85rem;
+          color: #2a2d34;
           cursor: pointer;
           transition: all 0.3s ease;
           letter-spacing: 0.04em;
           border-radius: 0;
         }
 
-        .mood-tag:hover { color: #8a7a68; border-color: #3a352d; }
-        .mood-tag.selected { color: #c4a97d; border-color: #c4a97d; }
+        .mood-tag:hover { color: #4a4f5a; border-color: #2e3138; }
+        .mood-tag.selected { color: #6b7080; border-color: #4a4f5a; }
 
-        /* Capsule toggle */
+        /* Capsule */
         .capsule-row {
           margin-top: 2rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding: 1rem 0;
-          border-top: 1px solid #1a1814;
+          border-top: 1px solid #1c1e22;
         }
 
         .capsule-label-group {
@@ -395,19 +402,19 @@ Reply with ONLY the single line. Nothing else.`;
         }
 
         .capsule-label {
-          font-size: 0.72rem;
+          font-size: 0.54rem;
           font-weight: 300;
           letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #d4c9b0;
+          text-transform: lowercase;
+          color: #2e3138;
         }
 
         .capsule-sublabel {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
+          font-weight: 400;
           font-size: 0.68rem;
-          color: #e0d5be;
+          color: #1e2026;
           letter-spacing: 0.04em;
         }
 
@@ -418,37 +425,34 @@ Reply with ONLY the single line. Nothing else.`;
           cursor: pointer;
         }
 
-        .capsule-toggle input {
-          opacity: 0;
-          width: 0; height: 0;
-        }
+        .capsule-toggle input { opacity: 0; width: 0; height: 0; }
 
         .capsule-toggle-track {
           position: absolute;
           inset: 0;
-          background: #1e1c18;
-          border: 1px solid #2e2b26;
+          background: #111214;
+          border: 1px solid #1c1e22;
           border-radius: 20px;
           transition: all 0.4s ease;
         }
 
         .capsule-toggle input:checked + .capsule-toggle-track {
-          background: rgba(196,169,125,0.15);
-          border-color: #e0d5be;
+          background: rgba(74,79,90,0.15);
+          border-color: #3a3d44;
         }
 
         .capsule-toggle-thumb {
           position: absolute;
           top: 3px; left: 3px;
           width: 12px; height: 12px;
-          background: #3a352d;
+          background: #1e2026;
           border-radius: 50%;
           transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .capsule-toggle input:checked ~ .capsule-toggle-thumb {
           transform: translateX(16px);
-          background: #c4a97d;
+          background: #4a4f5a;
         }
 
         /* Date picker */
@@ -457,30 +461,25 @@ Reply with ONLY the single line. Nothing else.`;
           animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(8px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-
         .capsule-date-label {
           display: block;
-          font-size: 0.84rem;
+          font-size: 0.54rem;
           font-weight: 300;
           letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #d4c9b0;
+          text-transform: lowercase;
+          color: #2e3138;
           margin-bottom: 0.6rem;
         }
 
         .capsule-date-input {
           background: transparent;
           border: none;
-          border-bottom: 1px solid #2e2b26;
+          border-bottom: 1px solid #1c1e22;
           padding: 0.5rem 0;
-          font-family: 'Jost', sans-serif;
-          font-size: 1rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.9rem;
           font-weight: 300;
-          color: #c4a97d;
+          color: #4a4f5a;
           outline: none;
           letter-spacing: 0.06em;
           color-scheme: dark;
@@ -489,11 +488,11 @@ Reply with ONLY the single line. Nothing else.`;
 
         .capsule-date-hint {
           margin-top: 0.5rem;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 0.94rem;
-          color: #e0d5be;
+          font-weight: 400;
+          font-size: 0.9rem;
+          color: #2e3138;
           letter-spacing: 0.04em;
         }
 
@@ -505,28 +504,11 @@ Reply with ONLY the single line. Nothing else.`;
           justify-content: space-between;
         }
 
-        /* Acknowledgement */
-        .entry-ack {
-          margin-top: 2rem;
-          text-align: center;
-          font-family: 'Cormorant Garamond', serif;
-          font-style: italic;
-          font-weight: 300;
-          font-size: 1.3rem;
-          color: #e0d5be;
-          letter-spacing: 0.06em;
-          line-height: 1.7;
-          transition: opacity 0.8s ease;
-        }
-
-        .entry-ack.visible { opacity: 1; }
-        .entry-ack.hidden { opacity: 0; }
-
         .entry-char-count {
-          font-size: 0.68rem;
+          font-size: 0.54rem;
           font-weight: 300;
           letter-spacing: 0.15em;
-          color: #e0d5be;
+          color: #1e2026;
         }
 
         .entry-actions {
@@ -536,11 +518,11 @@ Reply with ONLY the single line. Nothing else.`;
         }
 
         .entry-saved {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
+          font-weight: 400;
           font-size: 0.82rem;
-          color: #e0d5be;
+          color: #3a3d44;
           letter-spacing: 0.08em;
           animation: fadeIn 0.5s ease both;
         }
@@ -550,21 +532,37 @@ Reply with ONLY the single line. Nothing else.`;
         .entry-save-btn {
           background: transparent;
           border: none;
-          border-bottom: 1px solid #3a352d;
-          color: #8a7a68;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.6rem;
+          border-bottom: 1px solid #1e2026;
+          color: #2e3138;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.28em;
-          text-transform: uppercase;
+          text-transform: lowercase;
           padding: 0.3rem 0;
           cursor: pointer;
           transition: all 0.4s ease;
-          position: relative;
         }
 
-        .entry-save-btn:hover { color: #c4a97d; border-color: #c4a97d; }
-        .entry-save-btn:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
+        .entry-save-btn:hover { color: #6b7080; border-color: #3a3d44; }
+        .entry-save-btn:disabled { opacity: 0.15; cursor: default; pointer-events: none; }
+
+        /* Acknowledgement */
+        .entry-ack {
+          margin-top: 2rem;
+          text-align: center;
+          font-family: 'IM Fell English', serif;
+          font-style: italic;
+          font-weight: 400;
+          font-size: 1.2rem;
+          color: #3a3d44;
+          letter-spacing: 0.06em;
+          line-height: 1.7;
+          transition: opacity 0.8s ease;
+        }
+
+        .entry-ack.visible { opacity: 1; }
+        .entry-ack.hidden { opacity: 0; }
       `}</style>
 
       <div className="entry-root">
@@ -574,7 +572,6 @@ Reply with ONLY the single line. Nothing else.`;
           {t.write_prompt.split("\n")[1]}
         </p>
 
-        {/* To someone / to myself toggle */}
         <div className="to-toggle">
           <button
             className={`to-toggle-btn ${!toSelf ? "active" : ""}`}
@@ -593,7 +590,6 @@ Reply with ONLY the single line. Nothing else.`;
           </button>
         </div>
 
-        {/* Recipient — someone else */}
         {!toSelf && (
           <div
             className={`recipient-group ${focusedField === "recipient" ? "is-focused" : ""}`}
@@ -602,7 +598,7 @@ Reply with ONLY the single line. Nothing else.`;
             <input
               type="text"
               className="recipient-input"
-              placeholder={t.recipient_placeholder} // ✅
+              placeholder={t.recipient_placeholder}
               value={recipient}
               onChange={(e) => setRecipient(e.target.value)}
               onFocus={() => setFocusedField("recipient")}
@@ -612,7 +608,6 @@ Reply with ONLY the single line. Nothing else.`;
           </div>
         )}
 
-        {/* Self mode — past or future */}
         {toSelf && (
           <div className="self-mode-group">
             <span className="self-mode-label">which version?</span>
@@ -672,7 +667,6 @@ Reply with ONLY the single line. Nothing else.`;
           ))}
         </div>
 
-        {/* Time capsule toggle */}
         <div className="capsule-row">
           <div className="capsule-label-group">
             <span className="capsule-label">seal as time capsule</span>
@@ -736,7 +730,7 @@ Reply with ONLY the single line. Nothing else.`;
               onClick={handleSave}
               disabled={!content.trim() || (sealed && !unlockAt)}
             >
-              {sealed ? "Seal" : "Keep"}
+              {sealed ? "seal" : "keep"}
             </button>
           </div>
         </div>

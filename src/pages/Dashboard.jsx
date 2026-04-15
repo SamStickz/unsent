@@ -17,7 +17,6 @@ export default function Dashboard() {
     if (!onboarded) setShowOnboarding(true);
   }, []);
 
-  // Handle post-payment redirect
   useEffect(() => {
     const upgraded = searchParams.get("upgraded");
     if (upgraded === "true") {
@@ -92,36 +91,36 @@ export default function Dashboard() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=Jost:wght@200;300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@200;300;400&display=swap');
 
         .dashboard {
           min-height: calc(100vh - 73px);
           display: flex;
           flex-direction: column;
           align-items: center;
-          padding: 3rem 2rem;
+          padding: 3rem 0;
         }
 
         .dashboard-greeting {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 0.88rem;
-          color: #2e2a24;
-          letter-spacing: 0.1em;
+          font-weight: 400;
+          font-size: 0.9rem;
+          color: #2e3138;
+          letter-spacing: 0.06em;
           text-align: center;
-          margin-bottom: 0.8rem;
+          margin-bottom: 0.6rem;
           animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
           animation-delay: 0.1s;
         }
 
         .dashboard-streak {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.58rem;
-          font-weight: 200;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem;
+          font-weight: 300;
           letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #2e2a24;
+          text-transform: lowercase;
+          color: #222428;
           text-align: center;
           margin-bottom: 2.4rem;
           animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -130,16 +129,28 @@ export default function Dashboard() {
 
         .dashboard-streak-dot {
           display: inline-block;
-          width: 4px; height: 4px;
-          background: #c4a97d;
+          width: 3px;
+          height: 3px;
+          background: #3a3d44;
           border-radius: 50%;
           margin-right: 0.5rem;
           vertical-align: middle;
-          opacity: 0.7;
+        }
+
+        .dashboard-upgraded {
+          font-family: 'IM Fell English', serif;
+          font-style: italic;
+          font-weight: 400;
+          font-size: 0.95rem;
+          color: #4a4f5a;
+          letter-spacing: 0.06em;
+          text-align: center;
+          margin-bottom: 1.4rem;
+          animation: fadeUp 0.6s ease both;
         }
 
         @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(16px); }
+          from { opacity: 0; transform: translateY(12px); }
           to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
@@ -148,21 +159,7 @@ export default function Dashboard() {
 
       <div className="dashboard">
         {justUpgraded && (
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontStyle: "italic",
-              fontWeight: 300,
-              fontSize: "1rem",
-              color: "#c4a97d",
-              letterSpacing: "0.06em",
-              textAlign: "center",
-              marginBottom: "1.4rem",
-              animation: "fadeUp 0.6s ease both",
-            }}
-          >
-            welcome to unsent pro.
-          </p>
+          <p className="dashboard-upgraded">welcome to unsent pro.</p>
         )}
         <p className="dashboard-greeting">who is this for?</p>
         {streak >= 2 && (

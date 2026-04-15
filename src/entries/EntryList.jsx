@@ -5,14 +5,14 @@ import { useLang } from "../lib/LangContext";
 import { useNavigate } from "react-router-dom";
 
 const MOOD_COLORS = {
-  "still hurting": "#9b6b6b",
-  "finding peace": "#7a9b8a",
-  "letting go": "#c4a97d",
-  "missing you": "#7a8a9b",
-  "finally free": "#a89b6b",
-  "not yet ready": "#8a7a9b",
-  "grateful now": "#6b9b7a",
-  "just numb": "#6b6b7a",
+  "still hurting": "#5a4a4a",
+  "finding peace": "#4a5a52",
+  "letting go": "#4a4f5a",
+  "missing you": "#4a4d5a",
+  "finally free": "#52504a",
+  "not yet ready": "#4e4a5a",
+  "grateful now": "#4a5a4e",
+  "just numb": "#4a4a52",
 };
 
 export default function EntryList() {
@@ -61,7 +61,6 @@ export default function EntryList() {
 
         const today = new Date();
 
-        // On This Day — same month/day, previous year
         const match = topLevel.find((e) => {
           const d = new Date(e.created_at);
           return (
@@ -72,7 +71,6 @@ export default function EntryList() {
         });
         if (match) setOnThisDay(match);
 
-        // Anniversary — exact same month/day/year offset (1yr, 2yr etc)
         const anniv = topLevel.find((e) => {
           const d = new Date(e.created_at);
           const yearDiff = today.getFullYear() - d.getFullYear();
@@ -107,7 +105,6 @@ export default function EntryList() {
     return diff === 1 ? t.one_year_ago : t.years_ago(diff);
   };
 
-  // Mood frequency
   const moodFrequency = entries.reduce((acc, e) => {
     if (e.mood) acc[e.mood] = (acc[e.mood] || 0) + 1;
     return acc;
@@ -115,7 +112,6 @@ export default function EntryList() {
   const moodEntries = Object.entries(moodFrequency).sort((a, b) => b[1] - a[1]);
   const maxCount = moodEntries[0]?.[1] || 1;
 
-  // Mood timeline — group entries by month, pick dominant mood per month
   const moodTimeline = (() => {
     const byMonth = {};
     entries.forEach((e) => {
@@ -142,13 +138,13 @@ export default function EntryList() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Jost:wght@200;300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@200;300;400&display=swap');
 
         .list-root {
           max-width: 640px;
           margin: 0 auto;
           padding: 2.4rem 0 6rem;
-          font-family: 'Jost', sans-serif;
+          font-family: 'Inter', sans-serif;
           animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
@@ -163,28 +159,27 @@ export default function EntryList() {
         }
 
         .list-title {
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 300;
-          font-size: 1.3rem;
-          color: #8a7a68;
-          letter-spacing: 0.18em;
-          text-transform: lowercase;
+          font-family: 'IM Fell English', serif;
+          font-weight: 400;
+          font-size: 1.2rem;
+          color: #3a3d44;
+          letter-spacing: 0.1em;
         }
 
         .list-subtitle {
           margin-top: 0.5rem;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
+          font-weight: 400;
           font-size: 0.78rem;
-          color: #4a4030;
+          color: #2a2d34;
           letter-spacing: 0.06em;
         }
 
         .list-divider {
           width: 24px;
           height: 1px;
-          background: linear-gradient(90deg, transparent, #1e1c18, transparent);
+          background: linear-gradient(90deg, transparent, #1e2026, transparent);
           margin: 0.8rem auto 0;
         }
 
@@ -192,29 +187,29 @@ export default function EntryList() {
         .anniversary-banner {
           margin-bottom: 2.4rem;
           padding: 1.2rem 1.4rem;
-          border-left: 1px solid #c4a97d;
+          border-left: 1px solid #2e3138;
           background: transparent;
           animation: fadeUp 0.8s ease both;
           position: relative;
         }
 
         .anniversary-label {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.56rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem;
           font-weight: 300;
           letter-spacing: 0.24em;
-          text-transform: uppercase;
-          color: #6b5d48;
+          text-transform: lowercase;
+          color: #2e3138;
           margin-bottom: 0.4rem;
           display: block;
         }
 
         .anniversary-years {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 0.92rem;
-          color: #8a7a68;
+          font-weight: 400;
+          font-size: 0.9rem;
+          color: #3a3d44;
           margin-bottom: 0.5rem;
           display: block;
           letter-spacing: 0.04em;
@@ -222,10 +217,10 @@ export default function EntryList() {
         }
 
         .anniversary-content {
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 300;
-          font-size: 1rem;
-          color: #c4b99a;
+          font-family: 'IM Fell English', serif;
+          font-weight: 400;
+          font-size: 0.95rem;
+          color: #2e3138;
           line-height: 1.8;
           display: -webkit-box;
           -webkit-line-clamp: 2;
@@ -239,51 +234,54 @@ export default function EntryList() {
           top: 1rem; right: 0;
           background: none; border: none;
           cursor: pointer;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.56rem; font-weight: 200;
-          letter-spacing: 0.18em; text-transform: uppercase;
-          color: #3a352d; padding: 0;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.52rem;
+          font-weight: 200;
+          letter-spacing: 0.18em;
+          text-transform: lowercase;
+          color: #1e2026;
+          padding: 0;
           transition: color 0.3s ease;
         }
-        .anniversary-dismiss:hover { color: #8a7a68; }
+        .anniversary-dismiss:hover { color: #3a3d44; }
 
         /* On This Day */
         .on-this-day {
           margin-bottom: 2.4rem;
           padding: 1.2rem 1.4rem;
-          border-left: 1px solid #2e2b26;
+          border-left: 1px solid #1c1e22;
           background: transparent;
           animation: fadeUp 0.8s ease both;
           position: relative;
         }
 
         .on-this-day-label {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.56rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem;
           font-weight: 300;
           letter-spacing: 0.24em;
-          text-transform: uppercase;
-          color: #4a4030;
+          text-transform: lowercase;
+          color: #2a2d34;
           margin-bottom: 0.5rem;
           display: block;
         }
 
         .on-this-day-ago {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
+          font-weight: 400;
           font-size: 0.78rem;
-          color: #6b5d48;
+          color: #2e3138;
           margin-bottom: 0.6rem;
           display: block;
           letter-spacing: 0.04em;
         }
 
         .on-this-day-content {
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 300;
-          font-size: 1rem;
-          color: #a89880;
+          font-family: 'IM Fell English', serif;
+          font-weight: 400;
+          font-size: 0.95rem;
+          color: #2a2d34;
           line-height: 1.8;
           white-space: pre-wrap;
           display: -webkit-box;
@@ -294,12 +292,12 @@ export default function EntryList() {
 
         .on-this-day-recipient {
           margin-top: 0.5rem;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.56rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.52rem;
           font-weight: 200;
           letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #4a4030;
+          text-transform: lowercase;
+          color: #1e2026;
         }
 
         .on-this-day-dismiss {
@@ -307,21 +305,24 @@ export default function EntryList() {
           top: 1rem; right: 0;
           background: none; border: none;
           cursor: pointer;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.56rem; font-weight: 200;
-          letter-spacing: 0.18em; text-transform: uppercase;
-          color: #3a352d; padding: 0;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.52rem;
+          font-weight: 200;
+          letter-spacing: 0.18em;
+          text-transform: lowercase;
+          color: #1e2026;
+          padding: 0;
           transition: color 0.3s ease;
         }
-        .on-this-day-dismiss:hover { color: #8a7a68; }
+        .on-this-day-dismiss:hover { color: #3a3d44; }
 
         /* Loading */
         .list-loading {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 1.2rem;
-          color: #e0d5be;
+          font-weight: 400;
+          font-size: 1.1rem;
+          color: #2a2d34;
           text-align: center;
           letter-spacing: 0.1em;
           padding: 4rem 0;
@@ -329,8 +330,8 @@ export default function EntryList() {
         }
 
         @keyframes breathe {
-          0%, 100% { opacity: 0.3; }
-          50%       { opacity: 0.8; }
+          0%, 100% { opacity: 0.2; }
+          50%       { opacity: 0.6; }
         }
 
         /* Empty */
@@ -346,85 +347,75 @@ export default function EntryList() {
         .list-empty-line {
           width: 1px;
           height: 48px;
-          background: linear-gradient(180deg, transparent, #2e2b26, transparent);
+          background: linear-gradient(180deg, transparent, #1e2026, transparent);
           margin-bottom: 2rem;
         }
 
         .list-empty-title {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 1.45rem;
-          color: #e0d5be;
+          font-weight: 400;
+          font-size: 1.3rem;
+          color: #2e3138;
           letter-spacing: 0.06em;
           text-align: center;
           margin-bottom: 0.8rem;
         }
 
         .list-empty-sub {
-          font-size: 0.72rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.58rem;
           font-weight: 200;
           letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: #e0d5be;
+          text-transform: lowercase;
+          color: #1e2026;
           text-align: center;
-          line-height: 1.8;
+          line-height: 2;
           margin-bottom: 2.4rem;
         }
 
         .list-empty-btn {
           background: transparent;
-          border: 1px solid #2e2b26;
-          color: #c4a97d;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.84rem;
+          border: 1px solid #1c1e22;
+          color: #2e3138;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.28em;
-          text-transform: uppercase;
+          text-transform: lowercase;
           padding: 0.7rem 1.8rem;
           cursor: pointer;
           transition: all 0.4s ease;
-          position: relative;
-          overflow: hidden;
         }
 
-        .list-empty-btn::before {
-          content: '';
-          position: absolute; inset: 0;
-          background: rgba(196,169,125,0.07);
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .list-empty-btn:hover { border-color: #c4a97d; color: #e8dfc8; }
-        .list-empty-btn:hover::before { transform: scaleX(1); }
+        .list-empty-btn:hover { border-color: #2e3138; color: #6b7080; }
 
         .list-count {
-          font-size: 0.7rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem;
           font-weight: 200;
           letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #e0d5be;
+          text-transform: lowercase;
+          color: #1e2026;
           text-align: center;
           margin-bottom: 1rem;
         }
 
-        /* Mood over time — weighted tags */
+        /* Mood map */
         .mood-map {
           margin-bottom: 2.4rem;
           padding: 1.4rem 0;
-          border-top: 1px solid #111009;
-          border-bottom: 1px solid #111009;
+          border-top: 1px solid #1c1e22;
+          border-bottom: 1px solid #1c1e22;
         }
 
         .mood-map-label {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.56rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem;
           font-weight: 300;
           letter-spacing: 0.24em;
-          text-transform: uppercase;
-          color: #4a4030;
+          text-transform: lowercase;
+          color: #2a2d34;
           margin-bottom: 1rem;
           display: block;
           text-align: center;
@@ -440,9 +431,9 @@ export default function EntryList() {
         }
 
         .mood-map-tag {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
+          font-weight: 400;
           letter-spacing: 0.04em;
           transition: opacity 0.3s ease;
           line-height: 1.4;
@@ -451,7 +442,7 @@ export default function EntryList() {
 
         .mood-map-tag:hover { opacity: 1 !important; }
 
-        /* Mood timeline graph */
+        /* Mood timeline */
         .mood-timeline {
           margin-top: 0.8rem;
           overflow-x: auto;
@@ -474,30 +465,31 @@ export default function EntryList() {
         }
 
         .mood-timeline-dot {
-          width: 8px;
-          height: 8px;
+          width: 6px;
+          height: 6px;
           border-radius: 50%;
           flex-shrink: 0;
           transition: transform 0.3s ease;
           cursor: default;
+          opacity: 0.6;
         }
 
-        .mood-timeline-dot:hover { transform: scale(1.6); }
+        .mood-timeline-dot:hover { transform: scale(1.6); opacity: 1; }
 
         .mood-timeline-month {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.58rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.52rem;
           font-weight: 200;
           letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: #e0d5be;
+          text-transform: lowercase;
+          color: #1e2026;
           white-space: nowrap;
         }
 
         .mood-timeline-line {
           flex: 1;
           height: 1px;
-          background: linear-gradient(90deg, #1a1814, transparent);
+          background: linear-gradient(90deg, #1a1c20, transparent);
           align-self: center;
           min-width: 8px;
         }
@@ -512,17 +504,15 @@ export default function EntryList() {
           </p>
         </div>
 
-        {/* Mood over time */}
         {!loading && moodEntries.length > 0 && (
           <div className="mood-map">
             <span className="mood-map-label">how you've been feeling</span>
 
-            {/* Weighted tags */}
             <div className="mood-map-tags">
               {moodEntries.map(([m, count]) => {
                 const scale = 0.78 + (count / maxCount) * 0.6;
-                const opacity = 0.3 + (count / maxCount) * 0.7;
-                const color = MOOD_COLORS[m] || "#c4a97d";
+                const opacity = 0.25 + (count / maxCount) * 0.55;
+                const color = MOOD_COLORS[m] || "#4a4f5a";
                 return (
                   <span
                     key={m}
@@ -536,7 +526,6 @@ export default function EntryList() {
               })}
             </div>
 
-            {/* Timeline graph — dots per month */}
             {moodTimeline.length > 1 && (
               <div className="mood-timeline">
                 <div className="mood-timeline-inner">
@@ -547,7 +536,7 @@ export default function EntryList() {
                           className="mood-timeline-dot"
                           style={{
                             background:
-                              MOOD_COLORS[point.dominant] || "#c4a97d",
+                              MOOD_COLORS[point.dominant] || "#4a4f5a",
                           }}
                           title={`${point.label} — ${point.dominant}`}
                         />
@@ -566,7 +555,6 @@ export default function EntryList() {
           </div>
         )}
 
-        {/* Anniversary banner — exact date, specific year */}
         {anniversary && !anniversaryDismissed && (
           <div className="anniversary-banner">
             <span className="anniversary-label">an anniversary</span>
@@ -583,7 +571,6 @@ export default function EntryList() {
           </div>
         )}
 
-        {/* On This Day banner */}
         {onThisDay && !dismissed && onThisDay.id !== anniversary?.id && (
           <div className="on-this-day">
             <span className="on-this-day-label">on this day</span>
@@ -621,12 +608,7 @@ export default function EntryList() {
         ) : (
           <>
             <p className="list-count">
-              {entries.length}{" "}
-              {entries.length === 1
-                ? t.one_year_ago.includes("year")
-                  ? t.one_year_ago
-                  : "entry"
-                : "entries"}
+              {entries.length} {entries.length === 1 ? "entry" : "entries"}
             </p>
             {entries.map((entry) => (
               <EntryCard
