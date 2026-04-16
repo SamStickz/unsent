@@ -7,19 +7,16 @@ export default function LanguagePicker() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Jost:wght@200;300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@200;300;400&display=swap');
 
         .lang-root {
           min-height: 100vh;
-          background-color: #0e0d0b;
-          background-image:
-            radial-gradient(ellipse 80% 60% at 50% -10%, rgba(180,155,110,0.07) 0%, transparent 70%),
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+          background-color: #111214;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          font-family: 'Jost', sans-serif;
+          font-family: 'Inter', sans-serif;
           padding: 2rem;
           animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
@@ -30,29 +27,28 @@ export default function LanguagePicker() {
         }
 
         .lang-brand {
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 300;
+          font-family: 'IM Fell English', serif;
+          font-weight: 400;
           font-size: 2.2rem;
-          color: #e8dfc8;
-          letter-spacing: 0.22em;
-          text-transform: lowercase;
+          color: #2e3138;
+          letter-spacing: 0.1em;
           margin-bottom: 0.6rem;
         }
 
         .lang-divider {
           width: 1px;
           height: 32px;
-          background: linear-gradient(180deg, transparent, #2e2b26, transparent);
+          background: linear-gradient(180deg, transparent, #1e2026, transparent);
           margin: 0 auto 2.4rem;
         }
 
         .lang-prompt {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.62rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem;
           font-weight: 200;
           letter-spacing: 0.28em;
-          text-transform: uppercase;
-          color: #4a4030;
+          text-transform: lowercase;
+          color: #1e2026;
           margin-bottom: 2.4rem;
           text-align: center;
         }
@@ -68,7 +64,7 @@ export default function LanguagePicker() {
         .lang-btn {
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1a1814;
+          border-bottom: 1px solid #1c1e22;
           padding: 0.8rem 0;
           display: flex;
           align-items: baseline;
@@ -84,34 +80,34 @@ export default function LanguagePicker() {
           position: absolute;
           bottom: 0; left: 0;
           height: 1px; width: 0%;
-          background: #c4a97d;
+          background: #2e3138;
           transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .lang-btn:hover::after { width: 100%; }
 
         .lang-btn-native {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 1.2rem;
-          color: #c4b99a;
+          font-weight: 400;
+          font-size: 1.15rem;
+          color: #2a2d34;
           letter-spacing: 0.06em;
           transition: color 0.3s ease;
         }
 
         .lang-btn-label {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.56rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.52rem;
           font-weight: 200;
           letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #3a352d;
+          text-transform: lowercase;
+          color: #1e2026;
           transition: color 0.3s ease;
         }
 
-        .lang-btn:hover .lang-btn-native { color: #e8dfc8; }
-        .lang-btn:hover .lang-btn-label { color: #8a7a68; }
+        .lang-btn:hover .lang-btn-native { color: #4a4f5a; }
+        .lang-btn:hover .lang-btn-label  { color: #2e3138; }
       `}</style>
 
       <div className="lang-root">

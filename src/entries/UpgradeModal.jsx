@@ -18,26 +18,20 @@ export default function UpgradeModal({ onClose, reason }) {
   const handlePaystack = async () => {
     if (!user) return;
     setLoading(true);
-
     try {
       const ref = `unsent_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-
       const res = await fetch("/api/paystack-init", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: user.email, ref }),
       });
-
       const data = await res.json();
-
       if (data.url) {
         window.location.href = data.url;
       } else {
-        // Fallback — open Paystack directly with plan link
         window.location.href = `https://paystack.com/pay/${import.meta.env.VITE_PAYSTACK_PLAN_CODE}`;
       }
-    } catch (err) {
-      // Fallback on any error
+    } catch {
       window.location.href = `https://paystack.com/pay/${import.meta.env.VITE_PAYSTACK_PLAN_CODE}`;
     } finally {
       setLoading(false);
@@ -54,12 +48,12 @@ export default function UpgradeModal({ onClose, reason }) {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Jost:wght@200;300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@200;300;400&display=swap');
 
         .upgrade-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(8,7,6,0.94);
+          background: rgba(10,11,12,0.95);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -72,7 +66,7 @@ export default function UpgradeModal({ onClose, reason }) {
 
         .upgrade-modal {
           width: 100%;
-          max-width: 380px;
+          max-width: 360px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -86,33 +80,28 @@ export default function UpgradeModal({ onClose, reason }) {
           to   { opacity: 1; transform: translateY(0); }
         }
 
-        .upgrade-icon {
-          font-size: 1.4rem;
-          opacity: 0.5;
-        }
-
         .upgrade-reason {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.72rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem;
           font-weight: 200;
           letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #c4b99a;
+          text-transform: lowercase;
+          color: #2a2d34;
         }
 
         .upgrade-title {
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 300;
-          font-size: 2rem;
-          color: #e8dfc8;
-          letter-spacing: 0.1em;
+          font-family: 'IM Fell English', serif;
+          font-weight: 400;
+          font-size: 1.9rem;
+          color: #2e3138;
+          letter-spacing: 0.08em;
           line-height: 1.2;
         }
 
         .upgrade-divider {
           width: 24px;
           height: 1px;
-          background: linear-gradient(90deg, transparent, #3a352d, transparent);
+          background: linear-gradient(90deg, transparent, #1e2026, transparent);
         }
 
         .upgrade-perks {
@@ -123,11 +112,11 @@ export default function UpgradeModal({ onClose, reason }) {
         }
 
         .upgrade-perk {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 0.98rem;
-          color: #c4b99a;
+          font-weight: 400;
+          font-size: 0.95rem;
+          color: #2a2d34;
           letter-spacing: 0.04em;
           display: flex;
           align-items: center;
@@ -139,64 +128,52 @@ export default function UpgradeModal({ onClose, reason }) {
           width: 3px;
           height: 3px;
           border-radius: 50%;
-          background: #c4a97d;
+          background: #3a3d44;
           flex-shrink: 0;
         }
 
         .upgrade-price {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.72rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem;
           font-weight: 200;
           letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: #8a7a68;
+          text-transform: lowercase;
+          color: #2a2d34;
         }
 
         .upgrade-price strong {
-          color: #c4a97d;
+          color: #4a4f5a;
           font-weight: 300;
         }
 
         .upgrade-btn {
           width: 100%;
           background: transparent;
-          border: 1px solid #6b5d48;
-          color: #e8dfc8;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.72rem;
+          border: 1px solid #1c1e22;
+          color: #2e3138;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.28em;
-          text-transform: uppercase;
+          text-transform: lowercase;
           padding: 1rem;
           cursor: pointer;
           transition: all 0.4s ease;
-          position: relative;
-          overflow: hidden;
         }
 
-        .upgrade-btn::before {
-          content: '';
-          position: absolute; inset: 0;
-          background: rgba(196,169,125,0.08);
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .upgrade-btn:hover { border-color: #c4a97d; }
-        .upgrade-btn:hover::before { transform: scaleX(1); }
-        .upgrade-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+        .upgrade-btn:hover { border-color: #2e3138; color: #6b7080; }
+        .upgrade-btn:disabled { opacity: 0.15; cursor: default; pointer-events: none; }
 
         .upgrade-close {
           background: none; border: none; cursor: pointer;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.7rem; font-weight: 200;
-          letter-spacing: 0.2em; text-transform: uppercase;
-          color: #3a352d; padding: 0;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.52rem; font-weight: 200;
+          letter-spacing: 0.2em; text-transform: lowercase;
+          color: #1e2026; padding: 0;
           transition: color 0.3s ease;
         }
 
-        .upgrade-close:hover { color: #6b5d48; }
+        .upgrade-close:hover { color: #3a3d44; }
       `}</style>
 
       <div
@@ -204,32 +181,23 @@ export default function UpgradeModal({ onClose, reason }) {
         onClick={(e) => e.target === e.currentTarget && onClose()}
       >
         <div className="upgrade-modal">
-          <span className="upgrade-icon">◇</span>
           <span className="upgrade-reason">{reasonText}</span>
           <h2 className="upgrade-title">unsent pro</h2>
           <div className="upgrade-divider" />
 
           <div className="upgrade-perks">
-            <div className="upgrade-perk">
-              <div className="upgrade-perk-dot" />
-              unlimited entries
-            </div>
-            <div className="upgrade-perk">
-              <div className="upgrade-perk-dot" />
-              time capsules
-            </div>
-            <div className="upgrade-perk">
-              <div className="upgrade-perk-dot" />
-              mood timeline
-            </div>
-            <div className="upgrade-perk">
-              <div className="upgrade-perk-dot" />
-              anniversaries
-            </div>
-            <div className="upgrade-perk">
-              <div className="upgrade-perk-dot" />
-              export to pdf
-            </div>
+            {[
+              "unlimited entries",
+              "time capsules",
+              "mood timeline",
+              "anniversaries",
+              "export to pdf",
+            ].map((perk) => (
+              <div key={perk} className="upgrade-perk">
+                <div className="upgrade-perk-dot" />
+                {perk}
+              </div>
+            ))}
           </div>
 
           <p className="upgrade-price">
