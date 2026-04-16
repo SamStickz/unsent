@@ -112,11 +112,11 @@ export default function VoidNamePicker({ userId, onDone }) {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Jost:wght@200;300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@200;300;400&display=swap');
 
         .vname-root {
           min-height: 100vh;
-          background: #0e0d0b;
+          background: #111214;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -131,23 +131,23 @@ export default function VoidNamePicker({ userId, onDone }) {
         }
 
         .vname-title {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 1.3rem;
-          color: #8a7a68;
-          letter-spacing: 0.08em;
+          font-weight: 400;
+          font-size: 1.2rem;
+          color: #2e3138;
+          letter-spacing: 0.06em;
           text-align: center;
           margin-bottom: 0.5rem;
         }
 
         .vname-sub {
-          font-family: 'Jost', sans-serif;
-          font-size: 0.66rem;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem;
           font-weight: 200;
           letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: #5a5040;
+          text-transform: lowercase;
+          color: #1e2026;
           text-align: center;
           margin-bottom: 2.4rem;
         }
@@ -164,13 +164,13 @@ export default function VoidNamePicker({ userId, onDone }) {
         .vname-option {
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1a1814;
+          border-bottom: 1px solid #1c1e22;
           padding: 0.7rem 0;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
-          font-weight: 300;
-          font-size: 1.1rem;
-          color: #7a6f5e;
+          font-weight: 400;
+          font-size: 1.05rem;
+          color: #2a2d34;
           cursor: pointer;
           text-align: left;
           transition: all 0.3s ease;
@@ -183,16 +183,13 @@ export default function VoidNamePicker({ userId, onDone }) {
           position: absolute;
           bottom: 0; left: 0;
           height: 1px; width: 0%;
-          background: #c4a97d;
+          background: #3a3d44;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .vname-option:hover { color: #a89880; }
+        .vname-option:hover { color: #3a3d44; }
         .vname-option:hover::after { width: 100%; }
-
-        .vname-option.selected {
-          color: #c4a97d;
-        }
+        .vname-option.selected { color: #6b7080; }
         .vname-option.selected::after { width: 100%; }
 
         .vname-actions {
@@ -203,35 +200,35 @@ export default function VoidNamePicker({ userId, onDone }) {
 
         .vname-regen {
           background: none; border: none; cursor: pointer;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.65rem; font-weight: 300;
-          letter-spacing: 0.2em; text-transform: uppercase;
-          color: #5a5040; padding: 0;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.54rem; font-weight: 300;
+          letter-spacing: 0.2em; text-transform: lowercase;
+          color: #1e2026; padding: 0;
           transition: color 0.3s ease;
         }
 
-        .vname-regen:hover { color: #8a7a68; }
+        .vname-regen:hover { color: #3a3d44; }
 
         .vname-confirm {
           background: none; border: none;
-          border-bottom: 1px solid #3a352d;
+          border-bottom: 1px solid #1e2026;
           cursor: pointer;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.7rem; font-weight: 300;
-          letter-spacing: 0.22em; text-transform: uppercase;
-          color: #6b5d48; padding: 0.2rem 0;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.58rem; font-weight: 300;
+          letter-spacing: 0.22em; text-transform: lowercase;
+          color: #2e3138; padding: 0.2rem 0;
           transition: all 0.3s ease;
         }
 
-        .vname-confirm:hover { color: #c4a97d; border-color: #c4a97d; }
-        .vname-confirm:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
+        .vname-confirm:hover { color: #6b7080; border-color: #3a3d44; }
+        .vname-confirm:disabled { opacity: 0.15; cursor: default; pointer-events: none; }
 
         .vname-error {
           margin-top: 1rem;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: 'IM Fell English', serif;
           font-style: italic;
           font-size: 0.82rem;
-          color: #8a4f4f;
+          color: #7a4a4a;
           text-align: center;
           letter-spacing: 0.04em;
         }

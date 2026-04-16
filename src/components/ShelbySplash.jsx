@@ -54,7 +54,7 @@ export default function ShelbySplash({ onDone }) {
           .shelby-splash {
             position: fixed;
             inset: 0;
-            background: #0e0d0b;
+            background: #111214;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -64,9 +64,10 @@ export default function ShelbySplash({ onDone }) {
           }
           .shelby-enter {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 13px;
-            color: #7A6030;
+            font-size: 12px;
+            color: #2e3138;
             letter-spacing: 0.2em;
+            text-transform: lowercase;
             animation: shelbyCursorBlink 1.2s step-end infinite;
           }
           @keyframes shelbyCursorBlink {
@@ -87,7 +88,7 @@ export default function ShelbySplash({ onDone }) {
         .shelby-splash {
           position: fixed;
           inset: 0;
-          background: #0e0d0b;
+          background: #111214;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -100,8 +101,8 @@ export default function ShelbySplash({ onDone }) {
 
         .shelby-quote {
           font-family: 'Courier New', Courier, monospace;
-          font-size: clamp(15px, 2.2vw, 19px);
-          color: #D4A84B;
+          font-size: clamp(14px, 2.2vw, 18px);
+          color: #4a4f5a;
           line-height: 1.9;
           white-space: pre-wrap;
           max-width: 520px;
@@ -110,9 +111,9 @@ export default function ShelbySplash({ onDone }) {
 
         .shelby-cursor {
           display: inline-block;
-          width: 11px;
+          width: 10px;
           height: 1em;
-          background: #D4A84B;
+          background: #3a3d44;
           vertical-align: text-bottom;
           margin-left: 2px;
           animation: shelbyCursorBlink 0.53s step-end infinite;
@@ -125,8 +126,8 @@ export default function ShelbySplash({ onDone }) {
 
         .shelby-attr {
           font-family: 'Courier New', Courier, monospace;
-          font-size: 13px;
-          color: #7A6030;
+          font-size: 12px;
+          color: #2a2d34;
           margin-top: 1.6rem;
           letter-spacing: 0.12em;
           opacity: 0;
