@@ -30,7 +30,7 @@ export default function AppLayout() {
           background: rgba(17,18,20,0.97);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
-          border-bottom: 1px solid #1c1e22;
+          border-bottom: 1px solid #2a2d34;
           padding: 0 2rem;
         }
 
@@ -47,12 +47,12 @@ export default function AppLayout() {
           font-family: 'IM Fell English', serif;
           font-weight: 400;
           font-size: 1.05rem;
-          color: #5a5f6a;
+          color: #8a8f9a;
           letter-spacing: 0.06em;
           text-decoration: none;
           transition: color 0.3s ease;
         }
-        .app-brand:hover { color: #8a8f9a; }
+        .app-brand:hover { color: #b0b5c0; }
 
         .app-nav {
           display: flex;
@@ -62,11 +62,11 @@ export default function AppLayout() {
 
         .app-nav-link {
           font-family: 'Inter', sans-serif;
-          font-size: 0.58rem;
+          font-size: 0.62rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: lowercase;
-          color: #2e3138;
+          color: #5a5f6a;
           text-decoration: none;
           transition: color 0.3s ease;
           position: relative;
@@ -78,11 +78,11 @@ export default function AppLayout() {
           bottom: -1px; left: 0;
           width: 0%;
           height: 1px;
-          background: #4a4f5a;
+          background: #8a8f9a;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .app-nav-link:hover { color: #4a4f5a; }
-        .app-nav-link.active { color: #6b7080; }
+        .app-nav-link:hover { color: #8a8f9a; }
+        .app-nav-link.active { color: #b0b5c0; }
         .app-nav-link.active::after,
         .app-nav-link:hover::after { width: 100%; }
 
@@ -94,14 +94,15 @@ export default function AppLayout() {
           background: none;
           border: none;
           cursor: pointer;
-          padding: 4px;
+          padding: 8px;
           z-index: 60;
+          position: relative;
         }
         .hamburger span {
           display: block;
-          width: 20px;
+          width: 22px;
           height: 1px;
-          background: #3a3d44;
+          background: #8a8f9a;
           transition: all 0.3s ease;
           transform-origin: center;
         }
@@ -133,12 +134,12 @@ export default function AppLayout() {
           font-weight: 400;
           font-size: 2.4rem;
           letter-spacing: 0.06em;
-          color: #2e3138;
+          color: #5a5f6a;
           text-decoration: none;
           transition: color 0.3s ease;
         }
         .mobile-nav-link:hover,
-        .mobile-nav-link.active { color: #6b7080; }
+        .mobile-nav-link.active { color: #b0b5c0; }
 
         .mobile-lang {
           display: flex;
@@ -149,7 +150,7 @@ export default function AppLayout() {
           border: none;
           cursor: pointer;
           font-family: 'Inter', sans-serif;
-          font-size: 0.58rem;
+          font-size: 0.62rem;
           font-weight: 300;
           letter-spacing: 0.18em;
           text-transform: lowercase;
@@ -220,11 +221,11 @@ export default function AppLayout() {
                       border: "none",
                       cursor: "pointer",
                       fontFamily: "'Inter', sans-serif",
-                      fontSize: "0.52rem",
+                      fontSize: "0.56rem",
                       fontWeight: 300,
                       letterSpacing: "0.16em",
                       textTransform: "lowercase",
-                      color: lang === code ? "#6b7080" : "#222428",
+                      color: lang === code ? "#b0b5c0" : "#3a3d44",
                       padding: 0,
                       transition: "color 0.3s ease",
                     }}
@@ -285,7 +286,7 @@ export default function AppLayout() {
                   chooseLang(code);
                   closeMenu();
                 }}
-                style={{ color: lang === code ? "#6b7080" : "#222428" }}
+                style={{ color: lang === code ? "#b0b5c0" : "#5a5f6a" }}
               >
                 {code}
               </button>

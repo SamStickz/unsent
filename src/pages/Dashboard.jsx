@@ -44,7 +44,6 @@ export default function Dashboard() {
         data: { session },
       } = await supabase.auth.getSession();
       if (!session) return;
-
       const { data, error } = await supabase
         .from("entries")
         .select("created_at")
@@ -64,7 +63,6 @@ export default function Dashboard() {
       const yesterday = new Date(Date.now() - 86400000).toLocaleDateString(
         "en-CA",
       );
-
       if (days[0] !== today && days[0] !== yesterday) return;
 
       let count = 1;
@@ -75,7 +73,6 @@ export default function Dashboard() {
         if (diff === 1) count++;
         else break;
       }
-
       if (count >= 2) setStreak(count);
     };
     calcStreak();
@@ -105,8 +102,8 @@ export default function Dashboard() {
           font-family: 'IM Fell English', serif;
           font-style: italic;
           font-weight: 400;
-          font-size: 0.9rem;
-          color: #2e3138;
+          font-size: 1rem;
+          color: #6a6f7a;
           letter-spacing: 0.06em;
           text-align: center;
           margin-bottom: 0.6rem;
@@ -116,11 +113,11 @@ export default function Dashboard() {
 
         .dashboard-streak {
           font-family: 'Inter', sans-serif;
-          font-size: 0.54rem;
+          font-size: 0.56rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: lowercase;
-          color: #222428;
+          color: #5a5f6a;
           text-align: center;
           margin-bottom: 2.4rem;
           animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -131,7 +128,7 @@ export default function Dashboard() {
           display: inline-block;
           width: 3px;
           height: 3px;
-          background: #3a3d44;
+          background: #6a6f7a;
           border-radius: 50%;
           margin-right: 0.5rem;
           vertical-align: middle;
@@ -142,7 +139,7 @@ export default function Dashboard() {
           font-style: italic;
           font-weight: 400;
           font-size: 0.95rem;
-          color: #4a4f5a;
+          color: #8a8f9a;
           letter-spacing: 0.06em;
           text-align: center;
           margin-bottom: 1.4rem;

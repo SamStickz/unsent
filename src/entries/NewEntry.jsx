@@ -95,7 +95,6 @@ Reply with ONLY the single line. Nothing else.`;
   const handleSave = async () => {
     if (!content.trim() || !user) return;
     if (sealed && !unlockAt) return;
-
     if (!isPro && entryCount >= FREE_LIMIT) {
       setUpgradeReason("limit");
       setShowUpgrade(true);
@@ -167,15 +166,14 @@ Reply with ONLY the single line. Nothing else.`;
           font-family: 'IM Fell English', serif;
           font-style: italic;
           font-weight: 400;
-          font-size: 0.95rem;
-          color: #2e3138;
+          font-size: 1rem;
+          color: #6a6f7a;
           text-align: center;
           margin-bottom: 2.4rem;
           letter-spacing: 0.06em;
           line-height: 1.8;
         }
 
-        /* To toggle */
         .to-toggle {
           display: flex;
           gap: 1.4rem;
@@ -188,11 +186,11 @@ Reply with ONLY the single line. Nothing else.`;
           border: none;
           cursor: pointer;
           font-family: 'Inter', sans-serif;
-          font-size: 0.58rem;
+          font-size: 0.62rem;
           font-weight: 300;
           letter-spacing: 0.22em;
           text-transform: lowercase;
-          color: #2a2d34;
+          color: #5a5f6a;
           padding: 0;
           padding-bottom: 3px;
           transition: color 0.3s ease;
@@ -205,14 +203,13 @@ Reply with ONLY the single line. Nothing else.`;
           bottom: 0; left: 0;
           width: 0%;
           height: 1px;
-          background: #4a4f5a;
+          background: #8a8f9a;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .to-toggle-btn.active { color: #6b7080; }
+        .to-toggle-btn.active { color: #b0b5c0; }
         .to-toggle-btn.active::after { width: 100%; }
 
-        /* Self mode */
         .self-mode-group {
           margin-bottom: 1.6rem;
           animation: fadeUp 0.4s ease both;
@@ -220,49 +217,40 @@ Reply with ONLY the single line. Nothing else.`;
 
         .self-mode-label {
           font-family: 'Inter', sans-serif;
-          font-size: 0.54rem;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: lowercase;
-          color: #2e3138;
+          color: #5a5f6a;
           display: block;
           margin-bottom: 0.8rem;
         }
 
-        .self-mode-options {
-          display: flex;
-          gap: 0.8rem;
-        }
+        .self-mode-options { display: flex; gap: 0.8rem; }
 
         .self-mode-btn {
           background: none;
-          border: 1px solid #1c1e22;
+          border: 1px solid #2a2d34;
           cursor: pointer;
           font-family: 'IM Fell English', serif;
           font-style: italic;
           font-weight: 400;
-          font-size: 1.3rem;
-          color: #3a3d44;
+          font-size: 1.2rem;
+          color: #6a6f7a;
           padding: 0.4rem 1rem;
           letter-spacing: 0.04em;
           transition: all 0.3s ease;
         }
 
-        .self-mode-btn.active {
-          border-color: #3a3d44;
-          color: #6b7080;
-        }
+        .self-mode-btn.active { border-color: #6a6f7a; color: #b0b5c0; }
 
-        .self-age-group {
-          margin-top: 1rem;
-          animation: fadeUp 0.3s ease both;
-        }
+        .self-age-group { margin-top: 1rem; animation: fadeUp 0.3s ease both; }
 
         .self-age-input {
           background: none;
           border: none;
-          border-bottom: 1px solid #1c1e22;
-          color: #5a5f6a;
+          border-bottom: 1px solid #2a2d34;
+          color: #8a8f9a;
           font-family: 'IM Fell English', serif;
           font-style: italic;
           font-weight: 400;
@@ -274,212 +262,186 @@ Reply with ONLY the single line. Nothing else.`;
           transition: border-color 0.3s ease;
         }
 
-        .self-age-input::placeholder { color: #1e2026; font-style: italic; }
-        .self-age-input:focus { border-color: #2e3138; }
+        .self-age-input::placeholder { color: #3a3d44; font-style: italic; }
+        .self-age-input:focus { border-color: #5a5f6a; }
 
-        /* Recipient */
-        .recipient-group {
-          margin-bottom: 1.6rem;
-          position: relative;
-        }
+        .recipient-group { margin-bottom: 1.6rem; position: relative; }
 
         .recipient-label {
           display: block;
-          font-size: 0.54rem;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: lowercase;
-          color: #2a2d34;
+          color: #5a5f6a;
           margin-bottom: 0.6rem;
           transition: color 0.3s ease;
         }
 
-        .recipient-group.is-focused .recipient-label { color: #4a4f5a; }
+        .recipient-group.is-focused .recipient-label { color: #8a8f9a; }
 
         .recipient-input {
           width: 100%;
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1c1e22;
+          border-bottom: 1px solid #2a2d34;
           padding: 0.5rem 0;
           font-family: 'IM Fell English', serif;
           font-style: italic;
           font-weight: 400;
           font-size: 1.05rem;
-          color: #5a5f6a;
+          color: #8a8f9a;
           outline: none;
           transition: border-color 0.4s ease;
           letter-spacing: 0.04em;
-          caret-color: #3a3d44;
+          caret-color: #8a8f9a;
         }
 
-        .recipient-input::placeholder { color: #1e2026; font-style: italic; }
+        .recipient-input::placeholder { color: #3a3d44; font-style: italic; }
 
         .recipient-line {
           position: absolute;
           bottom: 0; left: 0;
           height: 1px; width: 0%;
-          background: #2e3138;
+          background: #6a6f7a;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .recipient-group.is-focused .recipient-line { width: 100%; }
 
-        /* Textarea */
         .entry-textarea {
           width: 100%;
           min-height: 200px;
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1c1e22;
+          border-bottom: 1px solid #2a2d34;
           padding: 0.8rem 0;
           font-family: 'IM Fell English', serif;
           font-weight: 400;
           font-size: 1.1rem;
-          color: #4a4f5a;
+          color: #8a8f9a;
           line-height: 1.9;
           letter-spacing: 0.02em;
           resize: none;
           outline: none;
           transition: border-color 0.4s ease;
-          caret-color: #3a3d44;
+          caret-color: #8a8f9a;
         }
 
-        .entry-textarea::placeholder { color: #1e2026; font-style: italic; }
-        .entry-textarea:focus { border-color: #2a2d34; }
+        .entry-textarea::placeholder { color: #3a3d44; font-style: italic; }
+        .entry-textarea:focus { border-color: #4a4f5a; }
 
-        /* Mood */
         .mood-label {
           display: block;
-          font-size: 0.54rem;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: lowercase;
-          color: #2a2d34;
+          color: #5a5f6a;
           margin: 1.6rem 0 0.8rem;
         }
 
-        .mood-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-        }
+        .mood-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
         .mood-tag {
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1c1e22;
+          border-bottom: 1px solid #2a2d34;
           padding: 0.2rem 0;
           margin-right: 0.6rem;
           font-family: 'IM Fell English', serif;
           font-style: italic;
           font-weight: 400;
-          font-size: 0.85rem;
-          color: #2a2d34;
+          font-size: 0.88rem;
+          color: #5a5f6a;
           cursor: pointer;
           transition: all 0.3s ease;
           letter-spacing: 0.04em;
           border-radius: 0;
         }
 
-        .mood-tag:hover { color: #4a4f5a; border-color: #2e3138; }
-        .mood-tag.selected { color: #6b7080; border-color: #4a4f5a; }
+        .mood-tag:hover { color: #8a8f9a; border-color: #5a5f6a; }
+        .mood-tag.selected { color: #c8cdd6; border-color: #8a8f9a; }
 
-        /* Capsule */
         .capsule-row {
           margin-top: 2rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding: 1rem 0;
-          border-top: 1px solid #1c1e22;
+          border-top: 1px solid #2a2d34;
         }
 
-        .capsule-label-group {
-          display: flex;
-          flex-direction: column;
-          gap: 0.3rem;
-        }
+        .capsule-label-group { display: flex; flex-direction: column; gap: 0.3rem; }
 
         .capsule-label {
-          font-size: 0.54rem;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: lowercase;
-          color: #2e3138;
+          color: #5a5f6a;
         }
 
         .capsule-sublabel {
           font-family: 'IM Fell English', serif;
           font-style: italic;
           font-weight: 400;
-          font-size: 0.68rem;
-          color: #1e2026;
+          font-size: 0.72rem;
+          color: #3a3d44;
           letter-spacing: 0.04em;
         }
 
-        .capsule-toggle {
-          position: relative;
-          width: 36px;
-          height: 20px;
-          cursor: pointer;
-        }
-
+        .capsule-toggle { position: relative; width: 36px; height: 20px; cursor: pointer; }
         .capsule-toggle input { opacity: 0; width: 0; height: 0; }
 
         .capsule-toggle-track {
-          position: absolute;
-          inset: 0;
+          position: absolute; inset: 0;
           background: #111214;
-          border: 1px solid #1c1e22;
+          border: 1px solid #2a2d34;
           border-radius: 20px;
           transition: all 0.4s ease;
         }
 
         .capsule-toggle input:checked + .capsule-toggle-track {
-          background: rgba(74,79,90,0.15);
-          border-color: #3a3d44;
+          background: rgba(106,111,122,0.2);
+          border-color: #6a6f7a;
         }
 
         .capsule-toggle-thumb {
           position: absolute;
           top: 3px; left: 3px;
           width: 12px; height: 12px;
-          background: #1e2026;
+          background: #2a2d34;
           border-radius: 50%;
           transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .capsule-toggle input:checked ~ .capsule-toggle-thumb {
           transform: translateX(16px);
-          background: #4a4f5a;
+          background: #8a8f9a;
         }
 
-        /* Date picker */
-        .capsule-date-group {
-          margin-top: 1rem;
-          animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
+        .capsule-date-group { margin-top: 1rem; animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
         .capsule-date-label {
           display: block;
-          font-size: 0.54rem;
+          font-size: 0.58rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: lowercase;
-          color: #2e3138;
+          color: #5a5f6a;
           margin-bottom: 0.6rem;
         }
 
         .capsule-date-input {
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1c1e22;
+          border-bottom: 1px solid #2a2d34;
           padding: 0.5rem 0;
           font-family: 'Inter', sans-serif;
           font-size: 0.9rem;
           font-weight: 300;
-          color: #4a4f5a;
+          color: #8a8f9a;
           outline: none;
           letter-spacing: 0.06em;
           color-scheme: dark;
@@ -492,11 +454,10 @@ Reply with ONLY the single line. Nothing else.`;
           font-style: italic;
           font-weight: 400;
           font-size: 0.9rem;
-          color: #2e3138;
+          color: #6a6f7a;
           letter-spacing: 0.04em;
         }
 
-        /* Footer */
         .entry-footer {
           margin-top: 1.6rem;
           display: flex;
@@ -505,24 +466,20 @@ Reply with ONLY the single line. Nothing else.`;
         }
 
         .entry-char-count {
-          font-size: 0.54rem;
+          font-size: 0.56rem;
           font-weight: 300;
           letter-spacing: 0.15em;
-          color: #1e2026;
+          color: #3a3d44;
         }
 
-        .entry-actions {
-          display: flex;
-          align-items: center;
-          gap: 1.2rem;
-        }
+        .entry-actions { display: flex; align-items: center; gap: 1.2rem; }
 
         .entry-saved {
           font-family: 'IM Fell English', serif;
           font-style: italic;
           font-weight: 400;
           font-size: 0.82rem;
-          color: #3a3d44;
+          color: #8a8f9a;
           letter-spacing: 0.08em;
           animation: fadeIn 0.5s ease both;
         }
@@ -532,10 +489,10 @@ Reply with ONLY the single line. Nothing else.`;
         .entry-save-btn {
           background: transparent;
           border: none;
-          border-bottom: 1px solid #1e2026;
-          color: #2e3138;
+          border-bottom: 1px solid #3a3d44;
+          color: #6a6f7a;
           font-family: 'Inter', sans-serif;
-          font-size: 0.58rem;
+          font-size: 0.6rem;
           font-weight: 300;
           letter-spacing: 0.28em;
           text-transform: lowercase;
@@ -544,10 +501,9 @@ Reply with ONLY the single line. Nothing else.`;
           transition: all 0.4s ease;
         }
 
-        .entry-save-btn:hover { color: #6b7080; border-color: #3a3d44; }
-        .entry-save-btn:disabled { opacity: 0.15; cursor: default; pointer-events: none; }
+        .entry-save-btn:hover { color: #b0b5c0; border-color: #8a8f9a; }
+        .entry-save-btn:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
 
-        /* Acknowledgement */
         .entry-ack {
           margin-top: 2rem;
           text-align: center;
@@ -555,7 +511,7 @@ Reply with ONLY the single line. Nothing else.`;
           font-style: italic;
           font-weight: 400;
           font-size: 1.2rem;
-          color: #3a3d44;
+          color: #8a8f9a;
           letter-spacing: 0.06em;
           line-height: 1.7;
           transition: opacity 0.8s ease;

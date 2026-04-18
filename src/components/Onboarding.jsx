@@ -27,129 +27,22 @@ export default function Onboarding({ onDone }) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@200;300;400&display=swap');
 
-        .ob-overlay {
-          position: fixed;
-          inset: 0;
-          background: #111214;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          z-index: 200;
-          padding: 2rem;
-          font-family: 'Inter', sans-serif;
-        }
-
-        .ob-inner {
-          width: 100%;
-          max-width: 380px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          animation: obFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
-        .ob-inner.exiting {
-          animation: obFadeOut 0.4s ease both;
-        }
-
-        @keyframes obFadeUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes obFadeOut {
-          from { opacity: 1; transform: translateY(0); }
-          to   { opacity: 0; transform: translateY(-12px); }
-        }
-
-        .ob-step {
-          font-family: 'Inter', sans-serif;
-          font-size: 0.52rem;
-          font-weight: 200;
-          letter-spacing: 0.24em;
-          text-transform: lowercase;
-          color: #1e2026;
-          margin-bottom: 2.4rem;
-        }
-
-        .ob-title {
-          font-family: 'IM Fell English', serif;
-          font-weight: 400;
-          font-size: clamp(1.8rem, 8vw, 2.8rem);
-          color: #2e3138;
-          letter-spacing: 0.06em;
-          line-height: 1.1;
-          margin-bottom: 1.6rem;
-        }
-
-        .ob-divider {
-          width: 24px;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, #1e2026, transparent);
-          margin-bottom: 1.6rem;
-        }
-
-        .ob-body {
-          font-family: 'IM Fell English', serif;
-          font-style: italic;
-          font-weight: 400;
-          font-size: 1.1rem;
-          color: #2a2d34;
-          line-height: 1.9;
-          letter-spacing: 0.04em;
-          white-space: pre-line;
-          margin-bottom: 3.2rem;
-        }
-
-        .ob-next {
-          background: transparent;
-          border: 1px solid #1c1e22;
-          color: #2e3138;
-          font-family: 'Inter', sans-serif;
-          font-size: 0.58rem;
-          font-weight: 300;
-          letter-spacing: 0.3em;
-          text-transform: lowercase;
-          padding: 0.85rem 2.4rem;
-          cursor: pointer;
-          transition: all 0.4s ease;
-        }
-
-        .ob-next:hover { border-color: #2e3138; color: #6b7080; }
-
-        .ob-dots {
-          display: flex;
-          gap: 0.5rem;
-          margin-top: 2.4rem;
-        }
-
-        .ob-dot {
-          width: 3px;
-          height: 3px;
-          border-radius: 50%;
-          background: #1c1e22;
-          transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .ob-dot.active {
-          background: #3a3d44;
-          transform: scale(1.3);
-        }
-
-        .ob-skip {
-          position: absolute;
-          bottom: 2.4rem;
-          background: none; border: none; cursor: pointer;
-          font-family: 'Inter', sans-serif;
-          font-size: 0.52rem; font-weight: 200;
-          letter-spacing: 0.2em; text-transform: lowercase;
-          color: #1e2026;
-          transition: color 0.3s ease;
-        }
-
-        .ob-skip:hover { color: #3a3d44; }
+        .ob-overlay { position: fixed; inset: 0; background: #111214; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200; padding: 2rem; font-family: 'Inter', sans-serif; }
+        .ob-inner { width: 100%; max-width: 380px; display: flex; flex-direction: column; align-items: center; text-align: center; animation: obFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        .ob-inner.exiting { animation: obFadeOut 0.4s ease both; }
+        @keyframes obFadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes obFadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-12px); } }
+        .ob-step { font-family: 'Inter', sans-serif; font-size: 0.54rem; font-weight: 200; letter-spacing: 0.24em; text-transform: lowercase; color: #4a4f5a; margin-bottom: 2.4rem; }
+        .ob-title { font-family: 'IM Fell English', serif; font-weight: 400; font-size: clamp(1.8rem, 8vw, 2.8rem); color: #8a8f9a; letter-spacing: 0.06em; line-height: 1.1; margin-bottom: 1.6rem; }
+        .ob-divider { width: 24px; height: 1px; background: linear-gradient(90deg, transparent, #3a3d44, transparent); margin-bottom: 1.6rem; }
+        .ob-body { font-family: 'IM Fell English', serif; font-style: italic; font-weight: 400; font-size: 1.1rem; color: #6a6f7a; line-height: 1.9; letter-spacing: 0.04em; white-space: pre-line; margin-bottom: 3.2rem; }
+        .ob-next { background: transparent; border: 1px solid #2a2d34; color: #6a6f7a; font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 300; letter-spacing: 0.3em; text-transform: lowercase; padding: 0.85rem 2.4rem; cursor: pointer; transition: all 0.4s ease; }
+        .ob-next:hover { border-color: #6a6f7a; color: #c8cdd6; }
+        .ob-dots { display: flex; gap: 0.5rem; margin-top: 2.4rem; }
+        .ob-dot { width: 3px; height: 3px; border-radius: 50%; background: #2a2d34; transition: background 0.3s ease, transform 0.3s ease; }
+        .ob-dot.active { background: #6a6f7a; transform: scale(1.3); }
+        .ob-skip { position: absolute; bottom: 2.4rem; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.54rem; font-weight: 200; letter-spacing: 0.2em; text-transform: lowercase; color: #3a3d44; transition: color 0.3s ease; }
+        .ob-skip:hover { color: #6a6f7a; }
       `}</style>
 
       <div className="ob-overlay">
@@ -172,7 +65,6 @@ export default function Onboarding({ onDone }) {
             ))}
           </div>
         </div>
-
         {current < slides.length - 1 && (
           <button
             className="ob-skip"

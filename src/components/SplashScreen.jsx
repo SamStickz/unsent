@@ -35,7 +35,7 @@ export default function SplashScreen({ onDone }) {
           font-family: 'IM Fell English', serif;
           font-weight: 400;
           font-size: 2.6rem;
-          color: #2e3138;
+          color: #8a8f9a;
           letter-spacing: 0.12em;
           animation: splashFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
@@ -56,7 +56,7 @@ export default function SplashScreen({ onDone }) {
           width: 4px;
           height: 4px;
           border-radius: 50%;
-          background: #1e2026;
+          background: #3a3d44;
           animation: splashPulse 1.4s ease-in-out infinite;
         }
 
@@ -64,8 +64,8 @@ export default function SplashScreen({ onDone }) {
         .splash-dot:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes splashPulse {
-          0%, 100% { opacity: 0.15; transform: scale(0.8); }
-          50%       { opacity: 0.5;  transform: scale(1.2); background: #3a3d44; }
+          0%, 100% { opacity: 0.3; transform: scale(0.8); }
+          50%       { opacity: 1;   transform: scale(1.2); background: #6a6f7a; }
         }
       `}</style>
 

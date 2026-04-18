@@ -64,7 +64,7 @@ export default function Home() {
         .home-divider {
           width: 1px;
           height: 28px;
-          background: #1e2026;
+          background: #3a3d44;
           margin: 1.2rem auto;
         }
 
@@ -72,8 +72,8 @@ export default function Home() {
           font-family: 'IM Fell English', serif;
           font-style: italic;
           font-weight: 400;
-          font-size: clamp(0.9rem, 3vw, 1.05rem);
-          color: #4a4f5a;
+          font-size: clamp(0.95rem, 3vw, 1.1rem);
+          color: #8a8f9a;
           letter-spacing: 0.04em;
           line-height: 1.7;
           height: 2.4rem;
@@ -94,11 +94,11 @@ export default function Home() {
 
         .home-manifesto p {
           font-family: 'Inter', sans-serif;
-          font-size: 0.62rem;
+          font-size: 0.65rem;
           font-weight: 300;
           letter-spacing: 0.18em;
           text-transform: lowercase;
-          color: #2a2d34;
+          color: #5a5f6a;
           line-height: 2.2;
         }
 
@@ -116,10 +116,10 @@ export default function Home() {
 
         .home-btn-primary {
           background: transparent;
-          border: 1px solid #1e2026;
-          color: #4a4f5a;
+          border: 1px solid #3a3d44;
+          color: #8a8f9a;
           font-family: 'Inter', sans-serif;
-          font-size: 0.6rem;
+          font-size: 0.62rem;
           font-weight: 300;
           letter-spacing: 0.3em;
           text-transform: lowercase;
@@ -129,19 +129,19 @@ export default function Home() {
         }
 
         .home-btn-primary:hover {
-          border-color: #2e3138;
-          color: #6b7080;
+          border-color: #6a6f7a;
+          color: #c8cdd6;
         }
 
         .home-btn-secondary {
           background: none;
           border: none;
           font-family: 'Inter', sans-serif;
-          font-size: 0.58rem;
+          font-size: 0.6rem;
           font-weight: 300;
           letter-spacing: 0.2em;
           text-transform: lowercase;
-          color: #222428;
+          color: #5a5f6a;
           cursor: pointer;
           padding: 0;
           transition: color 0.3s ease;
@@ -155,11 +155,11 @@ export default function Home() {
           left: 0;
           width: 0%;
           height: 1px;
-          background: #2e3138;
+          background: #6a6f7a;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .home-btn-secondary:hover { color: #3a3d44; }
+        .home-btn-secondary:hover { color: #8a8f9a; }
         .home-btn-secondary:hover::after { width: 100%; }
 
         .home-footer {
@@ -169,7 +169,7 @@ export default function Home() {
           font-weight: 200;
           letter-spacing: 0.2em;
           text-transform: lowercase;
-          color: #1e2026;
+          color: #3a3d44;
           padding-bottom: 2rem;
         }
       `}</style>
@@ -178,11 +178,9 @@ export default function Home() {
         <div className="home-inner">
           <h1 className="home-title">unsent</h1>
           <div className="home-divider" />
-
           <p className="home-rotating-line" style={{ opacity }}>
             {lines[currentLine]}
           </p>
-
           <div className="home-manifesto">
             <p>
               {t.manifesto_1}

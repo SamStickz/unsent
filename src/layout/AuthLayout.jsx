@@ -5,7 +5,6 @@ export default function AuthLayout() {
     <>
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
         .auth-root {
           min-height: 100vh;
           background-color: #111214;
@@ -14,7 +13,6 @@ export default function AuthLayout() {
           justify-content: center;
         }
       `}</style>
-
       <div className="auth-root">
         <Outlet />
       </div>

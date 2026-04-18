@@ -22,20 +22,16 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
         year: "numeric",
       }) +
       " · " +
-      d.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-      })
+      d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
     );
   };
 
-  const formatUnlockDate = (ts) => {
-    return new Date(ts).toLocaleDateString("en-US", {
+  const formatUnlockDate = (ts) =>
+    new Date(ts).toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
       year: "numeric",
     });
-  };
 
   const handleDelete = async () => {
     const { error } = await supabase
@@ -51,7 +47,6 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
       data: { session },
     } = await supabase.auth.getSession();
     if (!session) return;
-
     const { data, error } = await supabase
       .from("entries")
       .insert({
@@ -62,7 +57,6 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
       })
       .select()
       .single();
-
     if (!error) {
       setReplyContent("");
       setReplying(false);
@@ -75,323 +69,68 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@200;300;400&display=swap');
 
-        .entry-card {
-          padding: 2.4rem 0 1.6rem;
-          border-bottom: 1px solid #1a1c20;
-          animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
+        .entry-card { padding: 2.4rem 0 1.6rem; border-bottom: 1px solid #2a2d34; animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
         .entry-card:last-child { border-bottom: none; }
 
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(12px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-        .entry-card-sealed {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          gap: 1rem;
-        }
+        .entry-card-sealed { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+        .entry-card-sealed-left { display: flex; flex-direction: column; gap: 0.5rem; }
 
-        .entry-card-sealed-left {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
+        .entry-card-seal-icon { font-size: 0.7rem; opacity: 0.4; margin-bottom: 0.2rem; color: #6a6f7a; }
 
-        .entry-card-seal-icon {
-          font-size: 0.7rem;
-          opacity: 0.15;
-          margin-bottom: 0.2rem;
-        }
+        .entry-card-seal-label { font-family: 'Inter', sans-serif; font-size: 0.56rem; font-weight: 300; letter-spacing: 0.22em; text-transform: lowercase; color: #5a5f6a; }
+        .entry-card-seal-recipient { font-family: 'IM Fell English', serif; font-style: italic; font-weight: 400; font-size: 0.95rem; color: #8a8f9a; letter-spacing: 0.04em; }
+        .entry-card-seal-date { font-family: 'Inter', sans-serif; font-weight: 200; font-size: 0.54rem; letter-spacing: 0.12em; text-transform: lowercase; color: #4a4f5a; }
+        .entry-card-seal-opens { font-family: 'Inter', sans-serif; font-size: 0.54rem; font-weight: 200; letter-spacing: 0.16em; text-transform: lowercase; color: #5a5f6a; }
 
-        .entry-card-seal-label {
-          font-family: 'Inter', sans-serif;
-          font-size: 0.54rem;
-          font-weight: 300;
-          letter-spacing: 0.22em;
-          text-transform: lowercase;
-          color: #2e3138;
-        }
+        .entry-card-recipient { font-family: 'Inter', sans-serif; font-size: 0.58rem; font-weight: 300; letter-spacing: 0.2em; text-transform: lowercase; color: #5a5f6a; margin-bottom: 0.8rem; }
+        .entry-card-recipient span { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.95rem; letter-spacing: 0.04em; text-transform: none; color: #8a8f9a; margin-left: 0.4rem; }
 
-        .entry-card-seal-recipient {
-          font-family: 'IM Fell English', serif;
-          font-style: italic;
-          font-weight: 400;
-          font-size: 0.95rem;
-          color: #4a4f5a;
-          letter-spacing: 0.04em;
-        }
+        .entry-card-content { font-family: 'IM Fell English', serif; font-weight: 400; font-size: 1.05rem; color: #b0b5c0; line-height: 1.85; letter-spacing: 0.02em; white-space: pre-wrap; }
 
-        .entry-card-seal-date {
-          font-family: 'Inter', sans-serif;
-          font-weight: 200;
-          font-size: 0.54rem;
-          letter-spacing: 0.12em;
-          text-transform: lowercase;
-          color: #222428;
-        }
+        .entry-card-mood { display: inline-block; margin-top: 0.9rem; font-family: 'IM Fell English', serif; font-style: italic; font-weight: 400; font-size: 0.78rem; color: #5a5f6a; border-bottom: 1px solid #2a2d34; padding: 0.1rem 0; letter-spacing: 0.04em; }
 
-        .entry-card-seal-opens {
-          font-family: 'Inter', sans-serif;
-          font-size: 0.54rem;
-          font-weight: 200;
-          letter-spacing: 0.16em;
-          text-transform: lowercase;
-          color: #2e3138;
-        }
+        .entry-card-meta { margin-top: 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem; }
 
-        .entry-card-recipient {
-          font-family: 'Inter', sans-serif;
-          font-size: 0.56rem;
-          font-weight: 300;
-          letter-spacing: 0.2em;
-          text-transform: lowercase;
-          color: #2a2d34;
-          margin-bottom: 0.8rem;
-        }
+        .entry-card-date { font-family: 'Inter', sans-serif; font-size: 0.54rem; font-weight: 200; letter-spacing: 0.12em; text-transform: lowercase; color: #3a3d44; white-space: nowrap; flex-shrink: 0; }
 
-        .entry-card-recipient span {
-          font-family: 'IM Fell English', serif;
-          font-style: italic;
-          font-size: 0.95rem;
-          letter-spacing: 0.04em;
-          text-transform: none;
-          color: #4a4f5a;
-          margin-left: 0.4rem;
-        }
+        .entry-card-actions { display: flex; align-items: center; gap: 0.8rem; flex-shrink: 0; }
 
-        .entry-card-content {
-          font-family: 'IM Fell English', serif;
-          font-weight: 400;
-          font-size: 1.05rem;
-          color: #c8cdd6;
-          line-height: 1.85;
-          letter-spacing: 0.02em;
-          white-space: pre-wrap;
-        }
-
-        .entry-card-mood {
-          display: inline-block;
-          margin-top: 0.9rem;
-          font-family: 'IM Fell English', serif;
-          font-style: italic;
-          font-weight: 400;
-          font-size: 0.75rem;
-          color: #2e3138;
-          border-bottom: 1px solid #1a1c20;
-          padding: 0.1rem 0;
-          letter-spacing: 0.04em;
-        }
-
-        .entry-card-meta {
-          margin-top: 1rem;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          flex-wrap: wrap;
-          gap: 0.6rem;
-        }
-
-        .entry-card-date {
-          font-family: 'Inter', sans-serif;
-          font-size: 0.54rem;
-          font-weight: 200;
-          letter-spacing: 0.12em;
-          text-transform: lowercase;
-          color: #222428;
-          white-space: nowrap;
-          flex-shrink: 0;
-        }
-
-        .entry-card-actions {
-          display: flex;
-          align-items: center;
-          gap: 0.8rem;
-          flex-shrink: 0;
-        }
-
-        .entry-card-action-btn {
-          background: none;
-          border: none;
-          cursor: pointer;
-          font-family: 'Inter', sans-serif;
-          font-size: 0.54rem;
-          font-weight: 300;
-          letter-spacing: 0.14em;
-          text-transform: lowercase;
-          color: #2a2d34;
-          padding: 0;
-          transition: color 0.3s ease;
-          position: relative;
-          white-space: nowrap;
-        }
-
-        .entry-card-action-btn::after {
-          content: '';
-          position: absolute;
-          bottom: -2px; left: 0;
-          width: 0%; height: 1px;
-          background: currentColor;
-          transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .entry-card-action-btn:hover { color: #4a4f5a; }
+        .entry-card-action-btn { background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.56rem; font-weight: 300; letter-spacing: 0.14em; text-transform: lowercase; color: #5a5f6a; padding: 0; transition: color 0.3s ease; position: relative; white-space: nowrap; }
+        .entry-card-action-btn::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0%; height: 1px; background: currentColor; transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .entry-card-action-btn:hover { color: #8a8f9a; }
         .entry-card-action-btn:hover::after { width: 100%; }
-        .entry-card-release:hover { color: #6b4a4a !important; }
+        .entry-card-release:hover { color: #9a6a6a !important; }
 
-        .entry-card-confirm {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          animation: fadeIn 0.3s ease both;
-        }
-
+        .entry-card-confirm { display: flex; align-items: center; gap: 1rem; animation: fadeIn 0.3s ease both; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .entry-card-confirm-text { font-family: 'IM Fell English', serif; font-style: italic; font-weight: 400; font-size: 0.85rem; color: #6a6f7a; letter-spacing: 0.04em; }
+        .entry-card-confirm-yes { background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.56rem; font-weight: 300; letter-spacing: 0.2em; text-transform: lowercase; color: #8a5555; padding: 0; transition: color 0.3s ease; }
+        .entry-card-confirm-yes:hover { color: #b07070; }
+        .entry-card-confirm-no { background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.56rem; font-weight: 300; letter-spacing: 0.2em; text-transform: lowercase; color: #4a4f5a; padding: 0; transition: color 0.3s ease; }
+        .entry-card-confirm-no:hover { color: #8a8f9a; }
 
-        .entry-card-confirm-text {
-          font-family: 'IM Fell English', serif;
-          font-style: italic;
-          font-weight: 400;
-          font-size: 0.82rem;
-          color: #3a3d44;
-          letter-spacing: 0.04em;
-        }
+        .reply-compose { margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid #2a2d34; animation: fadeUp 0.4s ease both; }
+        .reply-compose-label { font-family: 'Inter', sans-serif; font-size: 0.56rem; font-weight: 300; letter-spacing: 0.2em; text-transform: lowercase; color: #5a5f6a; margin-bottom: 0.8rem; display: block; }
 
-        .entry-card-confirm-yes {
-          background: none; border: none; cursor: pointer;
-          font-family: 'Inter', sans-serif;
-          font-size: 0.54rem; font-weight: 300;
-          letter-spacing: 0.2em; text-transform: lowercase;
-          color: #5a3535; padding: 0;
-          transition: color 0.3s ease;
-        }
-        .entry-card-confirm-yes:hover { color: #9a5555; }
+        .reply-textarea { width: 100%; min-height: 90px; background: transparent; border: none; border-bottom: 1px solid #2a2d34; padding: 0.4rem 0; font-family: 'IM Fell English', serif; font-weight: 400; font-size: 1rem; color: #8a8f9a; line-height: 1.8; resize: none; outline: none; transition: border-color 0.3s ease; caret-color: #6a6f7a; }
+        .reply-textarea::placeholder { color: #2e3138; font-style: italic; }
+        .reply-textarea:focus { border-color: #3a3d44; }
 
-        .entry-card-confirm-no {
-          background: none; border: none; cursor: pointer;
-          font-family: 'Inter', sans-serif;
-          font-size: 0.54rem; font-weight: 300;
-          letter-spacing: 0.2em; text-transform: lowercase;
-          color: #2e3138; padding: 0;
-          transition: color 0.3s ease;
-        }
-        .entry-card-confirm-no:hover { color: #4a4f5a; }
-
-        .reply-compose {
-          margin-top: 1.2rem;
-          padding-top: 1.2rem;
-          border-top: 1px solid #1a1c20;
-          animation: fadeUp 0.4s ease both;
-        }
-
-        .reply-compose-label {
-          font-family: 'Inter', sans-serif;
-          font-size: 0.54rem;
-          font-weight: 300;
-          letter-spacing: 0.2em;
-          text-transform: lowercase;
-          color: #2e3138;
-          margin-bottom: 0.8rem;
-          display: block;
-        }
-
-        .reply-textarea {
-          width: 100%;
-          min-height: 90px;
-          background: transparent;
-          border: none;
-          border-bottom: 1px solid #1a1c20;
-          padding: 0.4rem 0;
-          font-family: 'IM Fell English', serif;
-          font-weight: 400;
-          font-size: 1rem;
-          color: #8a8f9a;
-          line-height: 1.8;
-          resize: none;
-          outline: none;
-          transition: border-color 0.3s ease;
-          caret-color: #4a4f5a;
-        }
-
-        .reply-textarea::placeholder { color: #1e2026; font-style: italic; }
-        .reply-textarea:focus { border-color: #2e3138; }
-
-        .reply-footer {
-          margin-top: 0.8rem;
-          display: flex;
-          justify-content: flex-end;
-          gap: 1.2rem;
-          align-items: center;
-        }
-
-        .reply-cancel {
-          background: none; border: none; cursor: pointer;
-          font-family: 'Inter', sans-serif;
-          font-size: 0.54rem; font-weight: 300;
-          letter-spacing: 0.18em; text-transform: lowercase;
-          color: #2a2d34; padding: 0;
-          transition: color 0.3s ease;
-        }
-        .reply-cancel:hover { color: #4a4f5a; }
-
-        .reply-send {
-          background: transparent; border: none;
-          border-bottom: 1px solid #2a2d34;
-          color: #3a3d44;
-          font-family: 'Inter', sans-serif;
-          font-size: 0.54rem; font-weight: 300;
-          letter-spacing: 0.22em; text-transform: lowercase;
-          padding: 0.2rem 0;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-        .reply-send:hover { border-color: #4a4f5a; color: #6b7080; }
+        .reply-footer { margin-top: 0.8rem; display: flex; justify-content: flex-end; gap: 1.2rem; align-items: center; }
+        .reply-cancel { background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.56rem; font-weight: 300; letter-spacing: 0.18em; text-transform: lowercase; color: #4a4f5a; padding: 0; transition: color 0.3s ease; }
+        .reply-cancel:hover { color: #8a8f9a; }
+        .reply-send { background: transparent; border: none; border-bottom: 1px solid #3a3d44; color: #6a6f7a; font-family: 'Inter', sans-serif; font-size: 0.56rem; font-weight: 300; letter-spacing: 0.22em; text-transform: lowercase; padding: 0.2rem 0; cursor: pointer; transition: all 0.3s ease; }
+        .reply-send:hover { border-color: #6a6f7a; color: #b0b5c0; }
         .reply-send:disabled { opacity: 0.2; cursor: default; pointer-events: none; }
 
-        .replies-list {
-          margin-top: 1rem;
-          padding-left: 1.2rem;
-          border-left: 1px solid #1a1c20;
-        }
-
-        .reply-item {
-          padding: 0.8rem 0;
-          border-bottom: 1px solid #161820;
-          animation: fadeUp 0.5s ease both;
-        }
+        .replies-list { margin-top: 1rem; padding-left: 1.2rem; border-left: 1px solid #2a2d34; }
+        .reply-item { padding: 0.8rem 0; border-bottom: 1px solid #1e2026; animation: fadeUp 0.5s ease both; }
         .reply-item:last-child { border-bottom: none; }
-
-        .reply-item-label {
-          font-family: 'Inter', sans-serif;
-          font-size: 0.5rem;
-          font-weight: 200;
-          letter-spacing: 0.2em;
-          text-transform: lowercase;
-          color: #2a2d34;
-          margin-bottom: 0.4rem;
-        }
-
-        .reply-item-content {
-          font-family: 'IM Fell English', serif;
-          font-weight: 400;
-          font-size: 0.95rem;
-          color: #4a4f5a;
-          line-height: 1.8;
-          white-space: pre-wrap;
-        }
-
-        .reply-item-date {
-          margin-top: 0.4rem;
-          font-family: 'Inter', sans-serif;
-          font-size: 0.5rem;
-          font-weight: 200;
-          letter-spacing: 0.15em;
-          text-transform: lowercase;
-          color: #1e2026;
-        }
+        .reply-item-label { font-family: 'Inter', sans-serif; font-size: 0.52rem; font-weight: 200; letter-spacing: 0.2em; text-transform: lowercase; color: #3a3d44; margin-bottom: 0.4rem; }
+        .reply-item-content { font-family: 'IM Fell English', serif; font-weight: 400; font-size: 0.95rem; color: #6a6f7a; line-height: 1.8; white-space: pre-wrap; }
+        .reply-item-date { margin-top: 0.4rem; font-family: 'Inter', sans-serif; font-size: 0.5rem; font-weight: 200; letter-spacing: 0.15em; text-transform: lowercase; color: #2e3138; }
       `}</style>
 
       <div className="entry-card">
@@ -444,9 +183,7 @@ export default function EntryCard({ entry, onDelete, onReply, replies = [] }) {
                 for <span>{entry.recipient}</span>
               </p>
             )}
-
             <p className="entry-card-content">{entry.content}</p>
-
             {entry.mood && (
               <span className="entry-card-mood">{entry.mood}</span>
             )}
