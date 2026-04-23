@@ -20,9 +20,9 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           email,
-          plan: process.env.VITE_PAYSTACK_PLAN_CODE,
+          plan: process.env.PAYSTACK_PLAN_CODE,
           reference: ref,
-          callback_url: `${process.env.VITE_APP_URL}/app?upgraded=true`,
+          callback_url: `${process.env.APP_URL}/app?upgraded=true`,
         }),
       },
     );
