@@ -3,7 +3,6 @@ import { supabase } from "../lib/supabase";
 
 export default function UpgradeModal({ onClose, reason }) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
@@ -15,23 +14,8 @@ export default function UpgradeModal({ onClose, reason }) {
     getUser();
   }, []);
 
-  const handlePaystack = async () => {
-    if (!user) return;
-    setLoading(true);
-    try {
-      const ref = `unsent_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-      const res = await fetch("/api/paystack-init", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: user.email, ref }),
-      });
-      const data = await res.json();
-      window.location.href = data.url || "https://paystack.shop/pay/ujunfs2fg5";
-    } catch {
-      window.location.href = "https://paystack.shop/pay/ujunfs2fg5";
-    } finally {
-      setLoading(false);
-    }
+  const handlePaystack = () => {
+    window.location.href = "https://paystack.shop/pay/ujunfs2fg5";
   };
 
   const reasonText =
@@ -63,6 +47,7 @@ export default function UpgradeModal({ onClose, reason }) {
         .upgrade-close { background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.54rem; font-weight: 200; letter-spacing: 0.2em; text-transform: lowercase; color: #3a3d44; padding: 0; transition: color 0.3s ease; }
         .upgrade-close:hover { color: #6a6f7a; }
       `}</style>
+
       <div
         className="upgrade-overlay"
         onClick={(e) => e.target === e.currentTarget && onClose()}
@@ -86,14 +71,14 @@ export default function UpgradeModal({ onClose, reason }) {
             ))}
           </div>
           <p className="upgrade-price">
-            <strong>$3</strong> / month
+            <strong>NGN 5,000</strong> / month
           </p>
           <button
             className="upgrade-btn"
             onClick={handlePaystack}
-            disabled={loading || !user}
+            disabled={!user}
           >
-            {loading ? "opening payment…" : "continue to payment"}
+            continue to payment
           </button>
           <button className="upgrade-close" onClick={onClose}>
             not now
