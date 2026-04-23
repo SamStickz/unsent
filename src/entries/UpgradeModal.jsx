@@ -26,11 +26,9 @@ export default function UpgradeModal({ onClose, reason }) {
         body: JSON.stringify({ email: user.email, ref }),
       });
       const data = await res.json();
-      window.location.href =
-        data.url ||
-        `https://paystack.com/pay/${import.meta.env.VITE_PAYSTACK_PLAN_CODE}`;
+      window.location.href = data.url || "https://paystack.shop/pay/ujunfs2fg5";
     } catch {
-      window.location.href = `https://paystack.com/pay/${import.meta.env.VITE_PAYSTACK_PLAN_CODE}`;
+      window.location.href = "https://paystack.shop/pay/ujunfs2fg5";
     } finally {
       setLoading(false);
     }
