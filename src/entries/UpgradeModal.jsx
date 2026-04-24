@@ -71,7 +71,7 @@ export default function UpgradeModal({ onClose, reason }) {
             ))}
           </div>
           <p className="upgrade-price">
-            <strong>NGN 5,000</strong> / month
+            <strong>NGN 5,000</strong> / year
           </p>
           <button
             className="upgrade-btn"

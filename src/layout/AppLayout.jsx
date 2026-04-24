@@ -90,43 +90,56 @@ export default function AppLayout() {
           display: none;
           flex-direction: column;
           justify-content: center;
+          align-items: center;
           gap: 5px;
           background: none;
           border: none;
           cursor: pointer;
-          padding: 8px;
-          z-index: 60;
-          position: relative;
+          width: 44px;
+          height: 44px;
+          padding: 0;
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
         }
+
         .hamburger span {
           display: block;
           width: 22px;
-          height: 1px;
+          height: 1.5px;
           background: #8a8f9a;
           transition: all 0.3s ease;
           transform-origin: center;
         }
-        .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+        .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
         .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        .hamburger-fixed {
+          position: fixed;
+          top: 0.75rem;
+          right: 1.5rem;
+          z-index: 101;
+        }
 
         .mobile-drawer {
           display: none;
           position: fixed;
           inset: 0;
           background: #0f1012;
-          z-index: 49;
+          z-index: 100;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           gap: 3rem;
           animation: drawerFade 0.3s ease both;
+          padding-top: env(safe-area-inset-top);
+          padding-bottom: env(safe-area-inset-bottom);
         }
         .mobile-drawer.open { display: flex; }
 
         @keyframes drawerFade {
-          from { opacity: 0; transform: translateY(-8px); }
-          to   { opacity: 1; transform: translateY(0); }
+          from { opacity: 0; }
+          to   { opacity: 1; }
         }
 
         .mobile-nav-link {
@@ -137,6 +150,8 @@ export default function AppLayout() {
           color: #5a5f6a;
           text-decoration: none;
           transition: color 0.3s ease;
+          padding: 0.5rem 0;
+          -webkit-tap-highlight-color: transparent;
         }
         .mobile-nav-link:hover,
         .mobile-nav-link.active { color: #b0b5c0; }
@@ -154,8 +169,9 @@ export default function AppLayout() {
           font-weight: 300;
           letter-spacing: 0.18em;
           text-transform: lowercase;
-          padding: 0;
+          padding: 0.5rem;
           transition: color 0.3s ease;
+          -webkit-tap-highlight-color: transparent;
         }
 
         .app-main {
@@ -238,7 +254,7 @@ export default function AppLayout() {
             </nav>
 
             <button
-              className={`hamburger ${menuOpen ? "open" : ""}`}
+              className={`hamburger ${menuOpen ? "open hamburger-fixed" : ""}`}
               onClick={() => setMenuOpen((v) => !v)}
               aria-label="menu"
             >
